@@ -12,7 +12,9 @@ __pycache__/
 db.sqlite3
 
 # Media & static
+# Media & static
 /media/
+
 /staticfiles/
 
 # Virtual environments
