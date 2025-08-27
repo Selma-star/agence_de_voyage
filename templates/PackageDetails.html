@@ -1,0 +1,389 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Package Detail{% endblock %}
+{% block extra_head %} 
+<link  rel="stylesheet" href="{% static 'css/form.css' %}">
+ <link rel="stylesheet" href="{% static 'css/packageD.css' %}">   
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+ {% endblock %}
+ {% block content %}
+ 
+    <section class="package-detail">
+        <div class="container">
+          
+          <!-- Partie description à gauche -->
+          <div class="info">
+            <h1 class="title">{{ package.name }}</h1>
+        
+            <div class="rating">
+                {% for i in "12345"|make_list %}
+                    {% if package.rating|default:0 >= i %}
+                        <i class="fas fa-star"></i>
+                    {% elif package.rating|default:0 >= i|add:"-0.5" %}
+                        <i class="fas fa-star-half-alt"></i>
+                    {% else %}
+                        <i class="far fa-star"></i>
+                    {% endif %}
+                {% endfor %}
+                <span class="rating-text">
+                    Rating: {{ package.rating|default:"0" }}/10
+                </span>
+            </div>
+        
+            <p class="description">
+                {{ package.description }}
+            </p>
+        
+            <ul class="features">
+                <li><i class="fas fa-dollar-sign"></i> <span class="label">Price:</span> {{ package.price }} DZD</li>
+                <li><i class="fas fa-clock"></i> <span class="label">Duration:</span> {{ package.duration }} days</li>
+                <li><i class="fas fa-user-friends"></i> <span class="label">Max People:</span> {{ package.max_people }}</li>
+                <li>
+                    <i class="fas fa-list"></i> <span class="label">Included:</span>
+                    {% if package.included_features %}
+                        {{ package.included_features|join:", " }}
+                    {% else %}
+                        Not specified
+                    {% endif %}
+                </li>
+                <li>
+                    <i class="fas fa-map-marked-alt"></i> <span class="label">Activities:</span>
+                    {% if package.activity %}
+                        {{ package.activity.name }}
+                    {% else %}
+                        No activities
+                    {% endif %}
+                </li>
+                <li>
+                    <i class="fas fa-hotel"></i> <span class="label">Hotel:</span> {{ package.hotel.name }}
+                </li>
+                <li>
+                    <i class="fas fa-plane"></i> <span class="label">Flight:</span>
+                    {% if package.flight %}
+                        {{ package.flight.airline_company }}
+                    {% else %}
+                        No flight included
+                    {% endif %}
+                </li>
+            </ul>
+        
+            <button class="book-button"
+            data-package-id="{{ package.id }}"
+            data-package-name="{{ package.name }}"
+            data-hotel-type="{{ package.hotel.name }}"
+            data-airline="{{ package.flight.airline_company }}"
+            data-duration="{{ package.duration }}"
+            data-price="{{ package.price }}">
+            Book Now
+    </button>
+    {% include 'form2.html' %}
+
+        </div>
+
+        
+        
+          <!-- Galerie d'images à droite -->
+          <div class="images">
+            <div class="column left">
+              <img src="{{ package.city.destination.image.url }}" alt="Small top image">
+              <img src="{{ package.hotel.image.url }}" alt="Small bottom image">
+            </div>
+            <div class="column right">
+              <img src="{{ package.city.image.url }}" alt="Main image">
+            </div>
+          </div>
+      
+        </div>
+      </section>
+      <script>
+        
+// Handle opening and closing of photo modal
+document.addEventListener("DOMContentLoaded", function () {
+document.querySelector(".view-more-link")?.addEventListener("click", function(e) {
+  e.preventDefault();
+  document.getElementById("photoModal").style.display = "block";
+});
+
+document.querySelector(".close-modal")?.addEventListener("click", function() {
+  document.getElementById("photoModal").style.display = "none";
+});
+
+window.addEventListener("click", function(e) {
+  if (e.target === document.getElementById("photoModal")) {
+      document.getElementById("photoModal").style.display = "none";
+  }
+});
+
+const modal = document.getElementById('bookingModal');
+const bookNowButtons = document.querySelectorAll('.book-button');
+const closeBtn = document.getElementById('modalCloseBtn');
+
+document.querySelectorAll('.book-button').forEach(button => {
+  button.addEventListener('click', function () {
+    const packageName = this.getAttribute('data-package-name');
+    const nameHotel = this.getAttribute('data-hotel-type');
+    const numDays = this.getAttribute('data-duration');
+    const Flight = this.getAttribute('data-airline');
+    const price = parseFloat(this.getAttribute('data-price'));
+    const packageId = this.getAttribute('data-package-id');
+
+    // Open modal
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+
+    // Reset sections
+    document.getElementById('bookingSummarySection').style.display = 'block';
+    document.getElementById('infoSection').style.display = 'none';
+
+    // Fill summary section
+    document.getElementById("packageName").textContent = packageName;
+    document.getElementById("nameHotel").textContent = nameHotel;
+    document.getElementById("numDays").textContent = numDays;
+    document.getElementById("Flight").textContent = Flight;
+    document.getElementById("totalPrice").textContent = price.toFixed(2) + " DZD";
+
+    // Fill hidden inputs
+    document.getElementById("hiddenPackageId").value = packageId;
+    document.getElementById("finalAmount").value = price.toFixed(2);
+    document.getElementById("packagePrice").value = price;
+
+    // Reset coupon
+    document.getElementById("summaryCoupon").value = "";
+  });
+});
+
+if (closeBtn) {
+  closeBtn.addEventListener('click', () => {
+    modal.style.display = 'none';
+    document.body.style.overflow = '';
+  });
+}
+
+window.onclick = function (event) {
+  if (event.target === modal) {
+    modal.style.display = 'none';
+    document.body.style.overflow = '';
+  }
+};
+
+window.showInfoSection = function () {
+  document.getElementById('infoSection').style.display = 'flex';
+  document.getElementById('bookingSummarySection').style.display = 'none';
+};
+
+window.applyCoupon = function () {
+  const couponCode = document.getElementById('summaryCoupon').value.trim();
+  const originalPrice = parseFloat(document.getElementById('packagePrice').value);
+
+  let discountedPrice = originalPrice;
+
+  if (couponCode === "DISCOUNT10") {
+    discountedPrice = originalPrice * 0.9;
+  } else if (couponCode === "DISCOUNT20") {
+    discountedPrice = originalPrice * 0.8;
+  }
+
+  document.getElementById('totalPrice').textContent = discountedPrice.toFixed(2) + " DZD";
+  document.getElementById('finalAmount').value = discountedPrice.toFixed(2);
+};
+
+
+});
+      </script>
+
+
+      {% if package_days %}
+      <section class="package-itinerary">
+        <h2 class="sect-title">Your Itinerary Guide</h2>
+    
+        {% for day in package_days %}
+          <div class="day-label">Day {{ forloop.counter }}</div>
+    
+          <div class="itinerary-cards">
+            <!-- Where to go -->
+            <div class="itinerary-card">
+              {% if day.img_where_to_go %}
+                <img src="{{ day.img_where_to_go.url }}" alt="Where to go image" class="itinerary-image" />
+              {% endif %}
+              <div class="itinerary-content">
+                <h4 class="itinerary-title">Where to go?</h4>
+                <ul class="card-list">
+                  <li><strong>{{ day.where_to_go_title }}</strong><br>
+                    <span>{{ day.description_where_to_go }}</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+    
+            <!-- Timeline Icons -->
+            <div class="timeline-card">
+              <div class="timeline"></div>
+              <div class="timeline-icon timeline-icon-left">
+                <div class="circle"><i class="fas fa-plane"></i></div>
+              </div>
+              <div class="timeline-icon timeline-icon-right">
+                <div class="circle"><i class="fas fa-utensils"></i></div>
+              </div>
+            </div>
+    
+            <!-- Where to eat -->
+            <div class="itinerary-card">
+              {% if day.img_where_to_eat %}
+                <img src="{{ day.img_where_to_eat.url }}" alt="Where to eat image" class="itinerary-image" />
+              {% endif %}
+              <div class="itinerary-content">
+                <h4 class="itinerary-title">Where to eat?</h4>
+                <ul class="card-list">
+                  <li><strong>{{ day.where_to_eat_title }}</strong><br>
+                    <span>{{ day.description_where_to_eat }}</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+    
+          </div>
+        {% endfor %}
+      </section>
+    {% else %}
+      <p>No planning available yet.</p>
+    {% endif %}
+    
+    <section class="package-gallery">
+      <div class="gallery-layout">
+    
+        <!-- Main image -->
+        {% if package.package_images.all %}
+          <div class="gallery-main">
+            <img src="{{ package.package_images.first.image.url }}" alt="Main package image" />
+            <div class="main-image-text">
+              Discover<br>the tourist spots<br>of your package
+            </div>
+          </div>
+    
+          <!-- Side images -->
+          <div class="gallery-side">
+            {% for image in package.package_images.all|slice:"1:5" %}
+              <img src="{{ image.image.url }}" alt="Image {{ forloop.counter }}" />
+            {% endfor %}
+    
+            {% if package.package_images.count > 5 %}
+              <div class="last-photo-wrapper">
+                <a href="#" class="view-more-link">View more photos</a>
+              </div>
+            {% endif %}
+          </div>
+        {% endif %}
+    
+      </div>
+    </section>
+    
+    
+    <div id="photoModal" class="photo-modal">
+      <div class="photo-modal-content">
+        <span class="close-modal">&times;</span>
+        <div class="modal-gallery">
+          {% for image in package.package_images.all %}
+            <img src="{{ image.image.url }}" alt="Photo {{ forloop.counter }}" />
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    
+
+      <section class="tour-includes-section">
+        <h2 class="section-title">What’s Included in Your Tour Package</h2>
+        <div class="tour-includes-grid">
+          <div class="include-item">
+            <i class="fas fa-map-signs icon"></i>
+            <h3>Guided Tours</h3>
+            <p>Explore the city with professional guides.</p>
+          </div>
+          <div class="include-item">
+            <i class="fas fa-camera-retro icon"></i>
+            <h3>Photo Spots</h3>
+            <p>Visit the most Instagrammable places.</p>
+          </div>
+          <div class="include-item">
+            <i class="fas fa-shuttle-van icon"></i>
+            <h3>Transport Included</h3>
+            <p>Private transport from site to site.</p>
+          </div>
+          <div class="include-item">
+            <i class="fas fa-ticket-alt icon"></i>
+            <h3>Entry Tickets</h3>
+            <p>All museum and park entries included.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="package-policies">
+        <h3 class="section-title policies-title">Package Policies</h3>
+        <div class="policies-content">
+          <article class="policy-item">
+            <h4>Cancellation</h4>
+            <p>You can cancel for free up to 72 hours before departure.After that, a 50% fee will apply.</p>
+          </article>
+    
+          <article class="policy-item">
+            <h4>Included</h4>
+            <p>All packages include transportation, guided tours, meals, and entry to main attractions.</p>
+          </article>
+    
+          <article class="policy-item">
+            <h4>Not Included</h4>
+            <p>Items of personal nature, travel insurance, and tips are not covered by the package.</p>
+          </article>
+    
+          <article class="policy-item">
+            <h4>Children Policy</h4>
+            <p>Children under 6 travel free. Kids aged 6–12 get a 50% discount on all services.</p>
+          </article>
+    
+          <article class="policy-item">
+            <h4>Language Options</h4>
+            <p>Guided tours are offered in English, French, Spanish, and German depending on availability.</p>
+          </article>
+    
+          <article class="policy-item">
+            <h4>Pets</h4>
+            <p>Pets are not allowed on this package due to hotel and transport restrictions.</p>
+          </article>
+        </div>
+      </section>
+    
+    
+
+    <section class="other-trips">
+        <h2>Other trips you might like</h2>
+        <div class="trip-cards">
+            <div class="card">
+                <img src="/static/images/hawai.jpg" alt="Algerian Sahara">
+                <h3>Algerian Sahara in a Week</h3>
+                <p><i class="fas fa-calendar-day"></i> 7 Days &nbsp; <i class="fas fa-map"></i> 15 Places &nbsp; <i class="fas fa-globe"></i> 1 Country</p>
+                <p class="price">120 $</p>
+                <button>View Trip</button>
+            </div>
+            <div class="card">
+                <img src="/static/images/hawai.jpg" alt="Moroccan Adventure">
+                <h3>Moroccan Adventure</h3>
+                <p><i class="fas fa-calendar-day"></i> 8 Days &nbsp; <i class="fas fa-map"></i> 9 Places &nbsp; <i class="fas fa-globe"></i> 1 Country</p>
+                <p class="price">150 $</p>
+                <button>View Trip</button>
+            </div>
+            <div class="card">
+                <img src="/static/images/hawai.jpg" alt="Tunisian Escape">
+                <h3>Tunisian Escape</h3>
+                <p><i class="fas fa-calendar-day"></i> 5 Days &nbsp; <i class="fas fa-map"></i> 10 Places &nbsp; <i class="fas fa-globe"></i> 1 Country</p>
+                <p class="price">130 $</p>
+                <button>View Trip</button>
+            </div>
+        </div>
+    </section>
+
+      {% endblock %}
+      {% block scripts %}
+      <script src="{% static 'js/package.js' %}"></script>
+      {% endblock %}
+      
+

@@ -1,0 +1,99 @@
+{% extends "Home/base_admin.html" %}
+{% load static %}
+{% block body %}
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        <div class="page-header">
+            <div class="row align-items-center">
+                <div class="col">
+                    <h3 class="page-title">Edit Agent</h3>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/agents">Agents</a></li>
+                        <li class="breadcrumb-item active">Edit Agent</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-body">
+                        <form method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-12">
+                                    <h5 class="form-title"><span>Agent Information</span></h5>
+                                </div>
+
+                                <!-- Full Name -->
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label>Full Name</label>
+                                        <input type="text" class="form-control" name="full_name" value="{{ agent.full_name }}" required>
+                                    </div>
+                                </div>
+
+                                <!-- Email -->
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label>Email</label>
+                                        <input type="email" class="form-control" name="email" value="{{ agent.email }}" required>
+                                    </div>
+                                </div>
+
+                                <!-- Phone Number -->
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label>Phone Number</label>
+                                        <input type="text" class="form-control" name="phone" value="{{ agent.phone }}">
+                                    </div>
+                                </div>
+
+                                <!-- Role -->
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label>Role</label>
+                                        <input type="text" class="form-control" name="role" value="{{ agent.role }}" required>
+                                    </div>
+                                </div>
+
+                                <!-- Status -->
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label>Status</label>
+                                        <select class="form-control" name="is_active" required>
+                                            <option value="True" {% if agent.is_active %}selected{% endif %}>Active</option>
+                                            <option value="False" {% if not agent.is_active %}selected{% endif %}>Inactive</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <!-- Profile Image -->
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label>Profile Image</label>
+                                        <input type="file" class="form-control" name="image" accept="image/*">
+                                        {% if agent.image %}
+                                            <small class="form-text text-muted">Current: <a href="{{ agent.image.url }}" target="_blank">{{ agent.image.name }}</a></small>
+                                        {% endif %}
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{% static 'assets/js/jquery-3.6.0.min.js' %}"></script>
+<script src="{% static 'assets/js/popper.min.js' %}"></script>
+<script src="{% static 'assets/plugins/bootstrap/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'assets/plugins/slimscroll/jquery.slimscroll.min.js' %}"></script>
+<script src="{% static 'assets/js/script.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,89 @@
+{% extends "Home/base_admin.html" %}
+{% load static %}
+{% block body %}
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        <div class="page-header">
+            <div class="row align-items-center">
+                <div class="col">
+                    <h3 class="page-title">Add City</h3>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url 'city_list' %}">Cities</a></li>
+                        <li class="breadcrumb-item active">Add City</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-body">
+                        <form method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="row">
+
+                                <!-- City Name -->
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label for="name">City Name</label>
+                                        <input type="text" id="name" class="form-control" name="name" required>
+                                    </div>
+                                </div>
+
+                                <!-- Destination (ForeignKey) -->
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label for="destination">Destination</label>
+                                        <select id="destination" class="form-control" name="destination" required>
+                                            <option value="">Select Destination</option>
+                                            {% for dest in destinations %}
+                                                <option value="{{ dest.id }}">{{ dest.name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <!-- Timezone -->
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label for="timezone">Timezone</label>
+                                        <input type="text" id="timezone" class="form-control" name="timezone" placeholder="e.g., UTC+1">
+                                    </div>
+                                </div>
+
+                                <!-- Airport Code -->
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label for="airport_code">Airport Code</label>
+                                        <input type="text" id="airport_code" class="form-control" name="airport_code" placeholder="e.g., ALG">
+                                    </div>
+                                </div>
+
+                                <!-- Image Upload -->
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="image">City Image</label>
+                                        <input type="file" id="image" class="form-control" name="image" accept="image/*">
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{% static 'assets/js/jquery-3.6.0.min.js' %}"></script>
+<script src="{% static 'assets/js/popper.min.js' %}"></script>
+<script src="{% static 'assets/plugins/bootstrap/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'assets/plugins/slimscroll/jquery.slimscroll.min.js' %}"></script>
+<script src="{% static 'assets/js/script.js' %}"></script>
+{% endblock body %}

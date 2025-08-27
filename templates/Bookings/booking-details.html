@@ -1,0 +1,133 @@
+{% extends "Home/base_admin.html" %}
+{% load static %}
+
+{% block body %}
+<div class="page-wrapper">
+  <div class="content container-fluid">
+    <div class="page-header">
+      <div class="row">
+        <div class="col-sm-12">
+          <h3 class="page-title">Booking Details - {{ booking.booking_code }}</h3>
+          <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'booking_list' %}">Bookings</a></li>
+            <li class="breadcrumb-item active">Booking Details</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-body">
+        <!-- Booking Information Section -->
+        <div class="row">
+          <div class="col-md-12">
+            <div class="about-info">
+              <h4>Booking Information</h4>
+              <div class="media mt-3">
+                <div class="media-body">
+                  <ul>
+                    <li><span class="title-span">Booking Code: </span><span class="info-span">{{ booking.booking_code }}</span></li>
+                    <li><span class="title-span">Client Name: </span><span class="info-span">{{ booking.client.full_name }}</span></li>
+                    <li><span class="title-span">Email: </span><span class="info-span">{{ booking.client.email }}</span></li>
+                    <li><span class="title-span">Phone: </span><span class="info-span">{{ booking.client.phone }}</span></li>
+                    <li><span class="title-span">City: </span><span class="info-span">{{ booking.city.name }}</span></li>
+                    <li><span class="title-span">Package Type: </span><span class="info-span">{{ booking.package_type }}</span></li>
+
+                    <!-- Flight info with condition -->
+                    <li><span class="title-span">Flight: </span>
+                      <span class="info-span">
+                        {% if booking.flight %}
+                          {{ booking.flight.flight_number }} - {{ booking.flight.airline }}
+                        {% else %}
+                          N/A
+                        {% endif %}
+                      </span>
+                    </li>
+
+                    <!-- Hotel info with condition -->
+                    <li><span class="title-span">Hotel: </span>
+                      <span class="info-span">
+                        {% if booking.hotel %}
+                          {{ booking.hotel.name }}
+                        {% else %}
+                          N/A
+                        {% endif %}
+                      </span>
+                    </li>
+
+                    <!-- Package info with condition -->
+                    <li><span class="title-span">Package: </span>
+                      <span class="info-span">
+                        {% if booking.package %}
+                          {{ booking.package.name }}
+                        {% else %}
+                          N/A
+                        {% endif %}
+                      </span>
+                    </li>
+
+                    <li><span class="title-span">Check-in Date: </span><span class="info-span">{{ booking.check_in_date if booking.check_in_date else "N/A" }}</span></li>
+                    <li><span class="title-span">Check-out Date: </span><span class="info-span">{{ booking.check_out_date if booking.check_out_date else "N/A" }}</span></li>
+                    <li><span class="title-span">Number of Nights: </span><span class="info-span">{{ booking.number_of_nights if booking.number_of_nights else "N/A" }}</span></li>
+                    <li><span class="title-span">Booking Status: </span><span class="info-span">{{ booking.status }}</span></li>
+                    <li><span class="title-span">Booked At: </span><span class="info-span">{{ booking.booked_at }}</span></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mt-3">
+          <div class="col-md-12">
+            <h5>Booking Overview</h5>
+            <p>The booking code <strong>{{ booking.booking_code }}</strong> belongs to {{ booking.client.full_name }}. The booking includes a {{ booking.package_type }} for {{ booking.city.name }} with the following details:</p>
+            <ul>
+              <li><strong>Flight:</strong>
+                {% if booking.flight %}
+                  {{ booking.flight.flight_number }} - {{ booking.flight.airline }}
+                {% else %}
+                  N/A
+                {% endif %}
+              </li>
+              <li><strong>Hotel:</strong>
+                {% if booking.hotel %}
+                  {{ booking.hotel.name }}
+                {% else %}
+                  N/A
+                {% endif %}
+              </li>
+              <li><strong>Package:</strong>
+                {% if booking.package %}
+                  {{ booking.package.name }}
+                {% else %}
+                  N/A
+                {% endif %}
+              </li>
+              <li><strong>Status:</strong> {{ booking.status }}</li>
+            </ul>
+            <p>This booking was confirmed on {{ booking.booked_at }} and is currently marked as <strong>{{ booking.status }}</strong>.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer></footer>
+
+</div>
+</div>
+
+<script data-cfasync="false" src="{% static 'cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js' %}"></script>
+<script src="{% static 'assets/js/jquery-3.6.0.min.js' %}"></script>
+<script src="{% static 'assets/js/popper.min.js' %}"></script>
+<script src="{% static 'assets/plugins/bootstrap/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'assets/plugins/slimscroll/jquery.slimscroll.min.js' %}"></script>
+<script src="{% static 'assets/js/script.js' %}"></script>
+
+</body>
+</html>
+
+{% endblock %}

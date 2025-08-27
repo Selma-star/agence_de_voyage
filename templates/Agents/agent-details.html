@@ -1,0 +1,78 @@
+{% extends "Home/base_admin.html" %}
+{% load static %}
+
+{% block body %}
+<div class="page-wrapper">
+  <div class="content container-fluid">
+    <div class="page-header">
+      <div class="row">
+        <div class="col-sm-12">
+          <h3 class="page-title">{{ agent.full_name }} Details</h3>
+          <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'agent_list' %}">Agents</a></li>
+            <li class="breadcrumb-item active">{{ agent.full_name }} Details</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-body">
+        <!-- Agent Information Section -->
+        <div class="row">
+          <div class="col-md-12">
+            <div class="about-info">
+              <h4>Agent Information</h4>
+              <div class="media mt-3">
+                {% if agent.image %}
+                  <img src="{{ agent.image.url }}" alt="Agent Image">
+                {% else %}
+                  <p>No image available</p>
+                {% endif %}
+
+                <div class="media-body">
+                  <ul>
+                    <li><span class="title-span">Agent Name: </span><span class="info-span">{{ agent.full_name }}</span></li>
+                    <li><span class="title-span">Email: </span><span class="info-span">{{ agent.email }}</span></li>
+                    <li><span class="title-span">Phone: </span><span class="info-span">{{ agent.phone }}</span></li>
+                    <li><span class="title-span">Insurance Number: </span><span class="info-span">{{ agent.insurance_number }}</span></li>
+                    <li><span class="title-span">Role: </span><span class="info-span">{{ agent.role }}</span></li>
+                    <li><span class="title-span">Joined: </span><span class="info-span">{{ agent.created_at }}</span></li>
+                    <li><span class="title-span">Active: </span><span class="info-span">{{ agent.is_active|yesno:"Yes,No" }}</span></li>
+                    <li><span class="title-span">Staff: </span><span class="info-span">{{ agent.is_staff|yesno:"Yes,No" }}</span></li>
+                    <li><span class="title-span">Superuser: </span><span class="info-span">{{ agent.is_superuser|yesno:"Yes,No" }}</span></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mt-3">
+          <div class="col-md-12">
+            <h5>Agent Overview</h5>
+            <p>{{ agent.full_name }} is an agent with role: {{ agent.role }}. The agent has been a part of our platform since {{ agent.created_at }} and is currently {{ agent.is_active|yesno:"active,inactive" }}. The agent is {{ agent.is_staff|yesno:"staff,non-staff" }} and has superuser access: {{ agent.is_superuser|yesno:"Yes,No" }}.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer></footer>
+
+</div>
+</div>
+
+<script data-cfasync="false" src="{% static 'cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js' %}"></script>
+<script src="{% static 'assets/js/jquery-3.6.0.min.js' %}"></script>
+<script src="{% static 'assets/js/popper.min.js' %}"></script>
+<script src="{% static 'assets/plugins/bootstrap/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'assets/plugins/slimscroll/jquery.slimscroll.min.js' %}"></script>
+<script src="{% static 'assets/js/script.js' %}"></script>
+
+</body>
+</html>
+
+{% endblock %}

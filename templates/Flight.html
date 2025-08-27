@@ -1,0 +1,426 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}flights{% endblock %}
+
+{% block extra_head %} 
+<link rel="stylesheet" href="{% static 'css/Flight.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+<!-- CSS file -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+{% endblock %}
+
+{% block content %}
+
+<body>
+
+    <section class="hero"> 
+    <div class="hero-title">
+        <h1>Everywhere we go ,<br> makes us everything we are</h1>
+        <form class="filter-container" action="{% url 'flightfiltre' %}" method="get">
+
+    
+            <div class="filter-item" >
+              <label for="from_city">From</label>
+              <div class="combobox">
+                  <input type="text" id="from_city" name="from_city" class="input-box" placeholder="City Coming from..." autocomplete="off">
+                  <ul id="from_city-list" class="dropdown" style="display: none;"></ul>
+              </div>
+
+            </div>
+
+            <div class="filter-item">
+              <label for="to_city">To</label>
+              <div class="combobox">
+                  <input type="text" id="to_city" name="to_city" class="input-box" placeholder="City Going to..." required />
+                  <ul id="to_city-list" class="dropdown" style="display: none;"></ul>
+                </div>
+           </div>
+
+           <div class="filter-item">
+              <label for="departure">Departure</label>
+              <input type="date" id="departure" name="departure" required>
+           </div>
+
+           <div class="filter-item">
+              <label for="return">Return</label>
+              <input type="date" id="return" name="return" required disabled>
+           </div>
+
+           <div class="filter-item">
+            <label>People</label>
+            <input type="number" name="people" min="1" value="1">
+          </div>
+
+           <div class="filter-item">
+            <label>&nbsp;</label> <!-- un espace pour aligner avec les autres labels -->
+            <button class="search-btn">Search Trip</button>
+          </div>
+
+        </form>
+    </div>
+    <script>
+      async function fetchCities() {
+          const res = await fetch("/api/cities/");
+          return await res.json();
+      }
+      
+      function setupCityDropdown(inputId, dropdownId) {
+          const input = document.getElementById(inputId);
+          const dropdown = document.getElementById(dropdownId);
+          let cities = [];
+      
+          async function init() {
+              cities = await fetchCities();
+          }
+      
+          function filterCities(query) {
+              return cities.filter(city =>
+                  city.name.toLowerCase().includes(query.toLowerCase())
+              );
+          }
+      
+          function renderDropdown(items) {
+              dropdown.innerHTML = "";
+      
+              if (items.length === 0) {
+                  dropdown.innerHTML = "<li class='no-results'>No cities found</li>";
+                  return;
+              }
+      
+              items.forEach(city => {
+                  const li = document.createElement("li");
+                  li.className = "option";
+                  li.innerHTML = `<span>${city.name}</span>`;
+                  li.addEventListener("click", () => {
+                      input.value = city.name;
+                      dropdown.style.display = "none";
+                  });
+                  dropdown.appendChild(li);
+              });
+          }
+      
+          function updateDropdown() {
+              const query = input.value;
+              const filtered = query ? filterCities(query) : cities;
+              renderDropdown(filtered);
+              dropdown.style.display = "block";
+          }
+      
+          input.addEventListener("input", updateDropdown);
+          input.addEventListener("focus", updateDropdown);
+          document.addEventListener("click", e => {
+              if (!e.target.closest(".combobox")) {
+                  dropdown.style.display = "none";
+              }
+          });
+      
+          init(); // Load city data once
+      }
+      
+      document.addEventListener('DOMContentLoaded', function () {
+          setupCityDropdown("from_city", "from_city-list");
+          setupCityDropdown("to_city", "to_city-list");
+      });
+      </script>
+      
+
+    
+    </section>
+    <section class="flights-overview">
+        <div class="flights-container">
+          <div class="flights-text">
+            <h2 class="section-title">Discover the World with Our Flights</h2>
+            <p class="section-description">
+              From weekend escapes to international journeys, our curated flight network connects you to over 150 destinations worldwide — comfortably, affordably, and on time. Whether you're flying solo, with family, or planning business travel, we've got the right options for you.
+            </p>
+          </div>
+          <div class="flights-image">
+            <img src="/static/images/airpot.jpg" alt="Airplane flying over clouds">
+          </div>
+        </div>
+      </section>
+      
+      
+    <section class="travel-benefits">
+        <h2 class="section-title">Travel Features</h2>
+        <div class="benefits-grid">
+          <div class="benefit-item">
+            <i class="fas fa-passport service-icon"></i>
+            <h4 class="benefit-title">Book a Visa</h4>
+            <p class="benefit-text">Apply for travel visas quickly and easily with our guided service.</p>
+          </div>
+          <div class="benefit-item">
+            <i class="fas fa-clipboard-check service-icon"></i>
+            <h4 class="benefit-title">Smart Checklist</h4>
+            <p class="benefit-text">Prepare for your trip with customized packing and planning lists.</p>
+          </div>
+          <div class="benefit-item">
+            <i class="fas fa-piggy-bank service-icon"></i>
+            <h4 class="benefit-title">Save More</h4>
+            <p class="benefit-text">Enjoy the best travel deals and save money on every booking.</p>
+          </div>
+        </div>
+      </section>
+      <section class="unaccompanied-minors">
+        <div class="minors-container">
+          <div class="minors-images">
+            <img src="/static/images/airpot.jpg" alt="image1">
+            <img src="/static/images/airport.jpg" alt="image">
+          </div>
+          <div class="minors-content">
+            <h2 class="section-title">Unaccompanied Minors Lounge</h2>
+            <div class="minors-features">
+              <div class="feature-item">
+                <i class="fas fa-plane-departure feature-icon"></i>
+                <div>
+                  <h3 class="feature-title">Help through the airport</h3>
+                  <p class="feature-text">Our friendly staff ensures your child moves safely through all procedures.</p>
+                </div>
+              </div>
+              <div class="feature-item">
+                <i class="fas fa-chair feature-icon"></i>
+                <div>
+                  <h3 class="feature-title">Priority boarding</h3>
+                  <p class="feature-text">Minors are among the first to board and are seated comfortably.</p>
+                </div>
+              </div>
+              <div class="feature-item">
+                <i class="fas fa-plane feature-icon"></i>
+                <div>
+                  <h3 class="feature-title">Care on the flight</h3>
+                  <p class="feature-text">Our team is here to assist and care for your child during the journey.</p>
+                </div>
+              </div>
+              <div class="feature-item">
+                <i class="fas fa-hands-helping feature-icon"></i>
+                <div>
+                  <h3 class="feature-title">Support when they land</h3>
+                  <p class="feature-text">We guide them until they meet the authorized person waiting at arrival.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="faq-section">
+        <h2>Frequently Asked Questions</h2>
+    
+        <div class="faq-container">
+
+            <!-- First 5 flight-related questions -->
+            <div class="faq-item">
+              <details>
+                <summary>How can I book a flight?</summary>
+                <p>You can book a flight directly through our website by selecting your destination, dates, and passenger details.</p>
+              </details>
+            </div>
+          
+            <div class="faq-item">
+              <details>
+                <summary>Which airlines do you work with?</summary>
+                <p>We partner with major global airlines as well as low-cost carriers to provide a wide range of flight options.</p>
+              </details>
+            </div>
+          
+            <div class="faq-item">
+              <details>
+                <summary>Can I change my flight date after booking?</summary>
+                <p>Yes, flight dates can be changed depending on the fare rules of your ticket. Change fees may apply.</p>
+              </details>
+            </div>
+          
+            <div class="faq-item">
+              <details>
+                <summary>Are meals included in the flight?</summary>
+                <p>Meal service depends on the airline and class of service. You’ll see the meal info during the booking process.</p>
+              </details>
+            </div>
+          
+            <div class="faq-item">
+              <details>
+                <summary>What should I do if my flight is delayed or canceled?</summary>
+                <p>If your flight is affected, we’ll notify you by email or SMS. You may be eligible for a refund or alternative options.</p>
+              </details>
+            </div>
+          
+            <!-- Hidden extra flight questions -->
+            <div id="more-faq" style="display: none;">
+              <div class="faq-item" style="display: none;">
+                <details>
+                  <summary>Do you offer multi-city or round-the-world flights?</summary>
+                  <p>Yes, you can book multi-city trips and round-the-world itineraries directly from our advanced search form.</p>
+                </details>
+              </div>
+          
+              <div class="faq-item" style="display: none;">
+                <details>
+                  <summary>Can I choose my seat when booking?</summary>
+                  <p>Seat selection is available with most airlines during the booking process or after purchase via the airline website.</p>
+                </details>
+              </div>
+          
+              <div class="faq-item" style="display: none;">
+                <details>
+                  <summary>What’s the baggage allowance for my flight?</summary>
+                  <p>Your baggage allowance depends on the airline and fare type. It is clearly displayed before payment.</p>
+                </details>
+              </div>
+            </div>
+          
+          </div>
+          
+           <!-- Button -->
+         <a href="#" class="more-faq" onclick="toggleFAQ(event)" id="faq-toggle">See more questions</a>
+  
+          <script>
+            let faqStep = 0;
+          
+            function toggleFAQ(event) {
+              event.preventDefault();
+          
+              const moreFaq = document.getElementById("more-faq");
+              const faqItems = moreFaq.querySelectorAll(".faq-item");
+              const button = document.getElementById("faq-toggle");
+          
+              if (faqStep === 0) {
+                faqItems[0].style.display = "block";
+                faqItems[1].style.display = "block";
+                moreFaq.style.display = "block";
+                faqStep = 1;
+              } else if (faqStep === 1) {
+                faqItems[2].style.display = "block";
+                button.textContent = "See less questions";
+                faqStep = 2;
+              } else {
+                faqItems.forEach(item => item.style.display = "none");
+                moreFaq.style.display = "none";
+                button.textContent = "See more questions";
+                faqStep = 0;
+              }
+            }
+            // counter of people 
+            let adults = 1;
+                      
+            function updatePeople(type, change) {
+            if (type === 'adults') {
+                 adults = Math.max(1, adults + change); // Minimum 1 adulte
+            } 
+            document.getElementById("people-count").innerText = adults + " adults / " ;
+            }
+                // departure checks 
+            document.addEventListener('DOMContentLoaded', function () {
+            const form = document.querySelector('.filter-container');
+          const checkinInput = document.getElementById('departure');
+const checkoutInput = document.getElementById('return');
+
+// Enable and set min for return date when check-in is chosen
+checkinInput.addEventListener('change', function () {
+  if (checkinInput.value) {
+    checkoutInput.disabled = false;
+    checkoutInput.min = checkinInput.value;
+
+    // Optional reset: if checkout date is before new check-in, clear it
+    if (checkoutInput.value && new Date(checkoutInput.value) <= new Date(checkinInput.value)) {
+      checkoutInput.value = '';
+    }
+  }
+});
+
+// Prevent invalid date range on submit
+form.addEventListener('submit', function (e) {
+  const checkinDate = new Date(checkinInput.value);
+  const checkoutDate = new Date(checkoutInput.value);
+
+  if (!checkoutInput.value || checkoutDate <= checkinDate) {
+    e.preventDefault();
+    alert("Check-out date must be after check-in date.");
+    return false;
+  }
+});
+});
+          </script>
+          
+    </section>
+      <section class="feedback-section">
+        <h2 class="title">What travelers say</h2>
+        <p class="subtitle">More than 3k reviews</p>
+    
+        <div class="feedback-container">
+            <!-- Feedback 1 -->
+            <div class="feedback-card">
+              <img src="/static/images/profile2 (1).png" alt="Jane Copper" class="profile-pic">
+              <div class="feedback-info">
+                      <h3>Lina_dl</h3>
+                      <p class="location">Tokyo, Japan</p>
+                  </div>
+                  <p class="feedback-text">"Amazing experience! Everything was seamless, and the trip was perfectly planned. Can't wait for my next adventure!"</p>
+             
+          </div>
+          <div class="feedback-card">
+            <img src="/static/images/profile2 (2).png" alt="Jane Copper" class="profile-pic">
+            <div class="feedback-info">
+                    <h3>Selma_star</h3>
+                    <p class="location">Tokyo, Japan</p>
+                </div>
+                <p class="feedback-text">"Amazing experience! Everything was seamless, and the trip was perfectly planned. Can't wait for my next adventure!"</p>
+           
+        </div>
+        <div class="feedback-card">
+          <img src="/static/images/profile2 (1).png" alt="Jane Copper" class="profile-pic">
+          <div class="feedback-info">
+                  <h3>Hiba_lk</h3>
+                  <p class="location">Tokyo, Japan</p>
+              </div>
+              <p class="feedback-text">"Amazing experience! Everything was seamless, and the trip was perfectly planned. Can't wait for my next adventure!"</p>
+         
+      </div>
+      <div class="feedback-card">
+        <img src="/static/images/profile2 (2).png" alt="Jane Copper" class="profile-pic">
+        <div class="feedback-info">
+                <h3>Maria_ibs</h3>
+                <p class="location">Tokyo, Japan</p>
+            </div>
+            <p class="feedback-text">"Amazing experience! Everything was seamless, and the trip was perfectly planned. Can't wait for my next adventure!"</p>
+       
+     </div>
+          <div class="feedback-card">
+            <img src="/static/images/profile2 (1).png" alt="Jane Copper" class="profile-pic">
+            <div class="feedback-info">
+                    <h3>Soulaf_h</h3>
+                    <p class="location">Tokyo, Japan</p>
+                </div>
+                <p class="feedback-text">"Amazing experience! Everything was seamless, and the trip was perfectly planned. Can't wait for my next adventure!"</p>
+           
+        </div>
+            <!-- Feedback 2 (Correction ici) -->
+            <div class="feedback-card">
+                <img src="/static/images/profile2 (2).png" alt="John Doe" class="profile-pic">
+                <div class="feedback-info">
+                    <h3>Bas_MA</h3>
+                    <p class="location">New York, USA</p>
+                </div>
+                <p class="feedback-text">"This trip changed my life! The planning was perfect, and I discovered amazing places I never imagined visiting."</p>
+            </div>
+        </div>
+    </div>
+        <div class="nav-buttons">
+            <button class="prev" onclick="prevFeedback()">&#10094;</button>
+            <button class="next" onclick="nextFeedback()">&#10095;</button>
+        </div>
+    </section>
+  
+    
+      
+ <!--<script src="DET.js"></script>-->
+</body>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/htmx.org@1.9.10"></script> <!-- Ajout de HTMX -->
+<script src="{% static 'js/Flight.js' %}"></script>
+{% endblock %}

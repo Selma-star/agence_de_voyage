@@ -1,0 +1,325 @@
+<!-- templates/booking/form.html -->
+<div id="bookingModal" class="modal">
+  <div class="modal-content">
+    <span id="modalCloseBtn" class="modal-close">&times;</span>
+
+    <form method="POST" action="{% url 'submit_booking_unified' 'hotel' hotel.id %}">
+      {% csrf_token %}
+      <!-- Booking fields: amount, payment_method, check_in_date, nights, etc. -->
+      <input type="hidden" name="amount" value="{{ hotel.price }}">
+      <input type="hidden" name="check_in_date" value="{{ today|date:'Y-m-d' }}">
+      <input type="hidden" name="nights" value="3">
+      <input type="hidden" name="hotel_id" value="{{ hotel.id }}">
+      <input type="hidden" name="amount" id="finalAmount" value="0.00">
+      <input type="hidden" name="currency" value="DZD">
+      <input type="hidden" name="payment_method" value="edahabia">
+      <div class="modal-body">
+<!-- NEW: Booking Summary Section -->
+<div id="bookingSummarySection">
+  <h2>Booking Summary</h2>
+  <input type="hidden" id="pricePerNight" value="">
+  <table class="booking-summary-table">
+    <thead>
+      <tr>
+        <th>Hotel</th>
+        <th>Room</th>
+        <th>Travelers</th>
+        <th>Rooms</th>
+        <th>Total Price</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <strong>Hotel Type:</strong> <span id="hotelType"></span><br>
+          <strong>Description:</strong> <span id="hotelDescription"></span>
+        </td>
+        
+        <td>
+          <strong>Room Type:</strong> <span id="roomType"></span><br>
+          <strong>Description:</strong> <span id="roomDescription"></span>
+        </td>
+        <td>
+          Adults: <input type="number" name="adults" min="1" value="2" style="width: 50px;">
+          <br>
+          Children: <input type="number" name="children" min="0" value="0" style="width: 50px;">
+        </td>
+        <td>
+          <label for="room_count">Number of Rooms</label><br>
+          <input type="number" id="room_count" name="room_count" min="1" max="10" value="1" required><br><br>
+    
+          <label for="nights">Number of Nights</label><br>
+          <input type="number" id="nights" name="nights" min="1" max="30" value="1" required>
+
+          <label for="check_in_date">Check-In Date:</label>
+          <input type="date" id="check_in_date" name="check_in_date" required>
+        </td>
+        <td>
+          <div class="coupon-row">
+            <input type="text" name="coupon_summary" id="summaryCoupon" placeholder="Coupon code">
+            <button type="button" onclick="applyCoupon()">Apply</button>
+          </div>
+          
+          <div class="total-row">
+            <strong>Total: <span id="totalPrice">0.00</span></strong>
+
+          </div>
+          
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="actions" style="margin-top: 2rem;">
+    <button type="button" onclick="showInfoSection()" class="confirm-btn">Continue to Information </button>
+  </div>
+</div>
+
+<div id="infoSection" style="display: none;">
+        <!-- Left Side - Payment -->
+        <div class="modal-left">
+          <h2>Payment Information</h2>
+
+        
+
+          <div class="card-icons">
+              <img src="https://img.icons8.com/color/48/mastercard-logo.png" />
+              <img src="https://img.icons8.com/color/48/visa.png" />
+              <img src="https://img.icons8.com/color/48/amex.png" />
+              <img src="https://img.icons8.com/color/48/discover.png" />
+              <img src="https://www.poste.dz/images/edahabia_card.png">
+            </div>
+
+          <label for="cardName">Name on Card</label>
+          <input type="text" id="cardName" name="card_name" required>
+
+          <label for="cardNumber">Debit/Credit card number</label>
+          <input type="text" id="cardNumber" name="card_number" placeholder="0000 0000 0000 0000" required>
+
+          <label>Expiration date*</label>
+          <div class="expiration">
+            <input type="text" name="exp_month" placeholder="Month" required>
+            <input type="text" name="exp_year" placeholder="Year" required>
+          </div>
+
+          <label for="securityCode">Security code</label>
+          <input type="text" id="securityCode" name="security_code" required>
+
+          <p class="secure-note">🔒 We use secure transmission and protect your personal info</p>
+        </div>
+
+        <!-- Right Side - Traveler Info -->
+        <div class="modal-right">
+          <h2>Traveler Information</h2>
+
+
+         
+
+          <div class="row-input-group">
+              <div class="form-group">
+                <label for="firstName">First Name</label>
+                <input type="text" id="firstName" name="first_name">
+              </div>
+              <div class="form-group">
+                  <label for="lastName">Last Name</label>
+                  <input type="text" id="lastName" name="last_name">
+                </div>
+          </div>
+          <div class="row-input-group">
+              <div class="form-group">
+                  <label for="dob">Date of Birth</label>
+                  <input type="date" id="dob" name="dob" required>
+                </div>
+              <div class="form-group">
+                <label for="phoneNumber">Phone Number</label>
+                <input type="tel" id="phoneNumber" name="phone">
+              </div>
+            </div>
+            <div class="row-input-group">
+              <div class="form-group">
+                <label for="passport">Passport</label>
+                <input type="text" id="passport" name="passport">
+              </div>
+              <div class="form-group">
+                <label for="email">Contact Email</label>
+                <input type="email" id="email" name="email">
+              </div>
+            </div>
+            <div class="form-group gender-line">
+              <label>Gender</label>
+              <div class="gender-options">
+                <label><input type="radio" name="gender" value="male"> Male</label>
+                <label><input type="radio" name="gender" value="female"> Female</label>
+              </div>
+            </div>
+
+
+            <div class="form-group policy-line">
+              <input type="checkbox" id="agreePolicy" name="agreePolicy" required>
+              <label for="agreePolicy">I agree to the terms and privacy policy.</label>
+            </div>
+
+          <div class="actions">
+            <button type="submit" class="confirm-btn">Confirm Booking</button>
+            <button type="button" class="cancel-btn" onclick="document.getElementById('bookingModal').style.display='none';">Cancel</button>
+          </div>
+        </div>
+      </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+  
+
+  // Feedback carousel
+  let feedbacks = document.querySelectorAll(".feedback-card");
+  let index = 0;
+
+  function showFeedback(i) {
+      feedbacks.forEach((card, idx) => {
+          card.style.display = (idx === i || idx === i + 1) ? "block" : "none";
+      });
+  }
+
+  function prevFeedback() {
+      index = (index - 1 + feedbacks.length) % feedbacks.length;
+      showFeedback(index);
+  }
+
+  function nextFeedback() {
+      index = (index + 1) % feedbacks.length;
+      showFeedback(index);
+  }
+
+  showFeedback(0);
+
+  // Booking Modal
+  const modal = document.getElementById('bookingModal');
+  const bookNowButtons = document.querySelectorAll('.bookNowBtn');
+  const closeBtn = document.getElementById('modalCloseBtn');
+
+  document.querySelectorAll('.bookNowBtn').forEach(button => {
+    button.addEventListener('click', function () {
+      const hotelType = this.getAttribute('data-hotel-type');
+      const hotelDescription = this.getAttribute('data-hotel-description');
+      const roomType = this.getAttribute('data-room-type');
+      const roomDescription = this.getAttribute('data-room-description');
+      const roomPrice = this.getAttribute('data-room-price');
+  
+      modal.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+  
+      // Reset modal sections
+      document.getElementById('bookingSummarySection').style.display = 'block';
+      document.getElementById('infoSection').style.display = 'none';
+  
+      // Fill modal fields
+      document.getElementById("hotelType").textContent = hotelType;
+      document.getElementById("hotelDescription").textContent = hotelDescription;
+      document.getElementById("roomType").textContent = roomType;
+      document.getElementById("roomDescription").textContent = roomDescription;
+      document.getElementById("pricePerNight").value = roomPrice;
+
+  
+  
+    
+  
+      // Trigger calculation and add event listeners
+      calculateTotal();
+      document.getElementById("room_count").addEventListener("change", calculateTotal);
+      document.getElementById("nights").addEventListener("input", calculateTotal);
+  
+      // Show modal
+      document.getElementById("bookingSummarySection").style.display = "block";
+    });
+  });
+  
+  
+  if (closeBtn) {
+    closeBtn.addEventListener('click', () => {
+      modal.style.display = 'none';
+      document.body.style.overflow = '';
+    });
+  }
+
+  window.onclick = function (event) {
+    if (event.target === modal) {
+      modal.style.display = 'none';
+      document.body.style.overflow = '';
+    }
+  };
+ 
+    
+  function calculateTotal() {
+    const rooms = parseInt(document.getElementById("room_count").value) || 1;
+    const nights = parseInt(document.getElementById("nights").value) || 1;
+    const pricePerNight = parseFloat(document.getElementById("pricePerNight").value) || 0;
+  
+    let total = rooms * nights * pricePerNight;
+  
+    const coupon = document.getElementById("summaryCoupon").value.trim();
+    if (coupon === "SAVE10") {
+      total *= 0.9;
+    }
+  
+    document.getElementById("totalPrice").textContent = total.toFixed(2) + "\u00A0DZD";
+
+    document.getElementById("finalAmount").value = total.toFixed(2);
+  };
+  
+  
+  
+    window.applyCoupon = function () {
+      const coupon = document.getElementById("summaryCoupon").value.trim();
+      if (coupon === "SAVE10") {
+        let totalElement = document.getElementById("totalPrice");
+        let currentTotal = parseFloat(totalElement.textContent);
+        let discountedTotal = currentTotal * 0.9;
+        totalElement.textContent = discountedTotal.toFixed(2);
+        alert("Coupon applied! 10% off.");
+      } else {
+        alert("Invalid coupon.");
+      }
+    };
+    
+    window.showInfoSection = function () {
+      document.getElementById('infoSection').style.display = 'flex';
+      document.getElementById('bookingSummarySection').style.display = 'none';
+    };
+
+    setTimeout(() => {
+      const alert = document.querySelector('[style*="background-color: #d4edda"]');
+      if (alert) {
+          alert.style.transition = 'opacity 0.5s ease';
+          alert.style.opacity = '0';
+          setTimeout(() => alert.remove(), 500);
+      }
+  }, 4000);
+
+  document.getElementById("nights").addEventListener("input", function() {
+    updateCheckOutDate();
+  });
+
+  document.getElementById("check_in_date").addEventListener("change", function() {
+    updateCheckOutDate();
+  });
+
+  function updateCheckOutDate() {
+    const checkInDate = document.getElementById("check_in_date").value;
+    const nights = document.getElementById("nights").value;
+    
+    if (checkInDate && nights) {
+      const checkIn = new Date(checkInDate);
+      checkIn.setDate(checkIn.getDate() + parseInt(nights));
+      
+      const checkOutDate = checkIn.toISOString().split('T')[0]; // Format as yyyy-mm-dd
+      document.getElementById("check_out_date").value = checkOutDate;
+    }
+  };
+});
+
+
+</script>

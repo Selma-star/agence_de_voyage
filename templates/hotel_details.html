@@ -1,0 +1,330 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Hotel Page{% endblock %}
+{% block extra_head %} 
+<link  rel="stylesheet" href="{% static 'css/form.css' %}">
+<link  rel="stylesheet" href="{% static 'css/DET.css' %}">
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+<!-- Poppins font -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+
+<!-- CSS file -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+<!-- Meta description -->
+<meta name="description" content="Discover our hotel with photos, services, and detailed information." />
+{% endblock %}
+{% block content %}
+<div class="container mt-4">
+ <!-- ✅ Show Django success messages -->
+ {% if messages %}
+ <div style="position: fixed; top: 20px; right: 20px; z-index: 9999;">
+     {% for message in messages %}
+         <div style="
+             background-color: #d4edda;
+             color: #155724;
+             border: 1px solid #c3e6cb;
+             padding: 12px 20px;
+             border-radius: 8px;
+             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+             margin-bottom: 10px;
+             font-family: Arial, sans-serif;
+             font-size: 15px;
+         ">
+             ✅ {{ message }}
+         </div>
+     {% endfor %}
+ </div>
+{% endif %}
+
+
+
+<section class="hotel-gallery">
+    <div class="gallery-layout">
+      <div class="gallery-main">
+        <img src="{% static 'images/pool.jpg' %}" alt="Main hotel image" />
+      </div>
+      <div class="gallery-side">
+        <img src="{% static 'images/resto.jpg' %}" alt="Image 1" />
+        <img src="{% static 'images/piano.jpg' %}" alt="Image 2" />
+        <img src="{% static 'images/hol.jpg' %}" alt="Image 2" />
+        <div class="last-photo-wrapper">
+          <img src="{% static 'images/eat.jpg' %}" alt="Image 3" />
+          <a href="#" class="view-more-link">View more photos</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div id="photoModal" class="photo-modal">
+    <div class="photo-modal-content">
+      <span class="close-modal">&times;</span>
+      <div class="modal-gallery">
+        <img src="{% static 'images/Rooms.png' %}" alt="Photo 1" />
+        <img src="{% static 'images/Rooms.png' %}" alt="Photo 2" />
+        <img src="{% static 'images/Rooms.png' %}" alt="Photo 3" />
+        <img src="{% static 'images/Rooms.png' %}" alt="Photo 4" />
+        <img src="{% static 'images/Rooms.png' %}" alt="Photo 5" />
+        <img src="{% static 'images/Rooms.png' %}" alt="Photo 6" />
+        <img src="{% static 'images/Rooms.png' %}" alt="Photo 7" />
+        <img src="{% static 'images/Rooms.png' %}" alt="Photo 8" />
+        <img src="{% static 'images/Rooms.png' %}" alt="Photo 9" />
+        <img src="{% static 'images/Rooms.png' %}" alt="Photo 10" />
+        <img src="{% static 'images/Rooms.png' %}" alt="Photo 11" />
+      </div>
+    </div>
+  </div>
+
+  <section class="hotel-info-section">
+    <div class="hotel-details-wrapper">
+      <div class="info-left">
+        <div class="info-content">
+          <h2 class="hotel-name">{{ hotel.name }}</h2>
+
+          <div class="hotel-rating">
+            <div class="stars">
+              <i class="fas fa-star" style="color: #f5c518;"></i>
+              <i class="fas fa-star" style="color: #f5c518;"></i>
+              <i class="fas fa-star" style="color: #f5c518;"></i>
+              <i class="fas fa-star" style="color: #ccc;"></i>
+              <i class="fas fa-star" style="color: #ccc;"></i>
+            </div>
+            <span class="rating-text">{{ hotel.rating }}</span>
+          </div>
+
+          <div class="hotel-contact">
+            <p><strong>Website:</strong>
+              <a href="{{ hotel.website_url }}" target="_blank" rel="noopener noreferrer">
+                {{ hotel.website_url }}
+              </a>
+            </p>
+
+            <p><strong>Email:</strong>{{ hotel.contact_email }}</p>
+            <p><strong>Phone:</strong> {{ hotel.hotel_telephone }}</p>
+          </div>
+        </div>
+
+        <div class="hotel-services">
+          <div class="service-item">
+            <i class="fas fa-swimmer service-icon"></i>
+            <div>
+              <p class="service-title">Swimming Pool</p>
+              <p class="service-desc">Enjoy a pool open all day long.</p>
+            </div>
+          </div>
+
+          <div class="service-item">
+            <i class="fas fa-taxi service-icon"></i>
+            <div>
+              <p class="service-title">Airport Taxi</p>
+              <p class="service-desc">Shuttle service to and from the airport.</p>
+            </div>
+          </div>
+
+          <div class="service-item">
+            <i class="fas fa-dumbbell service-icon"></i>
+            <div>
+              <p class="service-title">Fitness Room</p>
+              <p class="service-desc">Access to a fully-equipped gym.</p>
+            </div>
+          </div>
+
+          <div class="service-item">
+            <i class="fas fa-coffee service-icon"></i>
+            <div>
+              <p class="service-title">Breakfast</p>
+              <p class="service-desc">A varied buffet served every morning.</p>
+            </div>
+          </div>
+
+          <div class="service-item">
+            <i class="fas fa-wifi service-icon"></i>
+            <div>
+              <p class="service-title">Internet</p>
+              <p class="service-desc">Free Wi-Fi throughout the hotel.</p>
+            </div>
+          </div>
+
+          <div class="service-item">
+            <i class="fas fa-concierge-bell service-icon"></i>
+            <div>
+              <p class="service-title">Room Service</p>
+              <p class="service-desc">Order meals directly to your room.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="info-visuals">
+        <img src="{{ hotel.image.url }}" alt="{{ hotel.name }}" class="hotel-photo" />
+        <div class="hotel-map">
+          <iframe src="https://www.google.com/maps/embed?..."></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="hotel-description">
+    <h3 class="description-title">About The Hotel</h3>
+    <p class="description-text">
+      Located in the heart of the city, Hotel Belle Vue welcomes you to an elegant and warm setting, ideal for both business travelers and tourists. With its comfortable rooms, attentive service, and modern facilities, our establishment guarantees you a pleasant stay.
+    </p>
+    <p class="description-text">
+      Enjoy breathtaking views, a varied breakfast each morning, and quick access to major attractions. Whether you're here for a relaxing weekend or a business trip, our hotel is the perfect starting point to explore the region.
+    </p>
+  </div>
+
+  
+  <section class="room-types">
+    <h2 class="section-title">Our Room Types</h2>
+    <div class="room-cards">
+  
+      {% for room in hotel.hotelrooms_set.all %}
+      <div class="room-card">
+        {% with room.roomimages_set.first as room_image %}
+             {% if room_image %}
+             <img src="{{ room_image.image.url }}" alt="{{ room.room_type }}" class="room-image" />
+             {% else %}
+            <img src="{% static 'images/Rooms.png' %}" alt="{{ room.room_type }}" class="room-image" />
+           {% endif %}
+        {% endwith %}
+        <div class="room-content">
+          <h4 class="room-title">{{ room.room_type }}</h4>
+          <p class="room-description">{{ room.description }}</p>
+          <p class="room-price">From <strong>{{ room.price_per_night }} DZD / night</strong></p>
+  
+                <button class="bookNowBtn"
+                    data-hotel-id="{{ hotel.id }}"
+                    data-hotel-type="{{ hotel.type }}"
+                    data-hotel-description="{{ hotel.description }}"
+                    data-room-type="{{ room.room_type }}"
+                    data-room-description="{{ room.description }}"
+                    data-room-price="{{ room.price_per_night }}">
+                    Book Now
+               </button>
+
+
+        </div>
+      </div>
+      {% endfor %}
+  
+    </div>
+  </section>
+  
+  <!-- Include the modal form -->
+   {% include 'form.html' %}
+  
+
+
+  <section class="hotel-policies">
+    <h3 class="section-title policies-title">Hotel Policies</h3>
+    <div class="policies-content">
+      <article class="policy-item">
+        <h4>Check-in & Check-out</h4>
+        <p>Check-in from 2:00 PM<br />Check-out before 12:00 PM</p>
+      </article>
+
+      <article class="policy-item">
+        <h4>Cancellation Policy</h4>
+        <p>Free cancellation up to 48 hours before arrival. One night will be charged for late cancellations or no-shows.</p>
+      </article>
+
+      <article class="policy-item">
+        <h4>Children & Extra Beds</h4>
+        <p>Children under 6 stay free. Baby cots or extra beds available on request.</p>
+      </article>
+
+      <article class="policy-item">
+        <h4>Pets</h4>
+        <p>Pets are not allowed in the property.</p>
+      </article>
+
+      <article class="policy-item">
+        <h4>Payment Methods</h4>
+        <p>We accept cash, credit cards (Visa, MasterCard), and contactless payments.</p>
+      </article>
+
+      <article class="policy-item">
+        <h4>Smoking Policy</h4>
+        <p>Smoking is strictly prohibited in all indoor areas. Designated smoking zones are available outside.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="feedback-section">
+    <h2 class="title">What travelers say</h2>
+    <p class="subtitle">More than 3k reviews</p>
+
+    <div class="feedback-container">
+        <!-- Feedback 1 -->
+        <div class="feedback-card">
+          <img src="{% static 'images/profile2 (1).png' %}" alt="Jane Copper" class="profile-pic">
+          <div class="feedback-info">
+                  <h3>Jane Copper</h3>
+                  <p class="location">Tokyo, Japan</p>
+              </div>
+              <p class="feedback-text">"Amazing experience! Everything was seamless, and the trip was perfectly planned. Can't wait for my next adventure!"</p>
+         
+      </div>
+      <div class="feedback-card">
+        <img src="{% static 'images/profile2 (2).png' %}" alt="Jane Copper" class="profile-pic">
+        <div class="feedback-info">
+                <h3>Jane Copper</h3>
+                <p class="location">Tokyo, Japan</p>
+            </div>
+            <p class="feedback-text">"Amazing experience! Everything was seamless, and the trip was perfectly planned. Can't wait for my next adventure!"</p>
+       
+    </div>
+    <div class="feedback-card">
+      <img src="{% static 'images/profile2 (1).png' %}" alt="Jane Copper" class="profile-pic">
+      <div class="feedback-info">
+              <h3>Jane Copper</h3>
+              <p class="location">Tokyo, Japan</p>
+          </div>
+          <p class="feedback-text">"Amazing experience! Everything was seamless, and the trip was perfectly planned. Can't wait for my next adventure!"</p>
+     
+  </div>
+  <div class="feedback-card">
+    <img src="{% static 'images/profile2 (2).png' %}" alt="Jane Copper" class="profile-pic">
+    <div class="feedback-info">
+            <h3>Jane Copper</h3>
+            <p class="location">Tokyo, Japan</p>
+        </div>
+        <p class="feedback-text">"Amazing experience! Everything was seamless, and the trip was perfectly planned. Can't wait for my next adventure!"</p>
+   
+</div>
+      <div class="feedback-card">
+        <img src="{% static 'images/profile2 (1).png' %}" alt="Jane Copper" class="profile-pic">
+        <div class="feedback-info">
+                <h3>Jane Copper</h3>
+                <p class="location">Tokyo, Japan</p>
+            </div>
+            <p class="feedback-text">"Amazing experience! Everything was seamless, and the trip was perfectly planned. Can't wait for my next adventure!"</p>
+       
+    </div>
+        <!-- Feedback 2 (Correction ici) -->
+        <div class="feedback-card">
+            <img src="{% static 'images/profile2 (2).png' %}" alt="John Doe" class="profile-pic">
+            <div class="feedback-info">
+                <h3>John Doe</h3>
+                <p class="location">New York, USA</p>
+            </div>
+            <p class="feedback-text">"This trip changed my life! The planning was perfect, and I discovered amazing places I never imagined visiting."</p>
+        </div>
+    </div>
+</div>
+    <div class="nav-buttons">
+        <button class="prev" onclick="prevFeedback()">&#10094;</button>
+        <button class="next" onclick="nextFeedback()">&#10095;</button>
+    </div>
+</section>
+
+</div> 
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'js/DET.js' %}" ></script>
+<script src="{% static 'js/home.js' %}" ></script>
+{% endblock %}
+

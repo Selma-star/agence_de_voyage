@@ -1,0 +1,411 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Inter:wght@300;400;600&display=swap');
+
+body {
+    font-family: "Poppins", sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+}
+
+.hero {
+  width: 100%;
+  height: 45rem;
+  background-image: url('/static/imagess/summer2.jpg');
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 0 1rem; /* réduit le padding pour éviter débordement */
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.hero h1 {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(2rem, 6vw, 4.375rem); /* s'adapte entre 32px et 70px */
+  color: white;
+  font-weight: bold;
+  text-shadow: 0.125rem 0.125rem 0.3125rem rgba(0, 0, 0, 0.6);
+  margin: 0;
+  word-break: break-word; /* empêche les mots longs de déborder */
+}
+
+.brand-name {
+  font-family: 'Poppins', sans-serif;
+  font-size: clamp(1rem, 3vw, 1.25rem); /* adaptatif aussi */
+  color: #201E43;
+  font-weight: bold;
+  margin-left: 0; /* plus de marge négative */
+}
+
+/* Optionnel : ajustement hauteur sur petits écrans */
+@media (max-width: 576px) {
+  .hero {
+    height: 30rem;
+  }
+}
+
+
+ /* Structure globale */
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6rem 8rem;
+  gap: 4rem;
+  flex-wrap: wrap;
+}
+
+.hero-left {
+  flex: 1;
+}
+
+.hero-left h2 {
+  font-family: 'Inter', sans-serif;
+  color: #201E43;
+  font-size: 2.2rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.hero-left h2 span {
+  font-family: "poppins", sans-serif;
+  display: block;
+  font-size: 1.2rem;
+  color: #555;
+  margin-top: 0.5rem;
+}
+
+.hero-left p {
+  font-family: "poppins", sans-serif;
+  font-size: 1rem;
+  margin-bottom: 2rem;
+  color: #555;
+}
+
+.hero-right {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+
+.image-wrapper {
+  position: relative;
+  width: fit-content;
+  max-width: 100%;
+}
+
+.image-wrapper img {
+  border-radius: 1rem;
+  object-fit: cover;
+  box-shadow: 0 1rem 2rem rgba(0,0,0,0.1);
+  max-width: 100%;
+  height: auto;
+}
+
+/* Image principale */
+.img1 {
+  width: 22rem;
+  transform: rotate(-5deg);
+  position: relative;
+  z-index: 2;
+}
+
+/* Image secondaire */
+.img2 {
+  width: 20rem;
+  position: absolute;
+  top: 5rem;
+  left: 10rem;
+  transform: rotate(5deg);
+  z-index: 1;
+}
+
+/* ----------- Responsive Styles ----------- */
+
+/* Réduire la taille des images selon la taille d'écran */
+@media (max-width: 1200px) {
+  .img1 {
+    width: 19rem;
+  }
+  .img2 {
+    width: 17rem;
+    top: 4rem;
+    left: 8rem;
+  }
+}
+
+@media (max-width: 992px) {
+  .container {
+    padding: 4rem 4rem;
+  }
+  .img1 {
+    width: 17rem;
+  }
+  .img2 {
+    width: 15rem;
+    top: 3.5rem;
+    left: 6rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+    padding: 3rem 2rem;
+    text-align: center;
+  }
+
+  .hero-left {
+    order: 1;
+    width: 100%;
+  }
+
+  .hero-right {
+    order: 2;
+    margin-top: 2rem;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .image-wrapper {
+    display: flex;
+    justify-content: center;
+    position: relative;
+  }
+
+  .img1 {
+    width: 18rem;
+  }
+
+  .img2 {
+    width: 16rem;
+    top: 4rem;
+    left: 6rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .img1 {
+    width: 16rem;
+  }
+
+  .img2 {
+    width: 14rem;
+    top: 3rem;
+    left: 5rem;
+  }
+}
+
+  
+  /* Section principale */
+.season-block {
+  padding: 6rem 8rem;
+  font-family: 'Poppins', sans-serif;
+  background-color: #f9f9f9;
+}
+
+.season-title {
+  text-align: center;
+  font-size: 2.2rem;
+  color: #201E43;
+  margin-bottom: 4rem;
+}
+
+/* Container inversé */
+.season-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+/* Image à gauche */
+.season-image-left {
+  flex: 1;
+  display: flex;
+  justify-content: left;
+}
+
+.image-holder {
+  position: relative;
+}
+
+.image-holder img.main-img {
+  width: 24rem;
+  border-radius: 1rem;
+  object-fit: cover;
+  box-shadow: 0 1rem 2rem rgba(0,0,0,0.1);
+  transform: rotate(-3deg);
+}
+
+/* Texte à droite */
+.season-text-right {
+  flex: 1;
+}
+
+.season-text-right h3 {
+  font-family: "Inter", sans-serif;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #201E43;
+  margin-bottom: 1rem;
+}
+
+.season-text-right h3 span {
+  font-family: "poppins", sans-serif;
+  display: block;
+  font-size: 1.2rem;
+  color: #555;
+  margin-top: 0.5rem;
+}
+
+.season-text-right p {
+  font-family: "poppins", sans-serif;
+  font-size: 1rem;
+  color: #555;
+  line-height: 1.6;
+}
+
+/* Responsive mobile */
+@media (max-width: 768px) {
+  .season-block {
+    padding: 2rem;
+  }
+
+  .season-container {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .season-text-right h3 {
+    font-size: 1.8rem;
+  }
+
+  .image-holder img.main-img {
+    width: 16rem;
+  }
+
+  .season-text-right p {
+    font-size: 1rem;
+  }
+}
+
+
+.saison-ctn-section {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem; /* 40px */
+  padding: 2.5rem 1.25rem; /* 40px 20px */
+}
+
+.saison-ctn-block {
+  text-align: center;
+}
+
+.saison-ctn-titre {
+  font-size: 2.2rem; /* ~32px */
+  margin-bottom: 1.25rem; /* 20px */
+  color: #201E43;
+}
+
+.saison-ctn-image {
+  width: 100%;
+  max-height: 31.25rem; /* 500px */
+  object-fit: cover;
+  border-radius: 0.9375rem; /* 15px */
+  box-shadow: 0 0.3125rem 0.9375rem rgba(0, 0, 0, 0.2); /* 5px 15px */
+}
+
+.saison-ctn-texte {
+  margin-top: 1.25rem; /* 20px */
+  max-width: 50rem; /* 800px */
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 1rem;
+}
+
+.saison-ctn-texte p {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #555;
+}
+
+@media (max-width: 600px) {
+  .saison-ctn-titre {
+    font-size: 1.5rem;
+  }
+
+  .saison-ctn-image {
+    max-height: 18.75rem; /* 300px */
+  }
+
+  .saison-ctn-texte p {
+    font-size: 1rem;
+  }
+}
+
+  @media (max-width: 1024px) {
+  .rectangle {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .image-container,
+  .text-container {
+    width: 100%;
+    padding: 0;
+  }
+  
+  .image-container {
+    margin-bottom: 1rem;
+  }
+  
+  .footer-links {
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+  }
+  }
+  
+  @media (max-width: 768px) {
+  .footer-titre {
+    font-size: 1.75rem;
+    top: 2rem;
+  }
+  
+  .rectangle {
+    padding: 1rem;
+  }
+  
+  .text-container h2 {
+    font-size: 1.25rem;
+  }
+  
+  .text-container p {
+    font-size: 0.95rem;
+  }
+  
+  .social-icons img {
+    width: 2rem;
+    margin: 0 0.25rem;
+  }
+  
+  .footer-links h3 {
+    font-size: 1rem;
+  }
+  
+  .footer-links p,
+  .footer-links a {
+    font-size: 0.875rem;
+  }
+  
+  .footer-links {
+    padding: 1rem 0.5rem;
+  }
+  }

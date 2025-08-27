@@ -1,0 +1,114 @@
+{% extends "Home/base_admin.html" %}
+{% load static %}
+{% block body %}
+<div class="page-wrapper">
+  <div class="content container-fluid">
+    <div class="page-header">
+      <div class="row">
+        <div class="col-sm-12">
+          <h3 class="page-title">{{ package.name }} Details</h3>
+          <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'package_list' %}">Packages</a></li>
+            <li class="breadcrumb-item active">{{ package.name }} Details</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="about-info">
+              <h4>Package Information</h4>
+              <div class="media mt-3">
+                <img src="{{ package.hotel.image.url }}" class="img-fluid" alt="Hotel Image">
+                <div class="media-body">
+                  <ul>
+                    <li>
+                      <span class="title-span">Package Name: </span>
+                      <span class="info-span">{{ package.name }}</span>
+                    </li>
+                    <li>
+                      <span class="title-span">Flight: </span>
+                      <span class="info-span">{{ package.flight }}</span>
+                    </li>
+                    <li>
+                      <span class="title-span">Hotel: </span>
+                      <span class="info-span">{{ package.hotel }}</span>
+                    </li>
+                    <li>
+                      <span class="title-span">Price: </span>
+                      <span class="info-span">{{ package.price }}</span>
+                    </li>
+                    <li>
+                      <span class="title-span">Duration: </span>
+                      <span class="info-span">{{ package.duration }} Days</span>
+                    </li>
+                    <li>
+                      <span class="title-span">Max People: </span>
+                      <span class="info-span">{{ package.max_people }}</span>
+                    </li>
+                    <li>
+                      <span class="title-span">Description: </span>
+                      <span class="info-span">{{ package.description }}</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mt-2">
+          <div class="col-md-12">
+            <div class="row follow-sec">
+              <div class="col-md-4 mb-3">
+                <div class="blue-box">
+                  <h3>{{ package.price }}</h3>
+                  <p>Price</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="row mt-2">
+              <div class="col-md-12">
+                <h5>Package Duration</h5>
+                <p>{{ package.duration }} Days</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mt-3">
+          <div class="col-md-12">
+            <h4>Package Overview</h4>
+            <p>This package includes a flight with {{ package.flight }} and a stay at {{ package.hotel }} for {{ package.duration }} days.</p>
+          </div>
+        </div>
+
+        <div class="row mt-3">
+          <div class="col-md-12">
+            <h5>Hotel Image</h5>
+            <img src="{{ package.hotel.image.url }}" class="img-fluid" alt="Hotel Image">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer></footer>
+
+</div>
+
+</div>
+
+<script data-cfasync="false" src="{% static 'cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js' %}"></script>
+<script src="{% static 'assets/js/jquery-3.6.0.min.js' %}"></script>
+<script src="{% static 'assets/js/popper.min.js' %}"></script>
+<script src="{% static 'assets/plugins/bootstrap/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'assets/plugins/slimscroll/jquery.slimscroll.min.js' %}"></script>
+<script src="{% static 'assets/js/script.js' %}"></script>
+</body>
+</html>
+{% endblock %}

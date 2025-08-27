@@ -1,0 +1,135 @@
+{% extends "Home/base_admin.html" %}
+{% load static %}
+{% block body %}
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        <div class="page-header">
+            <div class="row align-items-center">
+                <div class="col">
+                    <h3 class="page-title">Add Package</h3>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url 'package_list' %}">Packages</a></li>
+                        <li class="breadcrumb-item active">Add Package</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-body">
+                        <form method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label for="name">Package Name</label>
+                                        <input type="text" id="name" class="form-control" name="name" required>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label for="places_to_visit">Places to Visit</label>
+                                        <textarea id="places_to_visit" class="form-control" name="places_to_visit" rows="3"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label for="flight">Flight Information</label>
+                                        <select id="flight" class="form-control" name="flight">
+                                            {% for flight in flights %}
+                                                <option value="{{ flight.id }}">{{ flight.airline_company }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label for="hotel">Hotel Information</label>
+                                        <select id="hotel" class="form-control" name="hotel">
+                                            {% for hotel in hotels %}
+                                                <option value="{{ hotel.id }}">{{ hotel.name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label for="activity">Activity Details</label>
+                                        <select id="activity" class="form-control" name="activity">
+                                            <option value="">None</option>
+                                            {% for activity in activities %}
+                                                <option value="{{ activity.id }}">{{ activity.name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                 
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label for="price">Price</label>
+                                        <input type="number" step="0.01" id="price" class="form-control" name="price" required>
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="description">Description</label>
+                                        <textarea id="description" class="form-control" name="description" rows="4"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label for="duration">Duration (in days)</label>
+                                        <input type="number" id="duration" class="form-control" name="duration" required min="1">
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label for="max_people">Max People</label>
+                                        <input type="number" id="max_people" class="form-control" name="max_people" min="1" value="1">
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="included_features">Included Features</label>
+                                        <textarea id="included_features" class="form-control" name="included_features" rows="3" placeholder="Separate features with commas"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="transportation_included">Transportation Included</label>
+                                        <select id="transportation_details" class="form-control" name="transportation_details">
+                                            <option value="True">Yes</option>
+                                            <option value="False">No</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{% static 'assets/js/jquery-3.6.0.min.js' %}"></script>
+<script src="{% static 'assets/js/popper.min.js' %}"></script>
+<script src="{% static 'assets/plugins/bootstrap/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'assets/plugins/slimscroll/jquery.slimscroll.min.js' %}"></script>
+<script src="{% static 'assets/js/script.js' %}"></script>
+{% endblock %}

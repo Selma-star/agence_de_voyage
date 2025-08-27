@@ -1,0 +1,11 @@
+{% for destination in destinations %}
+  <li 
+    class="suggestion-item" 
+    hx-on="click: document.querySelector('#country').value='{{ destination.name }}'; document.querySelector('#country-list').innerHTML=''"
+    style="padding: 5px; cursor: pointer;"
+  >
+    {{ destination.name }}
+  </li>
+{% empty %}
+  <li style="padding: 5px;">No matches found</li>
+{% endfor %}

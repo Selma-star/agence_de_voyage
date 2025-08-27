@@ -1,0 +1,28 @@
+{# templates/partials/hotel_cards.html #}
+<div class="hotels" id="hotel-cards" hx-target="this" hx-swap="outerHTML">
+    {% for hotel in hotels %}
+      <div class="hotel-card">
+        {% if hotel.image %}
+          <img src="{{ hotel.image.url }}" alt="{{ hotel.name }}">
+        {% else %}
+          <img src="/static/images/hotel2.png" alt="No Image Available">
+        {% endif %}
+        <h3>{{ hotel.name }}</h3>
+        <div class="hotel-location">
+          <i class="fas fa-map-marker-alt"></i>
+          {{ hotel.city.name }}, {{ hotel.city.destination.name }}
+        </div>
+        <div class="price">
+          {% if hotel.min_price %}
+          {{ hotel.min_price }} DZA
+          {% else %}
+          Price Unavailable
+          {% endif %}
+      </div>
+        <!--<div class="price">{{ hotel.price }} </div>-->
+        <button>More Details</button>
+      </div>
+    {% empty %}
+      <p>No hotels found based on your search.</p>
+    {% endfor %}
+</div>

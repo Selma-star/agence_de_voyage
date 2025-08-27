@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}destination hero{% endblock %}
+ 
+{% block extra_head %}
+    <link rel="stylesheet" href="{% static 'css/styledes5.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+{% endblock %}
+
+{% block content %}
+<body>
+
+
+
+    <section class="hero">
+        <h1>Constantine <br> The Best Times to Visit !</h1>
+    </section>
+
+      <div class="container">
+        <div class="hero-left">
+          <h2>Constantine in Winter <span>Algeria, Africa</span></h2>
+          <p>During winter, Constantine transforms into a peaceful retreat draped in soft fog and occasional snowfall. The city's bridges and cliffs take on a mystical aura, and the chilly air gives a refreshing edge to its ancient streets. It's the perfect time to explore museums and traditional tea houses while enjoying the quieter charm of the city.</p>
+        </div>
+        <div class="hero-right">
+          <div class="image-wrapper">
+            <img src="/static/imagess/win.jpg" alt="Constantine in winter" class="img1">
+            <img src="/static/imagess/winter.jpg" alt="Snowy bridge view" class="img2">
+          </div>
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="hero-left">
+          <h2>Constantine in Spring <span>Algeria, Africa</span></h2>
+          <p>Spring breathes life into Constantine with blooming flowers and warmer breezes. The city's gardens and riverside paths become ideal for scenic walks. Markets burst with colors, and festivals highlight local music and art, offering visitors a vibrant and lively atmosphere amidst the ancient cityscape.</p>
+        </div>
+        <div class="hero-right">
+          <div class="image-wrapper">
+            <img src="/static/imagess/printemps1.jpg" alt="Constantine in spring" class="img1">
+            <img src="/static/imagess/printemps2.jpg" alt="Blooming flowers" class="img2">
+          </div>
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="hero-left">
+          <h2>Constantine in Summer <span>Algeria, Africa</span></h2>
+          <p>Under the summer sun, Constantine shines with golden light. Visitors can enjoy open-air cafés, evening strolls on the bridges, and nearby natural escapes like waterfalls and hills. While the heat is present, the elevation provides a breezy climate that’s perfect for both sightseeing and relaxing.</p>
+        </div>
+        <div class="hero-right">
+          <div class="image-wrapper">
+            <img src="/static/imagess/summmer.jpeg" alt="Constantine in summer" class="img1">
+            <img src="/static/imagess/summer2.jpg" alt="Summer bridge scene" class="img2">
+          </div>
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="hero-left">
+          <h2>Constantine in Autumn <span>Algeria, Africa</span></h2>
+          <p>Autumn in Constantine brings golden leaves and a calm atmosphere. The city’s cliffs and bridges appear even more striking against the warm colors of fall. It's a season for reflection and photography, with soft light casting dramatic shadows over the historic architecture and natural landscapes.</p>
+        </div>
+        <div class="hero-right">
+          <div class="image-wrapper">
+            <img src="/static/imagess/autumn.jpg" alt="Constantine in autumn" class="img1">
+            <img src="/static/imagess/automn2.jpg" alt="Golden trees and cliffs" class="img2">
+          </div>
+        </div>
+      </div>
+
+      <section class="season-block">
+        <h2 class="season-title">The Best Time to Visit Constantine</h2>
+      
+        <div class="season-container">
+          <div class="season-image-left">
+            <div class="image-holder">
+              <img src="/static/imagess/briold.jpg" alt="Constantine in spring" class="main-img">
+            </div>
+          </div>
+      
+          <div class="season-text-right">
+            <h3>Constantine in Spring <span>March – May</span></h3>
+            <p>
+              Spring in Constantine is a season of renewal. The temperatures are pleasantly mild, and the dramatic cliffs are lined with blooming flowers. The city's famous bridges offer spectacular views under soft sunlight, making it a perfect time for exploration and photography without the summer crowds.
+            </p>
+          </div>
+        </div>
+      </section>
+
+
+
+</body>
+{% endblock %}

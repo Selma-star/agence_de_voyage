@@ -1,0 +1,377 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+body {
+  font-family: "poppins", sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #fFFF;
+}
+
+
+:root {
+  font-size: 16px; /* 1rem = 16px */
+}
+
+.hero {
+  width: 100%;
+  height: 45rem;
+  background-image: url('/static/imagess/heroalg.jpg');
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.hero h1 {
+  font-family: 'Inter', sans-serif;
+  font-size: 4.375rem;
+  color: white;
+  font-weight: bold;
+  text-shadow: 0.125rem 0.125rem 0.3125rem rgba(0, 0, 0, 0.6);
+}
+
+
+.search-bar {
+  position: relative;
+  margin-top: 0.5rem;
+  width: 100%;
+  max-width: 30rem;
+}
+
+.hero-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.search-bar input {
+  width: 100%;
+  padding: 0.8rem 3rem 0.8rem 1.2rem; /* Espace à droite pour l'icône */
+  font-size: 1rem;
+  border: none;
+  border-radius: 2rem;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.search-icon {
+  position: absolute;
+  top: 50%;
+  right: 1rem; /* bien à droite dans l’input */
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: #666;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.search-icon i {
+  color: #666; /* couleur de l'icône */
+  font-size: 1.2rem;
+}
+
+@media (max-width: 1024px) {
+  .hero {
+    height: 38rem;
+    padding: 0 2rem;
+    overflow-x: hidden; /* Évite le scroll horizontal */
+  }
+
+  .hero h1 {
+    font-size: 3rem;
+    word-break: break-word; /* Coupe les mots si nécessaire */
+  }
+
+  .search-bar {
+    max-width: 90%; /* Empêche d'être trop large */
+  }
+}
+
+@media (max-width: 768px) {
+  .hero {
+    height: 32rem;
+    padding: 0 1rem;
+    overflow-x: hidden;
+  }
+
+  .hero h1 {
+    font-size: 2rem;
+  }
+
+  .search-bar {
+    max-width: 90%;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero {
+    height: 28rem;
+    padding: 0 1rem;
+    overflow-x: hidden;
+  }
+
+  .hero h1 {
+    font-size: 1.5rem;
+  }
+
+  .search-bar {
+    max-width: 100%;
+  }
+}
+
+.hero, .hero * {
+  box-sizing: border-box;
+}
+/* Base styles (pour écrans larges) */
+.destinations {
+  background-color: white;
+  padding: 3.75rem 8.75rem;
+  text-align: left;
+  margin-top: 5rem;
+  margin-left: 0;
+  max-width: 75rem;
+  margin: auto;
+}
+
+.destinations-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.destinations h2 {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #1D1B4C;
+  margin: 0;
+  margin-bottom: 0.0625rem;
+}
+
+.subtitle {
+  color: #1D1B4C;
+  font-size: 1rem;
+  margin-bottom: 1.25rem;
+  margin-top: 0.0625rem;
+  margin-left: 0.3125rem;
+}
+
+.carousel {
+  display: grid; /* Utilisation du grid pour un meilleur contrôle des lignes et colonnes */
+  grid-template-columns: repeat(4, 1fr); /* 4 cartes par ligne sur desktop */
+  gap: 1.25rem;
+  padding-bottom: 0.625rem;
+}
+
+.carousel .card:nth-child(4n) {
+  margin-bottom: 5rem;  /* Espacement après chaque ligne de cartes */
+}
+
+.card {
+  position: relative;
+  flex: 0 0 auto;
+  width: 100%;
+  height: 21.875rem;
+  border-radius: 0.9375rem;
+  overflow: hidden;
+  box-shadow: 0 0.3125rem 0.9375rem rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-0.625rem);
+}
+
+.card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.card .overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 0.9375rem;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0));
+  color: white;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.card h3 {
+  margin: 0;
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+
+.card p {
+  margin: 0.3125rem 0 0;
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+/* Médias pour les tablettes */
+@media (max-width: 1024px) {
+  .carousel {
+    grid-template-columns: repeat(2, 1fr); /* 2 cartes par ligne sur tablette */
+  }
+
+  .card {
+    height: 20rem; /* Ajustement de la taille des cartes pour tablette */
+  }
+}
+
+/* Médias pour les mobiles */
+@media (max-width: 768px) {
+  .carousel {
+    grid-template-columns: 1fr; /* 1 carte par ligne sur mobile */
+    justify-items: center; /* Centrage des cartes sur mobile */
+  }
+
+  .card {
+    height: 18rem; /* Ajustement de la taille des cartes pour mobile */
+    max-width: 100%; /* Assurer que les cartes s'adaptent bien à l'écran */
+  }
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  gap: 8px;
+}
+
+.page-numbers {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.page-numbers button {
+  background-color: #201E43;
+  border: none;
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.page-numbers button.active {
+  background-color: #00aaff;
+}
+
+.pagination .prev,
+.pagination .next {
+  background-color: #201E43;
+  border: none;
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.pagination .prev:hover,
+.pagination .next:hover,
+.page-numbers button:hover {
+  background-color: #00aaff;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+@media (max-width: 1024px) {
+.rectangle {
+  flex-direction: column;
+  text-align: center;
+}
+
+.image-container,
+.text-container {
+  width: 100%;
+  padding: 0;
+}
+
+.image-container {
+  margin-bottom: 1rem;
+}
+
+.footer-links {
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+}
+
+@media (max-width: 768px) {
+.footer-titre {
+  font-size: 1.75rem;
+  top: 2rem;
+}
+
+.rectangle {
+  padding: 1rem;
+}
+
+.text-container h2 {
+  font-size: 1.25rem;
+}
+
+.text-container p {
+  font-size: 0.95rem;
+}
+
+.social-icons img {
+  width: 2rem;
+  margin: 0 0.25rem;
+}
+
+.footer-links h3 {
+  font-size: 1rem;
+}
+
+.footer-links p,
+.footer-links a {
+  font-size: 0.875rem;
+}
+
+.footer-links {
+  padding: 1rem 0.5rem;
+}
+}
+
+.card {
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.card:hover {
+    transform: scale(1.03);
+}

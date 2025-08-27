@@ -1,0 +1,91 @@
+{% extends "Home/base_admin.html" %}
+{% load static %}
+{% block body %}
+
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        <div class="page-header">
+            <div class="row align-items-center">
+                <div class="col">
+                    <h3 class="page-title">Edit Destination</h3>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/destinations">Destinations</a></li>
+                        <li class="breadcrumb-item active">Edit Destination</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-body">
+                        <form method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-12">
+                                    <h5 class="form-title"><span>Destination Information</span></h5>
+                                </div>
+
+                                <!-- Destination Name -->
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label>Destination Name</label>
+                                        <input type="text" class="form-control" name="name" value="{{ destination.name }}" required>
+                                    </div>
+                                </div>
+
+                                <!-- Country -->
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label>Country</label>
+                                        <input type="text" class="form-control" name="country" value="{{ destination.country }}" required>
+                                    </div>
+                                </div>
+
+                                <!-- Region -->
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label>Region</label>
+                                        <input type="text" class="form-control" name="region" value="{{ destination.region|default_if_none:'' }}">
+                                    </div>
+                                </div>
+
+                                <!-- Description -->
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label>Description</label>
+                                        <textarea class="form-control" name="description" rows="3">{{ destination.description }}</textarea>
+                                    </div>
+                                </div>
+
+                                <!-- Image Upload -->
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label>Destination Image</label>
+                                        <input type="file" class="form-control" name="image" accept="image/*">
+                                        {% if destination.image %}
+                                            <small class="form-text text-muted">Current: <a href="{{ destination.image.url }}" target="_blank">{{ destination.image.name }}</a></small>
+                                        {% endif %}
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <button type="submit" class="btn btn-primary">Update Destination</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{% static 'assets/js/jquery-3.6.0.min.js' %}"></script>
+<script src="{% static 'assets/js/popper.min.js' %}"></script>
+<script src="{% static 'assets/plugins/bootstrap/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'assets/plugins/slimscroll/jquery.slimscroll.min.js' %}"></script>
+<script src="{% static 'assets/js/script.js' %}"></script>
+
+{% endblock %}

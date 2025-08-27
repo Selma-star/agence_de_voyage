@@ -1,0 +1,157 @@
+<!-- templates/booking/form.html -->
+<div id="bookingModal" class="modal">
+    <div class="modal-content">
+      <span id="modalCloseBtn" class="modal-close">&times;</span>
+  
+      <form method="POST" action="{% url 'submit_booking_unified' 'package' package.id %}">
+        {% csrf_token %}
+        <!--<input type="hidden" name="amount" id="finalAmount" value="0.00">-->
+        <input type="hidden" name="amount" value="{{ package.price }}">
+        <input type="hidden" name="currency" value="DZD">
+        <input type="hidden" name="payment_method" value="edahabia">
+        <div class="modal-body">
+  <!-- NEW: Booking Summary Section -->
+  <div id="bookingSummarySection">
+    <h2>Booking Summary</h2>
+    <input type="hidden" id="packagePrice" value="">
+    <table class="booking-summary-table">
+      <thead>
+        <tr>
+          <th>Package</th>
+          <th>Duration</th>
+          <th>Hotel</th>
+          <th>Flight</th>
+          <th>Total Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <strong>Package name:</strong> <span id="packageName"></span><br>
+          </td>
+          
+          <td>
+            <strong>Number of days:</strong> <span id="numDays"></span><br>
+          </td>
+          <td>
+            <strong>Hotel name:</strong> <span id="nameHotel"></span><br>
+          </td>
+          <td>
+            <strong>Airline:</strong> <span id="Flight"></span><br>
+          </td>
+          <td>
+            <div class="coupon-row">
+              <input type="text" name="coupon_summary" id="summaryCoupon" placeholder="Coupon code">
+              <button type="button" onclick="applyCoupon()">Apply</button>
+            </div>
+            
+            <div class="total-row">
+              <strong>Total: <span id="totalPrice">0.00</span></strong>
+  
+            </div>
+            
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <div class="actions" style="margin-top: 2rem;">
+      <button type="button" onclick="showInfoSection()" class="confirm-btn">Continue to Information </button>
+    </div>
+  </div>
+  
+  <div id="infoSection" style="display: none;">
+          <!-- Left Side - Payment -->
+          <div class="modal-left">
+            <h2>Payment Information</h2>
+  
+          
+  
+            <div class="card-icons">
+                <img src="https://img.icons8.com/color/48/mastercard-logo.png" />
+                <img src="https://img.icons8.com/color/48/visa.png" />
+                <img src="https://img.icons8.com/color/48/amex.png" />
+                <img src="https://img.icons8.com/color/48/discover.png" />
+                <img src="https://www.poste.dz/images/edahabia_card.png">
+              </div>
+  
+            <label for="cardName">Name on Card</label>
+            <input type="text" id="cardName" name="card_name" required>
+  
+            <label for="cardNumber">Debit/Credit card number</label>
+            <input type="text" id="cardNumber" name="card_number" placeholder="0000 0000 0000 0000" required>
+  
+            <label>Expiration date*</label>
+            <div class="expiration">
+              <input type="text" name="exp_month" placeholder="Month" required>
+              <input type="text" name="exp_year" placeholder="Year" required>
+            </div>
+  
+            <label for="securityCode">Security code</label>
+            <input type="text" id="securityCode" name="security_code" required>
+  
+            <p class="secure-note">🔒 We use secure transmission and protect your personal info</p>
+          </div>
+  
+          <!-- Right Side - Traveler Info -->
+          <div class="modal-right">
+            <h2>Traveler Information</h2>
+  
+  
+           
+  
+            <div class="row-input-group">
+                <div class="form-group">
+                  <label for="firstName">First Name</label>
+                  <input type="text" id="firstName" name="first_name">
+                </div>
+                <div class="form-group">
+                    <label for="lastName">Last Name</label>
+                    <input type="text" id="lastName" name="last_name">
+                  </div>
+            </div>
+            <div class="row-input-group">
+                <div class="form-group">
+                    <label for="dob">Date of Birth</label>
+                    <input type="date" id="dob" name="dob" required>
+                  </div>
+                <div class="form-group">
+                  <label for="phoneNumber">Phone Number</label>
+                  <input type="tel" id="phoneNumber" name="phone">
+                </div>
+              </div>
+              <div class="row-input-group">
+                <div class="form-group">
+                  <label for="passport">Passport</label>
+                  <input type="text" id="passport" name="passport">
+                </div>
+                <div class="form-group">
+                  <label for="email">Contact Email</label>
+                  <input type="email" id="email" name="email">
+                </div>
+              </div>
+              <div class="form-group gender-line">
+                <label>Gender*</label>
+                <div class="gender-options">
+                  <label><input type="radio" name="gender" value="male"> Male</label>
+                  <label><input type="radio" name="gender" value="female"> Female</label>
+                </div>
+              </div>
+  
+  
+              <div class="form-group policy-line">
+                <input type="checkbox" id="agreePolicy" name="agreePolicy" required>
+                <label for="agreePolicy">I agree to the terms and privacy policy.</label>
+              </div>
+  
+            <div class="actions">
+              <button type="submit" class="confirm-btn">Confirm Booking</button>
+              <button type="button" class="cancel-btn" onclick="document.getElementById('bookingModal').style.display='none';">Cancel</button>
+            </div>
+          </div>
+        </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  

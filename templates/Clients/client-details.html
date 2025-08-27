@@ -1,0 +1,79 @@
+{% extends "Home/base_admin.html" %}
+{% load static %}
+
+{% block body %}
+<div class="page-wrapper">
+  <div class="content container-fluid">
+    <div class="page-header">
+      <div class="row">
+        <div class="col-sm-12">
+          <h3 class="page-title">{{ client.name }} Details</h3>
+          <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'client_list' %}">Clients</a></li>
+            <li class="breadcrumb-item active">{{ client.name }} Details</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-body">
+        <!-- Client Information Section -->
+        <div class="row">
+          <div class="col-md-12">
+            <div class="about-info">
+              <h4>Client Information</h4>
+              <div class="media mt-3">
+                {% if client.image %}
+    <img src="{{ client.image.url }}" alt="Client Image">
+{% else %}
+    <p>No image available</p>
+{% endif %}
+
+                <div class="media-body">
+                  <ul>
+                    <li><span class="title-span">Client Name: </span><span class="info-span">{{ client.full_name }}</span></li>
+                    <li><span class="title-span">Email: </span><span class="info-span">{{ client.email }}</span></li>
+                    <li><span class="title-span">Phone: </span><span class="info-span">{{ client.phone }}</span></li>
+                    <li><span class="title-span">Address: </span><span class="info-span">{{ client.address }}</span></li>
+                    <li><span class="title-span">Date of Birth: </span><span class="info-span">{{ client.date_of_birth }}</span></li>
+                    <li><span class="title-span">Joined: </span><span class="info-span">{{ client.created_at }}</span></li>
+                    <li><span class="title-span">Total Bookings: </span><span class="info-span">{{ client.bookings.count }}</span></li>
+                    <li><span class="title-span">Loyalty Status: </span><span class="info-span">{{ client.loyalty_status }}</span></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+       
+
+        <div class="row mt-3">
+          <div class="col-md-12">
+            <h5>Client Overview</h5>
+            <p>{{ client.full_name }} is a loyal client with {{ client.bookings.count }} bookings, enjoying a loyalty status of {{ client.loyalty_status }}. The client has been a part of our platform since {{ client.created_at }}.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer></footer>
+
+</div>
+</div>
+
+<script data-cfasync="false" src="{% static 'cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js' %}"></script>
+<script src="{% static 'assets/js/jquery-3.6.0.min.js' %}"></script>
+<script src="{% static 'assets/js/popper.min.js' %}"></script>
+<script src="{% static 'assets/plugins/bootstrap/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'assets/plugins/slimscroll/jquery.slimscroll.min.js' %}"></script>
+<script src="{% static 'assets/js/script.js' %}"></script>
+
+</body>
+</html>
+
+{% endblock %}

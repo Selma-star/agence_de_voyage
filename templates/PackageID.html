@@ -1,0 +1,233 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Packages{% endblock %}  <!-- Set custom title -->
+
+{% block extra_head %} 
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/PackageID.css' %}">
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+{% endblock %}
+
+{% block content %}
+<header>
+       
+</header>
+<body>
+    <div class="hero">
+        <h1>Exceptional Travel Packages <br> Start Here !</h1>
+    </div>  
+<!-- Menu Filtre -->
+<section class="layout">
+      
+    <!-- FILTER MENU (Left Column) -->
+    <div class="filter-wrapper">
+    <div  class="filter-menu ">
+        <div class="filter-header">
+            <h3>Filter</h3>
+            <button id="reset-button">Reset</button>
+        </div>
+
+     <!-- Search Summary -->
+     <h3>Your Search Details</h3>
+     <div class="search-summary">
+        <p>From {{ from_country }} To {{ to_country }}</p>
+        <p>{{ people }} {{ people|add:"-1"|yesno:"person,people" }}</p>
+     </div>
+     <div id="loading-spinner" style="display: none;">
+        <img src="{% static 'images/spinner.gif' %}" alt="Loading..." />
+    </div>
+     <form id="package-filter-form" hx-get="{% url 'package-id-cards' %}" hx-target="#package-cards" hx-swap="outerHTML" hx-indicator="#loading-spinner">
+        <input type="hidden" name="to_country" value="{{ to_country }}">
+        <input type="hidden" name="from_country" value="{{ from_country }}">
+        <input type="hidden" name="people" value="{{ people }}">
+        <input type="hidden" name="min_price" id="hidden-min-price">
+        <input type="hidden" name="max_price" id="hidden-max-price">
+        <input type="hidden" name="rating" id="selected-rating">
+        <input type="hidden" name="duration" id="selected-duration">
+        <input type="hidden" name="city" id="selected-city">
+    
+ <!-- Région -->
+<h4>Cities</h4>
+
+<div class="filter-buttons" id="city-buttons">
+    {% for city in cities %}
+        {% if forloop.counter > 5 %}
+            <button class="filter-option city-btn" data-city="{{ city.name }}" style="display: none;">
+                <i class="fas fa-globe-europe"></i> {{ city.name }}
+            </button>
+        {% else %}
+            <button class="filter-option city-btn" data-city="{{ city.name }}">
+                <i class="fas fa-globe-europe"></i> {{ city.name }}
+            </button>
+        {% endif %}
+    {% endfor %}
+
+    {% if cities|length > 5 %}
+        <button class="filter-option" id="toggle-cities">
+            <i class="fas fa-plus"></i> More cities
+        </button>
+    {% endif %}
+</div>
+         <!-- Price -->
+         <h4>Price Range</h4>
+         <div class="price-stepper">
+           <div class="price-control">
+             <label>Min Price</label>
+             <div class="step-buttons">
+               <button onclick="changePrice('min', -10000)">-</button>
+               <span id="min-price">100000 DZD</span>
+               <button onclick="changePrice('min', 10000)">+</button>
+             </div>
+           </div>
+         
+           <div class="price-control">
+             <label>Max Price</label>
+             <div class="step-buttons">
+               <button onclick="changePrice('max', -10000)">-</button>
+               <span id="max-price">1000000 DZD</span>
+               <button onclick="changePrice('max', 10000)">+</button>
+             </div>
+           </div>
+         </div>
+         <div class="button-price">
+           <button id="apply-price">Apply price</button>
+         </div>
+        
+    
+        <!-- Rating -->
+     <h4>Rating</h4>
+  <div class="rating-stars" id="rating-stars">
+    <span class="star" data-rating="1">★</span>
+    <span class="star" data-rating="2">★</span>
+    <span class="star" data-rating="3">★</span>
+    <span class="star" data-rating="4">★</span>
+    <span class="star" data-rating="5">★</span>
+  </div>
+    
+      <!-- Durée -->
+      <h4>For how long?</h4>
+      <div class="filter-buttons">
+        <button class="filter-option duration-btn" data-duration="5">5 Days</button>
+        <button class="filter-option duration-btn" data-duration="6">6 Days</button>
+        <button class="filter-option duration-btn" data-duration="7">7 Days</button>
+        <button class="filter-option duration-btn" data-duration="more">+1 week</button>
+      </div>
+    </form>
+    <script>
+    // the price filter and logic 
+
+        let min = 100000 ;
+        let max = 1000000 ;
+        const step = 10000;
+        const minLimit = 50000;
+        const maxLimit = 7500000;
+        
+        function changePrice(type, value) {
+           if (type === 'min') {
+            min = Math.min(max - step, Math.max(min + value, minLimit));
+           document.getElementById('min-price').textContent = `${min} DZD`;
+          } else {
+             max = Math.max(min + step, Math.min(max + value, maxLimit));
+             document.getElementById('max-price').textContent = `${max} DZD`;
+          }
+           }
+          document.getElementById('apply-price').addEventListener('click', function () {
+                  document.getElementById('hidden-min-price').value = min;
+                  document.getElementById('hidden-max-price').value = max;
+                  document.getElementById('package-filter-form').requestSubmit(); // Uses HTMX!
+          });
+          // to reset everything
+          document.getElementById('reset-button').addEventListener('click', () => {
+          document.getElementById('hidden-min-price').value = '';
+          document.getElementById('hidden-max-price').value = '';
+          document.getElementById('selected-rating').value = '';
+          document.getElementById('selected-duration').value = '';
+          document.getElementById('selected-city').value = '';
+          document.getElementById('package-filter-form').requestSubmit();
+        });
+        // to select the rating stars 
+        document.querySelectorAll('.star').forEach(star => {
+          star.addEventListener('click', () => {
+            document.getElementById('selected-rating').value = star.dataset.rating;
+            document.getElementById('package-filter-form').requestSubmit();
+          });
+        });
+        // to select the duration 
+        document.querySelectorAll('.duration-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            document.getElementById('selected-duration').value = btn.dataset.duration;
+            document.getElementById('package-filter-form').requestSubmit();
+          });
+        });
+        // to select a city 
+        document.querySelectorAll('.city-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            document.getElementById('selected-city').value = btn.dataset.city;
+            document.getElementById('package-filter-form').requestSubmit();
+          });
+        });
+        
+        //the cities filter depending of the selected to_country
+            document.addEventListener('DOMContentLoaded', function () {
+                const toggleBtn = document.getElementById('toggle-cities');
+                if (!toggleBtn) return;
+        
+                let expanded = false;
+                toggleBtn.addEventListener('click', function () {
+                    const cityButtons = document.querySelectorAll('.city-btn');
+        
+                    cityButtons.forEach((btn, index) => {
+                        if (index >= 5) {
+                            btn.style.display = expanded ? 'none' : 'inline-block';
+                        }
+                    });
+        
+                    toggleBtn.innerHTML = expanded
+                        ? '<i class="fas fa-plus"></i> More cities'
+                        : '<i class="fas fa-minus"></i> Fewer cities';
+        
+                    expanded = !expanded;
+                });
+            });
+
+        </script>
+    </div>
+    </div>
+    <div class="content-area">
+        
+    <div class="packages">
+        <div class="cards" id="package-cards">
+            {% for package in packages %}
+                <div class="card">
+                    {% if package.city.image %}
+                        <img src="{{ package.city.image.url }}" alt="{{ package.name }}">
+                    {% else %}
+                        <img src="{% static 'images/hawai.jpg' %}" alt="{{ package.name }}">
+                    {% endif %}
+                    <h3>{{ package.name }}</h3>
+                    <p>
+                        <i class="fas fa-calendar-day"></i> {{ package.duration }} Days &nbsp;
+                        <i class="fas fa-map"></i> {{ package.max_people }} People &nbsp;
+                        <i class="fas fa-globe"></i> {{ package.city }}
+                    </p>
+                    <p class="price">${{ package.price }}</p>
+                    <a href="{% url 'package_det' package.id %}">
+                        <button type="button">View Trip</button>
+                    </a>
+                </div>
+            {% empty %}
+                <p>No packages found.</p>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+</section>
+
+</div>
+</body>
+{% endblock %}
+{% block scripts %}
+<script src="{% static 'js/PackageID.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,165 @@
+{% extends "Home/base_admin.html" %}
+{% load static %}
+{% block body %}
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        <div class="page-header">
+            <div class="row align-items-center">
+                <div class="col">
+                    <h3 class="page-title">Edit Flight</h3>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/flights">Flights</a></li>
+                        <li class="breadcrumb-item active">Edit Flight</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-body">
+                        <form method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-12">
+                                    <h5 class="form-title"><span>Flight Information</span></h5>
+                                </div>
+
+                                <!-- Airline Company -->
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label>Airline Company</label>
+                                        <input type="text" class="form-control" name="airline_company" value="{{ flight.airline_company }}" required>
+                                    </div>
+                                </div>
+
+                                <!-- Plane Model -->
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label>Plane Model</label>
+                                        <input type="text" class="form-control" name="plane_model" value="{{ flight.plane_model|default_if_none:'' }}">
+                                    </div>
+                                </div>
+
+                                <!-- Departure City -->
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label>Departure City</label>
+                                        <select class="form-control" name="departure_city" required>
+                                            {% for city in cities %}
+                                                <option value="{{ city.id }}" {% if city.id == flight.departure_city.id %}selected{% endif %}>{{ city.name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <!-- Departure IATA Code -->
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label>Departure IATA Code</label>
+                                        <input type="text" class="form-control" name="departure_iata" value="{{ flight.departure_iata|default_if_none:'' }}" maxlength="10">
+                                    </div>
+                                </div>
+
+                                <!-- Arrival City -->
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label>Arrival City</label>
+                                        <select class="form-control" name="arrival_city" required>
+                                            {% for city in cities %}
+                                                <option value="{{ city.id }}" {% if city.id == flight.arrival_city.id %}selected{% endif %}>{{ city.name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <!-- Arrival IATA Code -->
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label>Arrival IATA Code</label>
+                                        <input type="text" class="form-control" name="arrival_iata" value="{{ flight.arrival_iata|default_if_none:'' }}" maxlength="10">
+                                    </div>
+                                </div>
+
+                                <!-- Departure Time -->
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label>Departure Time</label>
+                                        <input type="datetime-local" class="form-control" name="departure_time" value="{{ flight.departure_time|date:'Y-m-d\\TH:i' }}" required>
+                                    </div>
+                                </div>
+
+                                <!-- Arrival Time -->
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label>Arrival Time</label>
+                                        <input type="datetime-local" class="form-control" name="arrival_time" value="{{ flight.arrival_time|date:'Y-m-d\\TH:i' }}" required>
+                                    </div>
+                                </div>
+
+                                <!-- Price -->
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label>Price</label>
+                                        <input type="number" step="0.01" class="form-control" name="price" value="{{ flight.price }}" required>
+                                    </div>
+                                </div>
+
+                                <!-- Available Seats -->
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label>Available Seats</label>
+                                        <input type="number" class="form-control" name="available_seats" value="{{ flight.available_seats }}" required>
+                                    </div>
+                                </div>
+
+                                <!-- Duration -->
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label>Duration (HH:MM:SS)</label>
+                                        <input type="text" class="form-control" name="duration" value="{{ flight.duration }}" placeholder="e.g., 02:30:00" required>
+                                    </div>
+                                </div>
+
+                                <!-- Status -->
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label>Status</label>
+                                        <select class="form-control" name="status" required>
+                                            <option value="active" {% if flight.status == 'active' %}selected{% endif %}>Active</option>
+                                            <option value="canceled" {% if flight.status == 'canceled' %}selected{% endif %}>Canceled</option>
+                                            <option value="delayed" {% if flight.status == 'delayed' %}selected{% endif %}>Delayed</option>
+                                            <option value="completed" {% if flight.status == 'completed' %}selected{% endif %}>Completed</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <!-- Flight Image -->
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label>Flight Image</label>
+                                        <input type="file" class="form-control" name="image" accept="image/*">
+                                        {% if flight.image %}
+                                            <small class="form-text text-muted">Current: <a href="{{ flight.image.url }}" target="_blank">{{ flight.image.name }}</a></small>
+                                        {% endif %}
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{% static 'assets/js/jquery-3.6.0.min.js' %}"></script>
+<script src="{% static 'assets/js/popper.min.js' %}"></script>
+<script src="{% static 'assets/plugins/bootstrap/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'assets/plugins/slimscroll/jquery.slimscroll.min.js' %}"></script>
+<script src="{% static 'assets/js/script.js' %}"></script>
+{% endblock %}

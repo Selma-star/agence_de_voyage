@@ -1,0 +1,162 @@
+{% extends "Home/base_admin.html" %}
+{% load static %}
+{% block body %}
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        <div class="page-header">
+            <div class="row">
+                <div class="col">
+                    <h3 class="page-title">Profile</h3>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="">Dashboard</a></li>
+                        <li class="breadcrumb-item active">Profile</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="profile-header">
+                    <div class="row align-items-center">
+                        <div class="col-auto profile-image">
+                            <a href="#">
+                                <img class="rounded-circle" alt="Owner Image" src="{% static 'assets/img/profiles/avatar-02.jpg' %}">
+                            </a>
+                        </div>
+                        <div class="col ml-md-n2 profile-user-info">
+                            <h4 class="user-name mb-0">Jane Smith</h4>
+                            <h6 class="text-muted">Voyago Travel Agency</h6>
+                            <div class="user-location"><i class="fas fa-map-marker-alt"></i>Algiers,Algeria</div>
+                            <div class="about-text">Providing bespoke travel experiences worldwide.</div>
+                        </div>
+                        <div class="col-auto profile-btn">
+                            <a href="#" class="btn btn-primary">Edit</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="profile-menu">
+                    <ul class="nav nav-tabs nav-tabs-solid">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-toggle="tab" href="#per_details_tab">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#password_tab">Password</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="tab-content profile-tab-cont">
+                    <!-- About Tab -->
+                    <div class="tab-pane fade show active" id="per_details_tab">
+                        <div class="row">
+                            <div class="col-lg-9">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title d-flex justify-content-between">
+                                            <span>Business Details</span>
+                                            <a class="edit-link" data-toggle="modal" href="#edit_business_details"><i class="far fa-edit mr-1"></i>Edit</a>
+                                        </h5>
+                                        <div class="row">
+                                            <p class="col-sm-3 text-muted text-sm-right mb-0 mb-sm-3">Owner Name</p>
+                                            <p class="col-sm-9">Jane Smith</p>
+                                        </div>
+                                        <div class="row">
+                                            <p class="col-sm-3 text-muted text-sm-right mb-0 mb-sm-3">Agency Founded</p>
+                                            <p class="col-sm-9">15 Mar 2025</p>
+                                        </div>
+                                        <div class="row">
+                                            <p class="col-sm-3 text-muted text-sm-right mb-0 mb-sm-3">Email</p>
+                                            <p class="col-sm-9">contact@Voyagotravel.com</p>
+                                        </div>
+                                        <div class="row">
+                                            <p class="col-sm-3 text-muted text-sm-right mb-0 mb-sm-3">Phone</p>
+                                            <p class="col-sm-9">+33 1 23 45 67 89</p>
+                                        </div>
+                                        <div class="row">
+                                            <p class="col-sm-3 text-muted text-sm-right mb-0">Address</p>
+                                            <p class="col-sm-9 mb-0">
+                                                Oued Smar,<br>
+                                                75004 Algiers,<br>
+                                                Algeria.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title d-flex justify-content-between">
+                                            <span>Account Status</span>
+                                            <a class="edit-link" href="#"><i class="far fa-edit mr-1"></i> Edit</a>
+                                        </h5>
+                                        <button class="btn btn-success" type="button">
+                                            <i class="fe fe-check-verified"></i> Active
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title d-flex justify-content-between">
+                                            <span>Services</span>
+                                            <a class="edit-link" href="#"><i class="far fa-edit mr-1"></i> Edit</a>
+                                        </h5>
+                                        <div class="skill-tags">
+                                            <span>Flight Booking</span>
+                                            <span>Hotel Reservations</span>
+                                            <span>Custom Trips</span>
+                                            <span>Travel Insurance</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Password Tab -->
+                    <div id="password_tab" class="tab-pane fade">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Change Password</h5>
+                                <div class="row">
+                                    <div class="col-md-10 col-lg-6">
+                                        <form method="post">
+                                            {% csrf_token %}
+                                            <div class="form-group">
+                                                <label>Old Password</label>
+                                                <input type="password" class="form-control" name="old_password" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>New Password</label>
+                                                <input type="password" class="form-control" name="new_password" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Confirm Password</label>
+                                                <input type="password" class="form-control" name="confirm_password" required>
+                                            </div>
+                                            <button class="btn btn-primary" type="submit">Save Changes</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Password Tab -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Scripts -->
+<script src="{% static 'assets/js/jquery-3.6.0.min.js' %}"></script>
+<script src="{% static 'assets/js/popper.min.js' %}"></script>
+<script src="{% static 'assets/plugins/bootstrap/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'assets/plugins/slimscroll/jquery.slimscroll.min.js' %}"></script>
+<script src="{% static 'assets/js/script.js' %}"></script>
+
+{% endblock %}

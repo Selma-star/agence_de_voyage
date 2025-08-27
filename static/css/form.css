@@ -1,0 +1,339 @@
+* {
+    box-sizing: border-box;
+  }
+  
+  html, body {
+    overflow-x: hidden;
+  }
+  
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; /* prevent background scroll */
+  }
+  
+  .modal-content {
+    background-color: #fff;
+    width: 90%;
+    max-width: 1200px;
+    max-height: 90vh;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    padding: 1rem;
+    overflow-y: auto; /* ✅ Add this */
+  }
+  
+  .modal-close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 2rem;
+    cursor: pointer;
+  }
+  
+  
+.modal-body {
+    flex: 1;
+    display: flex;
+    gap: 2rem;
+    overflow-y: auto; /* ✅ scrolling happens here */
+    padding-right: 1rem;
+    padding-bottom: 2rem;
+    flex-direction: column;
+    width: 100%;
+
+  }
+  
+  .modal-left, .modal-right {
+    flex: 1;
+    min-width: 0;
+    padding: 1rem;
+    box-sizing: border-box;
+
+}
+
+  .modal-left h2, .modal-right h2 {
+    margin-top: 0;
+    color: #1e1e1e;
+  }
+  
+  label {
+    display: block;
+    margin-top: 1rem;
+    font-weight: 600;
+  }
+
+  .card-icons img {
+    height: 48px; /* Increased from 30px */
+    margin: 0.3rem;
+    object-fit: contain; /* Ensures the image scales without distortion */
+  }
+  
+  input, select {
+    width: 100%;
+    padding: 0.5rem;
+    margin-top: 0.25rem;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+  }
+  
+  .expiration, .dob {
+    display: flex;
+    gap: 0.5rem;
+  }
+  
+  .gender-group {
+    display: flex;
+    gap: 1rem;
+    margin-top: 0.5rem;
+  }
+  
+  .secure-note {
+    font-size: 0.9rem;
+    color: green;
+    margin-top: 1rem;
+  }
+  
+  .apply-btn, .confirm-btn, .cancel-btn {
+    margin-top: 1rem;
+    padding: 0.6rem 1.2rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  
+  .apply-btn {
+    background-color: #f0f0f0;
+  }
+  
+  .confirm-btn {
+    background-color: #007bff;
+    color: #fff;
+  }
+  
+  .cancel-btn {
+    background-color: #ccc;
+    margin-left: 1rem;
+  }
+  
+  .actions {
+    display: flex;
+    justify-content: flex-end; /* aligns to the right */
+    margin-top: 1.5rem;
+    gap: 1rem;
+  }
+  
+  
+  .agree-policy {
+    margin-top: 1.5rem;
+  }
+
+  .row-input-group {
+    display: flex;
+    gap: 1rem;
+    width: 100%;
+  }
+  
+  .row-input-group .form-group {
+    flex: 1;
+  }
+
+  .gender-line {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+  
+  .gender-line label {
+    margin: 0;
+    white-space: nowrap;
+  }
+  
+  .gender-options {
+    display: flex;
+    gap: 1rem;
+  }
+  .policy-line {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    font-size: 0.95rem;
+  }
+  
+  .policy-line input[type="checkbox"] {
+    width: auto;
+    margin: 0;
+    transform: translateY(8px);
+  }
+
+  .confirm-btn, .cancel-btn {
+    padding: 0.8rem 1.8rem;  /* bigger padding = bigger button */
+    font-size: 1rem;         /* increase font size */
+    border-radius: 10px;
+    font-weight: 600;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* optional shadow for better look */
+  }
+  
+  .confirm-btn {
+    background-color: #007bff;
+    color: #fff;
+  }
+  
+  .cancel-btn {
+    background-color: #ccc;
+    color: #333;
+  }
+  
+  .booking-summary-table {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+    border: 1px solid #ccc;
+  }
+  
+  .booking-summary-table th,
+.booking-summary-table td {
+  padding: 12px;
+  border: 1px solid #ddd;
+  vertical-align: top;
+  word-wrap: break-word;
+  word-break: break-word;
+  text-align: left;
+  font-size: 14px;
+}
+
+  
+  .booking-summary-table th {
+    background-color: #f4f4f4;
+  }
+  
+  .booking-summary-table input,
+  .booking-summary-table select {
+    padding: 0.4rem;
+    margin-top: 0.2rem;
+    width: 90%;
+  }
+  #infoSection {
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+    width: 100%;
+  }
+  
+  #bookingSummarySection {
+    width: 100%;
+    padding: 1rem;
+    box-sizing: border-box;
+  }
+  
+  .booking-summary-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  /*the style of coupon button*/
+
+  .coupon-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem; /* space between input and button */
+    margin-bottom: 0.5rem;
+  }
+  
+  .coupon-row input[type="text"] {
+    flex: 1; /* makes input grow to fill space */
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .coupon-row button {
+    padding: 0.5rem 1rem;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .coupon-row button:hover {
+    background-color: #0056b3;
+  }
+
+  /*the style of the count button*/
+  .total-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+  }
+  
+  .total-row strong {
+    font-size: 1.1rem;
+    flex: 1;
+  }
+  
+  .total-row button {
+    padding: 0.5rem 1rem;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .total-row button:hover {
+    background-color: #0056b3;
+  }
+  .booking-summary-table th:nth-child(1),
+  .booking-summary-table td:nth-child(1) {
+    width: 18%;
+    max-width: 18%;
+  }
+  
+  .booking-summary-table th:nth-child(2),
+  .booking-summary-table td:nth-child(2) {
+    width: 18%;
+    max-width: 18%;
+  }
+  
+  .booking-summary-table th:nth-child(3),
+  .booking-summary-table td:nth-child(3) {
+    width: 20%;
+    max-width: 20%;
+  }
+  
+  .booking-summary-table th:nth-child(4),
+  .booking-summary-table td:nth-child(4) {
+    width: 22%;
+    max-width: 22%;
+  }
+  
+  .booking-summary-table th:nth-child(5),
+  .booking-summary-table td:nth-child(5) {
+    width: 22%;
+    max-width: 22%;
+  }
+  
+  
+.booking-summary-table td span {
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* only 3 lines of text shown */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+#infoSection {
+  flex-direction: row;
+  display: flex;
+  gap: 2rem;
+}

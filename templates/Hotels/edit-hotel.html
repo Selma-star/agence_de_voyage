@@ -1,0 +1,159 @@
+{% extends "Home/base_admin.html" %}
+{% load static %}
+{% block body %}
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        <div class="page-header">
+            <div class="row align-items-center">
+                <div class="col">
+                    <h3 class="page-title">Edit Hotel</h3>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/hotels">Hotels</a></li>
+                        <li class="breadcrumb-item active">Edit Hotel</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-body">
+                        <form method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-12">
+                                    <h5 class="form-title"><span>Hotel Information</span></h5>
+                                </div>
+
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label>Hotel Name</label>
+                                        <input type="text" class="form-control" name="name" value="{{ hotel.name }}">
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label for="address">Address</label>
+                                        <input type="text" class="form-control" name="address" value="{{ hotel.address }}">
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label for="city">City</label>
+                                        <select id="city" name="city" class="form-control">
+                                            {% for city in cities %}
+                                                <option value="{{ city.id }}" {% if hotel.city.id == city.id %}selected{% endif %}>
+                                                    {{ city.name }}
+                                                </option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label for="hotel_telephone">Hotel Telephone</label>
+                                        <input type="text" id="hotel_telephone" class="form-control" name="hotel_telephone" value="{{ hotel.hotel_telephone }}">
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label for="contact_email">Contact Email</label>
+                                        <input type="email" id="contact_email" class="form-control" name="contact_email" value="{{ hotel.contact_email }}">
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label for="rating">Rating</label>
+                                        <input type="number" step="0.1" max="5" min="0" id="rating" class="form-control" name="rating" value="{{ hotel.rating }}">
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label for="website_url">Website URL</label>
+                                        <input type="url" id="website_url" class="form-control" name="website_url" value="{{ hotel.website_url }}">
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label for="currency">Currency</label>
+                                        <input type="text" id="currency" class="form-control" name="currency" value="{{ hotel.currency }}">
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label for="image">Hotel Image</label>
+                                        <input type="file" id="image" class="form-control" name="image">
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label for="type">Hotel Type</label>
+                                        <select id="type" name="type" class="form-control">
+                                            <option value="LUXE" {% if hotel.type == 'LUXE' %}selected{% endif %}>Luxe</option>
+                                            <option value="FAMILIALE" {% if hotel.type == 'FAMILIALE' %}selected{% endif %}>Familiale</option>
+                                            <option value="POPULAIRE" {% if hotel.type == 'POPULAIRE' %}selected{% endif %}>Populaire</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label for="latitude">Latitude</label>
+                                        <input type="number" step="0.0000001" id="latitude" class="form-control" name="latitude" value="{{ hotel.latitude }}">
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label for="longitude">Longitude</label>
+                                        <input type="number" step="0.0000001" id="longitude" class="form-control" name="longitude" value="{{ hotel.longitude }}">
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label for="description">Description</label>
+                                        <textarea id="description" class="form-control" name="description">{{ hotel.description }}</textarea>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label for="is_active">Is Active</label>
+                                        <select class="form-control" name="is_active">
+                                            <option value="True" {% if hotel.is_active %}selected{% endif %}>Yes</option>
+                                            <option value="False" {% if not hotel.is_active %}selected{% endif %}>No</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{% static 'assets/js/jquery-3.6.0.min.js' %}"></script>
+<script src="{% static 'assets/js/popper.min.js' %}"></script>
+<script src="{% static 'assets/plugins/bootstrap/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'assets/plugins/slimscroll/jquery.slimscroll.min.js' %}"></script>
+<script src="{% static 'assets/js/script.js' %}"></script>
+</body>
+</html>
+
+{% endblock %}

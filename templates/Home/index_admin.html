@@ -1,0 +1,249 @@
+{% extends "Home/base_admin.html" %}
+ {% load static %}
+
+{% block body %}
+
+         <div class="page-wrapper">
+            <div class="content container-fluid">
+               <div class="page-header">
+                  <div class="row">
+                     <div class="col-sm-12">
+                        <h3 class="page-title">Welcome Admin!</h3>
+                        <ul class="breadcrumb">
+                           <li class="breadcrumb-item active">Dashboard</li>
+                        </ul>
+                     </div>
+                  </div>
+               </div>
+             <div class="row">
+  <!-- Clients -->
+  <div class="col-xl-3 col-sm-6 col-12 d-flex">
+    <div class="card bg-one w-100">
+      <div class="card-body">
+        <div class="db-widgets d-flex justify-content-between align-items-center">
+          <div class="db-icon">
+            <i class="fas fa-user-graduate"></i>
+          </div>
+          <div class="db-info">
+            <h3>{{ clients_count }}</h3>
+            <h6>Clients</h6>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cities -->
+  <div class="col-xl-3 col-sm-6 col-12 d-flex">
+    <div class="card bg-two w-100">
+      <div class="card-body">
+        <div class="db-widgets d-flex justify-content-between align-items-center">
+          <div class="db-icon">
+            <i class="fas fa-map-marker-alt"></i>
+          </div>
+          <div class="db-info">
+            <h3>{{ cities_count }}</h3>
+            <h6>Cities</h6>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bookings -->
+  <div class="col-xl-3 col-sm-6 col-12 d-flex">
+    <div class="card bg-three w-100">
+      <div class="card-body">
+        <div class="db-widgets d-flex justify-content-between align-items-center">
+          <div class="db-icon">
+            <i class="fas fa-building"></i>
+          </div>
+          <div class="db-info">
+            <h3>{{ bookings_count }}</h3>
+            <h6>Bookings</h6>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Revenue -->
+  <div class="col-xl-3 col-sm-6 col-12 d-flex">
+    <div class="card bg-four w-100">
+      <div class="card-body">
+        <div class="db-widgets d-flex justify-content-between align-items-center">
+          <div class="db-icon">
+            <i class="fas fa-file-invoice-dollar"></i>
+          </div>
+          <div class="db-info">
+        {% load custom_filter %}
+           <h3>{{ total_revenue|millify }}</h3>
+            <h6>Revenue</h6>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+               <div class="row">
+                  <div class="col-md-12 col-lg-6">
+                     <div class="card card-chart">
+                        <div class="card-header">
+                           <div class="row align-items-center">
+                              <div class="col-6">
+                                 <h5 class="card-title">Bookings</h5>
+                              </div>
+                              <div class="col-6">
+                                 <ul class="list-inline-group text-right mb-0 pl-0">
+                                    <li class="list-inline-item">
+                                       <div class="form-group mb-0 amount-spent-select">
+                                          <select class="form-control form-control-sm">
+                                             <option>Today</option>
+                                             <option>Last Week</option>
+                                             <option>Last Month</option>
+                                          </select>
+                                       </div>
+                                    </li>
+                                 </ul>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="card-body">
+                           <div id="apexcharts-area"></div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-md-12 col-lg-6">
+                     <div class="card card-chart">
+                        <div class="card-header">
+                           <div class="row align-items-center">
+                              <div class="col-6">
+                                 <h5 class="card-title">Number of Clients</h5>
+                              </div>
+                              <div class="col-6">
+                                 <ul class="list-inline-group text-right mb-0 pl-0">
+                                    <li class="list-inline-item">
+                                       <div class="form-group mb-0 amount-spent-select">
+                                          <select class="form-control form-control-sm">
+                                             <option>Today</option>
+                                             <option>Last Week</option>
+                                             <option>Last Month</option>
+                                          </select>
+                                       </div>
+                                    </li>
+                                 </ul>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="card-body">
+                           <div id="bar"></div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+              <div class="row">
+   <div class="col-md-6 d-flex">
+      <div class="card flex-fill">
+         <div class="card-header">
+            <h5 class="card-title">Star Clients</h5>
+         </div>
+         <div class="card-body">
+            <div class="table-responsive">
+               <table class="table table-hover table-center">
+                  <thead class="thead-light">
+                     <tr>
+                        <th>Number</th>
+                        <th>Name</th>
+                        <th class="text-center">Spending</th>
+                        <th class="text-center">Email</th>
+                     </tr>
+                  </thead>
+                 <tbody>
+{% for client in star_clients %}
+<tr>
+  <td>{{ forloop.counter }}</td>
+  <td>{{ client.full_name }}</td>
+  <td>{{ client.total_spending|default:0 }}</td>
+  <td>{{ client.email }}</td>
+</tr>
+  {% empty %}
+  <tr>
+    <td colspan="4" class="text-center">No clients found</td>
+  </tr>
+  {% endfor %}
+</tbody>
+               </table>
+            </div>
+         </div>
+      </div>
+   </div>
+
+
+                  <div class="col-md-6 d-flex">
+  <div class="card flex-fill">
+    <div class="card-header">
+      <h5 class="card-title">Latest Activities</h5>
+    </div>
+   <div class="card-body">
+   <ul class="activity-feed">
+      {% for activity in latest_activities %}
+         <li class="feed-item">
+            <div class="feed-date">{{ activity.date }}</div>
+            <span class="feed-text">{{ activity.text }}</span>
+         </li>
+      {% endfor %}
+   </ul>
+</div>
+  </div>
+</div>
+
+               </div>
+               <div class="row">
+                  <div class="col-xl-3 col-sm-6 col-12">
+                     <div class="card flex-fill fb sm-box">
+                        <i class="fab fa-facebook"></i>
+                        <h6>50,095</h6>
+                        <p>Likes</p>
+                     </div>
+                  </div>
+                  <div class="col-xl-3 col-sm-6 col-12">
+                     <div class="card flex-fill twitter sm-box">
+                        <i class="fab fa-twitter"></i>
+                        <h6>48,596</h6>
+                        <p>Follows</p>
+                     </div>
+                  </div>
+                  <div class="col-xl-3 col-sm-6 col-12">
+                     <div class="card flex-fill insta sm-box">
+                        <i class="fab fa-instagram"></i>
+                        <h6>52,085</h6>
+                        <p>Follows</p>
+                     </div>
+                  </div>
+                  <div class="col-xl-3 col-sm-6 col-12">
+                     <div class="card flex-fill linkedin sm-box">
+                        <i class="fab fa-linkedin-in"></i>
+                        <h6>69,050</h6>
+                        <p>Follows</p>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <footer>
+               
+            </footer>
+         </div>
+      </div>
+   <script src="{% static 'assets/js/jquery-3.6.0.min.js' %}"></script>
+<script src="{% static 'assets/js/popper.min.js' %}"></script>
+<script src="{% static 'assets/plugins/bootstrap/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'assets/plugins/slimscroll/jquery.slimscroll.min.js' %}"></script>
+<script src="{% static 'assets/plugins/apexchart/apexcharts.min.js' %}"></script>
+<script src="{% static 'assets/plugins/apexchart/chart-data.js' %}"></script>
+<script src="{% static 'assets/js/script.js' %}"></script>
+
+   </body>
+   
+</html>
+{% endblock  %}

@@ -1,0 +1,160 @@
+{% extends "Home/base_admin.html" %}
+{% load static %}
+{% block body %}
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        <div class="page-header">
+            <div class="row align-items-center">
+                <div class="col">
+                    <h3 class="page-title">Add Flight</h3>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url 'flight_list'%}">Flights</a></li>
+                        <li class="breadcrumb-item active">Add Flight</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-body">
+                        <form method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="row">
+                                <!-- Airline Company -->
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label for="airline_company">Airline Company</label>
+                                        <input type="text" id="airline_company" class="form-control" name="airline_company" required>
+                                    </div>
+                                </div>
+                                
+                                <!-- Plane Model -->
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label for="plane_model">Plane Model</label>
+                                        <input type="text" id="plane_model" class="form-control" name="plane_model">
+                                    </div>
+                                </div>
+                                
+                                <!-- Departure City -->
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label for="departure_city">Departure City</label>
+                                        <select id="departure_city" class="form-control" name="departure_city" required>
+                                            <option value="">Select Departure City</option>
+                                            {% for city in cities %}
+                                                <option value="{{ city.id }}">{{ city.name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <!-- Departure IATA Code -->
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label for="departure_iata">Departure IATA Code</label>
+                                        <input type="text" id="departure_iata" class="form-control" name="departure_iata" maxlength="10">
+                                    </div>
+                                </div>
+                                
+                                <!-- Arrival City -->
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label for="arrival_city">Arrival City</label>
+                                        <select id="arrival_city" class="form-control" name="arrival_city" required>
+                                            <option value="">Select Arrival City</option>
+                                            {% for city in cities %}
+                                                <option value="{{ city.id }}">{{ city.name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <!-- Arrival IATA Code -->
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label for="arrival_iata">Arrival IATA Code</label>
+                                        <input type="text" id="arrival_iata" class="form-control" name="arrival_iata" maxlength="10">
+                                    </div>
+                                </div>
+                                
+                                <!-- Departure Time -->
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label for="departure_time">Departure Time</label>
+                                        <input type="datetime-local" id="departure_time" class="form-control" name="departure_time" required>
+                                    </div>
+                                </div>
+                                
+                                <!-- Arrival Time -->
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label for="arrival_time">Arrival Time</label>
+                                        <input type="datetime-local" id="arrival_time" class="form-control" name="arrival_time" required>
+                                    </div>
+                                </div>
+                                
+                                <!-- Price -->
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label for="price">Price</label>
+                                        <input type="number" id="price" class="form-control" name="price" step="0.01" min="0" required>
+                                    </div>
+                                </div>
+                                
+                                <!-- Available Seats -->
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label for="available_seats">Available Seats</label>
+                                        <input type="number" id="available_seats" class="form-control" name="available_seats" min="1" required>
+                                    </div>
+                                </div>
+                                
+                                <!-- Duration (hours:minutes) -->
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label for="duration">Duration (HH:MM:SS)</label>
+                                        <input type="text" id="duration" class="form-control" name="duration" placeholder="e.g., 02:30:00" required>
+                                    </div>
+                                </div>
+                                
+                                <!-- Status -->
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label for="status">Status</label>
+                                        <select id="status" class="form-control" name="status" required>
+                                            <option value="active">Active</option>
+                                            <option value="canceled">Canceled</option>
+                                            <option value="delayed">Delayed</option>
+                                            <option value="completed">Completed</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <!-- Flight Image -->
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="image">Flight Image</label>
+                                        <input type="file" id="image" class="form-control" name="image" accept="image/*">
+                                    </div>
+                                </div>
+                                
+                                <div class="col-12">
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{% static 'assets/js/jquery-3.6.0.min.js' %}"></script>
+<script src="{% static 'assets/js/popper.min.js' %}"></script>
+<script src="{% static 'assets/plugins/bootstrap/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'assets/plugins/slimscroll/jquery.slimscroll.min.js' %}"></script>
+<script src="{% static 'assets/js/script.js' %}"></script>
+{% endblock body %}

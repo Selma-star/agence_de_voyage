@@ -1,0 +1,114 @@
+{% extends "Home/base_admin.html" %}
+{% load static %}
+{% block body %}
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        <div class="page-header">
+            <div class="row align-items-center">
+                <div class="col">
+                    <h3 class="page-title">Add Activity</h3>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url 'activity_list' %}">Activities</a></li>
+                        <li class="breadcrumb-item active">Add Activity</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-body">
+                        <form method="POST">
+                            {% csrf_token %}
+                            <div class="row">
+
+                                <!-- Activity Name -->
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label for="name">Activity Name</label>
+                                        <input type="text" id="name" class="form-control" name="name" required>
+                                    </div>
+                                </div>
+
+                                <!-- City (ForeignKey) -->
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label for="city">City</label>
+                                        <select id="city" class="form-control" name="city" required>
+                                            <option value="">Select City</option>
+                                            {% for city in cities %}
+                                                <option value="{{ city.id }}">{{ city.name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <!-- Activity Type -->
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label for="activity_type">Activity Type</label>
+                                        <input type="text" id="activity_type" class="form-control" name="activity_type">
+                                    </div>
+                                </div>
+
+                                <!-- Price -->
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label for="price">Price</label>
+                                        <input type="number" id="price" name="price" class="form-control" step="0.01">
+                                    </div>
+                                </div>
+
+                                <!-- Opening Hours -->
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label for="opening_hours">Opening Hours</label>
+                                        <input type="text" id="opening_hours" name="opening_hours" class="form-control">
+                                    </div>
+                                </div>
+
+                                <!-- Website URL -->
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label for="website_url">Website URL</label>
+                                        <input type="url" id="website_url" name="website_url" class="form-control">
+                                    </div>
+                                </div>
+
+                                <!-- Rating -->
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label for="rating">Rating</label>
+                                        <input type="number" id="rating" name="rating" class="form-control" step="0.1" max="5">
+                                    </div>
+                                </div>
+
+                                <!-- Description -->
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="description">Description</label>
+                                        <textarea id="description" name="description" class="form-control" rows="3"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{% static 'assets/js/jquery-3.6.0.min.js' %}"></script>
+<script src="{% static 'assets/js/popper.min.js' %}"></script>
+<script src="{% static 'assets/plugins/bootstrap/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'assets/plugins/slimscroll/jquery.slimscroll.min.js' %}"></script>
+<script src="{% static 'assets/js/script.js' %}"></script>
+
+{% endblock %}

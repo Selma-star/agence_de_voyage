@@ -1,0 +1,336 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Voyago - packages{% endblock %}  <!-- Set custom title -->
+
+{% block extra_head %} 
+ <link rel="stylesheet" href="{% static 'css/PackageHome.css' %}">   
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    {% endblock %}
+
+{% block content %}
+
+ 
+
+<section class="hero">
+  <div class="hero-title">
+   <h1>Exceptional Travel Packages <br> Start Here !</h1>
+  
+     <form class="filter-container" action="{% url 'packagefiltre' %}" method="get">
+   
+       <div class="filter-item">
+         <label for="from_country">From Country</label>
+                         <div class="combobox">
+                             <input type="text" id="from_country" name="from_country" class="input-box" placeholder="Search country..." autocomplete="off">
+                             <ul id="from_country-list" class="dropdown" style="display: none;"></ul>
+                         </div>
+       </div>
+   
+       <div class="filter-item">
+         <label for="to_country">To Country </label>
+                         <div class="combobox">
+                             <input type="text" id="to_country" name="to_country" class="input-box" placeholder="Search country..." autocomplete="off">
+                             <ul id="to_country-list" class="dropdown" style="display: none;"></ul>
+                         </div>
+       </div>
+   
+       <div class="filter-item">
+         <label for="departure">Check-in</label>
+         <input type="date" id="departure" name="departure" required>
+      </div>
+
+      <div class="filter-item">
+         <label for="return">Check-out</label>
+         <input type="date" id="return" name="return" required disabled >
+      </div>
+   
+      <div class="filter-item">
+       <label>People</label>
+       <input type="number" name="people" min="1" value="1">
+     </div>
+   
+       
+     <div class="filter-item">
+       <label>&nbsp;</label> <!-- un espace pour aligner avec les autres labels -->
+       <button class="search-btn">Search Trip</button>
+     </div>
+   
+   </form>
+   <!-- JavaScript to control the Check-out rules -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+   const departureInput = document.getElementById('departure');
+   const returnInput = document.getElementById('return');
+
+   departureInput.addEventListener('change', function () {
+       if (departureInput.value) {
+           let departureDate = new Date(departureInput.value);
+           departureDate.setMonth(departureDate.getMonth() + 1);
+
+           let year = departureDate.getFullYear();
+           let month = String(departureDate.getMonth() + 1).padStart(2, '0'); // months are 0-indexed
+           let day = String(departureDate.getDate()).padStart(2, '0');
+
+           let minReturnDate = `${year}-${month}-${day}`;
+
+           returnInput.min = minReturnDate;
+           returnInput.disabled = false;
+       } else {
+           returnInput.value = '';
+           returnInput.disabled = true;
+       }
+   });
+});
+// --- Universal dropdown setup for From Country and To Country ---
+
+async function fetchCountries() {
+ const res = await fetch("/api/countries/");
+ return await res.json();
+}
+
+function setupCountryDropdown(inputId, dropdownId) {
+ const input = document.getElementById(inputId);
+ const dropdown = document.getElementById(dropdownId);
+ let countries = [];
+
+ async function init() {
+     countries = await fetchCountries();
+     //updateDropdown(); show all on focus
+ }
+
+ function filterCountries(query) {
+     return countries.filter(country =>
+         country.name.toLowerCase().includes(query.toLowerCase())
+     );
+ }
+
+ function renderDropdown(items) {
+     dropdown.innerHTML = "";
+
+     if (items.length === 0) {
+         dropdown.innerHTML = "<li class='no-results'>No countries found</li>";
+         return;
+     }
+
+     items.forEach(country => {
+         const li = document.createElement("li");
+         li.className = "option";
+         li.innerHTML = `<span>${country.name}</span>`;
+         li.addEventListener("click", () => {
+             input.value = country.name;
+             dropdown.style.display = "none";
+         });
+         dropdown.appendChild(li);
+     });
+ }
+
+ function updateDropdown() {
+     const query = input.value;
+     const filtered = query ? filterCountries(query) : countries;
+     renderDropdown(filtered);
+     dropdown.style.display = "block";
+ }
+
+ input.addEventListener("input", updateDropdown);
+ input.addEventListener("focus", updateDropdown);
+ document.addEventListener("click", e => {
+     if (!e.target.closest(".combobox")) {
+         dropdown.style.display = "none";
+     }
+ });
+
+ init(); // Initialize loading
+}
+
+// --- Call the setup for both fields ---
+document.addEventListener('DOMContentLoaded', function () {
+ setupCountryDropdown("from_country", "from_country-list");
+ setupCountryDropdown("to_country", "to_country-list");
+});
+
+</script>
+ </div>  
+   
+</section>
+
+
+      <section class="trips">
+        <h2>Explore vacation packages to popular destinations</h2>
+        <div class="trip-cards">
+            {% for package in packages %}
+                <div class="card">
+                    {% if package.city.image %}
+                        <img src="{{ package.city.image.url }}" alt="{{ package.name }}">
+                    {% else %}
+                        <img src="{% static 'images/hawai.jpg' %}" alt="{{ package.name }}">
+                    {% endif %}
+                    <h3>{{ package.name }}</h3>
+                    <p>
+                        <i class="fas fa-calendar-day"></i> {{ package.duration }} Days &nbsp;
+                
+                        <i class="fas fa-globe"></i> {{ package.city }}
+                    </p>
+                    <p class="price">${{ package.price }}</p>
+                    <a href="{% url 'package_det' package.id %}">
+                        <button type="button">View Trip</button>
+                    </a>
+                </div>
+            {% empty %}
+                <p>No packages found.</p>
+            {% endfor %}
+        </div>
+    </section>
+    
+   
+      
+<section class="info-section">
+    <div class="info-container">
+        <div class="info-text">
+            <h2>Our Exceptional Packages</h2>
+
+            <p>
+              Discover our offers specially designed to meet your travel desires. Whether you dream of paradisiacal beaches,
+              mountain adventures, or cultural discoveries, our agency is here to guide you with packages tailored to all types of travelers.
+            </p>
+            
+            <p>
+              Our packages include flights, accommodations, transfers, and excursions to provide you with a hassle-free, all-in-one experience.
+            </p>
+            
+            <!-- Partie masquée au départ -->
+            <div id="more-content" style="display: none;">
+              <p>
+                Thanks to our network of international partners, we guarantee the best prices and impeccable service quality.
+              </p>
+            
+              <p>
+                Whether you're traveling solo, with a partner, with family, or with friends, we have the perfect trip for you.
+                Our advisors are ready to customize your stay according to your needs and budget.
+              </p>
+            
+              <p>
+                Book now and enjoy an unforgettable experience at a discounted price. Escape, comfort, and authenticity await you!
+              </p>
+            </div>
+            
+            <a href="#" class="read-more" onclick="toggleContent(event)">Read More</a>
+            
+          </div>
+  
+      <div class="info-images">
+        <div class="image-card">
+          <img src="/static/images/impack1.jpg" alt="Destination 1">
+        </div>
+        <div class="image-card">
+          <img src="/static/images/impack2.jpg" alt="Destination 2">
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  
+  <section class="faq-section">
+    <h2>Frequently Asked Questions</h2>
+
+    <div class="faq-container">
+
+        <!-- Premières 5 questions -->
+        <div class="faq-item">
+          <details>
+            <summary>How can I book a package?</summary>
+            <p>You can book a package directly on our website by selecting the desired dates, destinations, and services.</p>
+          </details>
+        </div>
+      
+        <div class="faq-item">
+          <details>
+            <summary>What payment methods are accepted?</summary>
+            <p>We accept payments by credit card (Visa, MasterCard, etc.), PayPal, as well as bank transfers for certain bookings.</p>
+          </details>
+        </div>
+      
+        <div class="faq-item">
+          <details>
+            <summary>Can I modify my reservation after confirming it?</summary>
+            <p>Yes, it is possible to modify a reservation under certain conditions. Please contact us quickly for more details.</p>
+          </details>
+        </div>
+      
+        <div class="faq-item">
+          <details>
+            <summary>Do the packages include insurance?</summary>
+            <p>Our packages may include travel insurance, depending on the package selected. Please check the booking details.</p>
+          </details>
+        </div>
+      
+        <div class="faq-item">
+          <details>
+            <summary>What should I do if I want to cancel my trip?</summary>
+            <p>Cancellation policies vary depending on the package. Cancellation fees may apply. Check our booking conditions.</p>
+          </details>
+        </div>
+      
+        <!-- Questions supplémentaires (masquées au début) -->
+        <div id="more-faq" style="display: none;">
+          <div class="faq-item">
+            <details>
+              <summary>How can I contact the agency?</summary>
+              <p>You can contact us via email, phone, or our online contact form available on the website.</p>
+            </details>
+          </div>
+      
+          <div class="faq-item">
+            <details>
+              <summary>Are the excursions customizable?</summary>
+              <p>Yes, we offer customizable excursions depending on the destination. Ask our advisors for more info.</p>
+            </details>
+          </div>
+      
+          <div class="faq-item">
+            <details>
+              <summary>Is it possible to travel with pets?</summary>
+              <p>Some of our partners accept pets. Please check with us before booking for pet-friendly packages.</p>
+            </details>
+          </div>
+        </div>
+      
+        <!-- Bouton -->
+        <a href="#" class="more-faq" onclick="toggleFAQ(event)">See more questions</a>
+      
+      </div>
+</section>
+<section class="feedback-section">
+    <h2 class="title">What travelers say</h2>
+    <p class="subtitle">Your Feedback, Our Inspiration</p>
+
+    <div class="feedback-container">
+        <!-- Feedback 1 -->
+        <div class="feedback-card">
+            <img src="profile2 (1).png" alt="Jane Copper" class="profile-pic">
+            <div class="feedback-info">
+                    <h3>Jane Copper</h3>
+                    <p class="location">Tokyo, Japan</p>
+                </div>
+                <p class="feedback-text">"Amazing experience! Everything was seamless, and the trip was perfectly planned. Can't wait for my next adventure!"</p>
+           
+        </div>
+    
+        <!-- Feedback 2 (Correction ici) -->
+        <div class="feedback-card">
+            <img src="profile2 (2).png" alt="John Doe" class="profile-pic">
+            <div class="feedback-info">
+                <h3>John Doe</h3>
+                <p class="location">New York, USA</p>
+            </div>
+            <p class="feedback-text">"This trip changed my life! The planning was perfect, and I discovered amazing places I never imagined visiting."</p>
+        </div>
+    </div>
+    <div class="nav-buttons">
+        <button class="prev" onclick="prevFeedback()">&#10094;</button>
+        <button class="next" onclick="nextFeedback()">&#10095;</button>
+    </div>
+</section>
+{% endblock %}
+{% block scripts %}
+<script src="{% static 'js/home.js' %}"></script>
+{% endblock %}

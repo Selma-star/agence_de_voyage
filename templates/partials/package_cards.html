@@ -1,0 +1,25 @@
+{% load static %}
+
+{# templates/partials/package_cards.html #}
+<div class="cards" id="package-cards">
+    {% for package in packages %}
+        <div class="card">
+            {% if package.city.image %}
+                <img src="{{ package.city.image.url }}" alt="{{ package.name }}">
+            {% else %}
+                <img src="{% static 'images/hawai.jpg' %}" alt="{{ package.name }}">
+            {% endif %}
+            <h3>{{ package.name }}</h3>
+            <p>
+                <i class="fas fa-calendar-day"></i> {{ package.duration }} Days &nbsp;
+                <i class="fas fa-globe"></i> {{ package.city }}
+            </p>
+            <p class="price">${{ package.price }}</p>
+            <a href="{% url 'package_details' package.id %}">
+                <button type="button">View Trip</button>
+            </a>
+        </div>
+    {% empty %}
+        <p>No packages found.</p>
+    {% endfor %}
+</div>

@@ -1,0 +1,223 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}destination hero{% endblock %}
+
+{% block extra_head %} 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <link rel="stylesheet" href="{% static 'css/styledes.css' %}">
+  <script defer src="{% static 'js/scriptdes.js' %}"></script>
+{% endblock %}
+
+
+{% block content %}
+<body>
+    <section class="hero">
+        <div class="hero-content">
+          <h1>Journey Into the Heart of Algeria <br> Culture, Beauty, Discovery!</h1>
+          <div class="search-bar">
+            <input 
+              type="text" 
+              list="countries" 
+              placeholder="Trouvez votre destination de rêve" 
+              hx-get="/search" 
+              hx-target="#results">
+            <button class="search-icon">
+              <i class="fas fa-search"></i>
+            </button>
+      
+            <datalist id="countries">
+              <option value="France">
+              <option value="Italie">
+              <option value="Espagne">
+              <option value="Allemagne">
+              <option value="Algérie">
+              <option value="Canada">
+              <option value="Tunisie">
+              <option value="Japon">
+              <option value="Brésil">
+              <option value="Turquie">
+            </datalist>
+          </div>
+        </div>
+      </section>
+    
+      <section class="destinations">
+        <div class="destinations-header">
+            <h2>Where to next?</h2>
+        </div>
+        <p class="subtitle">Plan your trip</p>
+
+        <div class="carousel">
+            <div class="card">
+                <img src="/static/imagess/alger.jpg" alt="Alger">
+                <div class="overlay">
+                    <h3>Alger</h3>
+                    <p>Capitale vibrante au bord de la Méditerranée</p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <img src="/static/imagess/bejaia.jpg" alt="Béjaïa">
+                <div class="overlay">
+                    <h3>Béjaïa</h3>
+                    <p>Perle de la Kabylie entre mer et montagne</p>
+                </div> 
+            </div>
+            
+            <div class="card">
+                <img src="/static/imagess/setif.jpg" alt="Sétif">
+                <div class="overlay">
+                    <h3>Sétif</h3>
+                    <p>Ville historique à l’âme berbère <br> et romaine</p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <img src="/static/imagess/blida2.jpg" alt="Blida">
+                <div class="overlay">
+                    <h3>Blida</h3>
+                    <p>La ville des roses au pied de <br> l’Atlas</p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <img src="/static/imagess/batna.webp" alt="Batna">
+                <div class="overlay">
+                    <h3>Batna</h3>
+                    <p>Berceau des Aurès et des traditions chaouies</p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <img src="/static/imagess/ouedssouf.jpg" alt="Oued Souf">
+                <div class="overlay">
+                    <h3>Oued Souf</h3>
+                    <p>La ville aux mille coupoles du Sahara</p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <img src="/static/imagess/tlemecen.jpg" alt="Tlemcen">
+                <div class="overlay">
+                    <h3>Tlemcen</h3>
+                    <p>Ville d’art, d’histoire et de culture andalouse</p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <img src="/static/imagess/annaba.jpg" alt="Annaba">
+                <div class="overlay">
+                    <h3>Annaba</h3>
+                    <p>Entre mer, forêt et vestiges de Saint Augustin</p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <img src="/static/imagess/jijel.jpg" alt="Jijel">
+                <div class="overlay">
+                    <h3>Jijel</h3>
+                    <p>Plages sauvages et grottes féériques</p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <img src="/static/imagess/ouargla.jpg" alt="Ouargla">
+                <div class="overlay">
+                    <h3>Ouargla</h3>
+                    <p>Portes du désert aux oasis ancestrales</p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <img src="/static/imagess/tipaza.jpg" alt="Tipaza">
+                <div class="overlay">
+                    <h3>Tipaza</h3>
+                    <p>Vestiges romains en bord de <br> mer</p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <img src="/static/imagess/tiziouezzou.jpg" alt="Tizi Ouzou">
+                <div class="overlay">
+                    <h3>Tizi Ouzou</h3>
+                    <p>Coeur battant de la Kabylie berbère</p>
+                </div>
+            </div>
+
+     <a href="{% url 'constantine_detail' %}" style="text-decoration: none; color: inherit;">
+  <div class="card">
+    <img src="/static/imagess/briold.jpg" alt="Constantine">
+    <div class="overlay">
+      <h3>Constantine</h3>
+      <p>La cité des ponts suspendus et <br> de l’histoire millénaire</p>
+    </div>
+  </div>
+</a>
+            
+            <div class="card">
+                <img src="/static/imagess/tamen.jpg" alt="Tamanrasset">
+                <div class="overlay">
+                    <h3>Tamanrasset</h3>
+                    <p>Au cœur du Hoggar, berceau touareg</p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <img src="/static/imagess/oran.jpg" alt="Oran">
+                <div class="overlay">
+                    <h3>Oran</h3>
+                    <p>La ville radieuse de l’ouest <br> algérien</p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <img src="/static/imagess/guelma.jpg" alt="Guelma">
+                <div class="overlay">
+                    <h3>Guelma</h3>
+                    <p>Ville thermale et vestiges <br> romains</p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <img src="/static/imagess/bouira.jpg" alt="Bouira">
+                <div class="overlay">
+                    <h3>Bouira</h3>
+                    <p>Entre montagnes de Kabylie et vallées paisibles</p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <img src="/static/imagess/mosta.jfif" alt="Mostaganem">
+                <div class="overlay">
+                    <h3>Mostaganem</h3>
+                    <p>Station balnéaire au charme andalou</p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <img src="/static/imagess/skikda.jpg" alt="Skikda">
+                <div class="overlay">
+                    <h3>Skikda</h3>
+                    <p>Plages paradisiaques et héritage colonial</p>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="pagination">
+            <button class="prev">&lt;</button>
+            <div class="page-numbers"></div>
+            <button class="next">&gt;</button>
+        </div>
+    </section>
+
+      <div id="results"></div>
+
+
+</body>
+
+{% endblock %}
+{% block scripts %}
+
+{% endblock %}

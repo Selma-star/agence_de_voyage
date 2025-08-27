@@ -1,0 +1,31 @@
+<!-- templates/partials/navbar.html -->
+{% load static %}
+<nav class="navbar">
+    <div class="logo">
+        <img src="{% static 'images/logo (1).png' %}" alt="Voyago Logo">
+    </div>
+    <ul class="nav-links">
+        <li><a href="{% url 'home' %}" class="{% if request.path == '/home/' %}active{% endif %}">Home</a></li>
+        <li><a href="{% url 'destination' %}" class="{% if request.path == '/destination/' %}active{% endif %}">Destination</a></li>
+        <li><a href="{% url 'Flight_page' %} " class="{% if request.path == '/Flight/' %}active{% endif %}" >Flights</a></li>
+        <li><a href="{% url 'hotel_page' %} " class="{% if request.path == '/hotel/' %}active{% endif %}">Hotels</a></li>
+        <li><a href="{% url 'package_page' %}" class="{% if request.path == '/packages/' %}active{% endif %} ">Offers</a></li>
+        <li><a href="#" class="{% if request.path == '/Contact/' %}active{% endif %}">Contact Us</a></li>
+    </ul>
+
+    {% if user.is_authenticated %}
+        <a href="{% url 'profile' %}" class="sign-in">Profile</a>
+    {% else %}
+        <a href="{% url 'register' %}" class="sign-in">Sign In</a>
+    {% endif %}
+</nav>
+<script>
+     let currentPath = window.location.pathname;
+  let navLinks = document.querySelectorAll(".navbar a");
+
+  navLinks.forEach(link => {
+      if (link.getAttribute("href") === currentPath) {
+          link.classList.add("active");
+      }
+  });
+</script>

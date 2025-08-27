@@ -1,0 +1,150 @@
+{% extends "Home/base_admin.html" %}
+{% load static %}
+{% block body %}
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        <div class="page-header">
+            <div class="row align-items-center">
+                <div class="col">
+                    <h3 class="page-title">Add Booking</h3>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url 'booking_list' %}">Bookings</a></li>
+                        <li class="breadcrumb-item active">Add Booking</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-body">
+                        <form method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label for="booking_code">Booking Code</label>
+                                        <input type="text" id="booking_code" class="form-control" name="booking_code" required>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label for="client">Client</label>
+                                        <select id="client" class="form-control" name="client" required>
+                                            {% for client in clients %}
+                                                <option value="{{ client.id }}">{{ client.full_name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label for="city">City</label>
+                                        <select id="city" class="form-control" name="city" required>
+                                            {% for city in cities %}
+                                                <option value="{{ city.id }}">{{ city.name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label for="flight">Flight Information</label>
+                                        <select id="flight" class="form-control" name="flight">
+                                            <option value="">None</option>
+                                            {% for flight in flights %}
+                                                <option value="{{ flight.id }}">{{ flight.airline_company }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label for="hotel">Hotel Information</label>
+                                        <select id="hotel" class="form-control" name="hotel">
+                                            <option value="">None</option>
+                                            {% for hotel in hotels %}
+                                                <option value="{{ hotel.id }}">{{ hotel.name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label for="package">Package Information</label>
+                                        <select id="package" class="form-control" name="package">
+                                            <option value="">None</option>
+                                            {% for package in packages %}
+                                                <option value="{{ package.id }}">{{ package.name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label for="package_type">Package Type</label>
+                                        <select id="package_type" class="form-control" name="package_type" required>
+                                            <option value="flight-only">Flight Only</option>
+                                            <option value="hotel-only">Hotel Only</option>
+                                            <option value="full-package">Full Package</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label for="check_in_date">Check-in Date</label>
+                                        <input type="date" id="check_in_date" class="form-control" name="check_in_date">
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label for="check_out_date">Check-out Date</label>
+                                        <input type="date" id="check_out_date" class="form-control" name="check_out_date">
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label for="number_of_nights">Number of Nights</label>
+                                        <input type="number" id="number_of_nights" class="form-control" name="number_of_nights" min="1">
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label for="status">Booking Status</label>
+                                        <select id="status" class="form-control" name="status" required>
+                                            <option value="pending">Pending</option>
+                                            <option value="confirmed">Confirmed</option>
+                                            <option value="canceled">Canceled</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{% static 'assets/js/jquery-3.6.0.min.js' %}"></script>
+<script src="{% static 'assets/js/popper.min.js' %}"></script>
+<script src="{% static 'assets/plugins/bootstrap/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'assets/plugins/slimscroll/jquery.slimscroll.min.js' %}"></script>
+<script src="{% static 'assets/js/script.js' %}"></script>
+{% endblock %}

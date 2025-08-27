@@ -1,0 +1,204 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+body {
+  font-family: "poppins", sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f9f9f9;
+}
+
+.room-types {
+  max-width: 75rem;
+  margin: 6rem auto;
+  padding: 2rem 10rem;
+  color: #222;
+}
+
+.section-title {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 2rem;
+  color: #1D1B4C;
+  text-align: center;
+}
+
+.room-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+  column-gap: 2rem;
+  row-gap: 4rem;
+}
+
+.room-card {
+  background-color: #fff;
+  border-radius: 1rem;
+  box-shadow: 0 0.2rem 0.8rem rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
+
+.room-card:hover {
+  transform: translateY(-5px);
+}
+
+.room-image {
+  width: 100%;
+  height: 12rem;
+  object-fit: cover;
+}
+
+.restaurant-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.6rem;
+  font-size: 0.95rem;
+}
+
+.restaurant-name {
+  font-weight: 600;
+  color: #1D1B4C;
+  font-size: 1.2rem;
+}
+
+.rating {
+  margin-top: 0.4rem;
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+.rating .fas {
+  color: #FFD700;
+  font-size: 1.2rem;
+}
+
+.rating .fas:not(.filled) {
+  color: #ccc;
+}
+
+.rating-score {
+  margin-left: 0.3rem;
+  font-size: 1.1rem;
+  color: #444;
+}
+
+.room-description {
+  padding: 1.2rem;
+}
+
+.restaurant-location {
+  font-size: 0.95rem;
+  color: #555;
+  margin-top: 0.6rem;
+  margin-bottom: 0.8rem;
+  line-height: 1.5;
+  display: flex;
+  align-items: flex-start;
+}
+
+.location-icon {
+  color: #555;
+  font-size: 1rem;
+  margin-top: 0.3rem;
+  padding-right: 0.4rem;
+}
+
+.desc-title {
+  font-weight: 600;
+  color: #555;
+}
+
+.location-desc {
+  font-size: 0.95rem;
+  color: #555;
+  margin-bottom: 0.8rem;
+  line-height: 1.5;
+  margin-top: 0.3rem;
+}
+
+/* Responsive Media Queries */
+@media (max-width: 1024px) {
+  .room-types {
+    padding: 2rem 5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .room-types {
+    padding: 2rem 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .room-types {
+    padding: 1rem;
+  }
+
+  .restaurant-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.4rem;
+  }
+}
+
+
+
+@media (max-width: 1024px) {
+  .rectangle {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .image-container,
+  .text-container {
+    width: 100%;
+    padding: 0;
+  }
+
+  .image-container {
+    margin-bottom: 1rem;
+  }
+
+  .footer-links {
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .footer-titre {
+    font-size: 1.75rem;
+    top: 2rem;
+  }
+
+  .rectangle {
+    padding: 1rem;
+  }
+
+  .text-container h2 {
+    font-size: 1.25rem;
+  }
+
+  .text-container p {
+    font-size: 0.95rem;
+  }
+
+  .social-icons img {
+    width: 2rem;
+    margin: 0 0.25rem;
+  }
+
+  .footer-links h3 {
+    font-size: 1rem;
+  }
+
+  .footer-links p,
+  .footer-links a {
+    font-size: 0.875rem;
+  }
+
+  .footer-links {
+    padding: 1rem 0.5rem;
+  }
+}

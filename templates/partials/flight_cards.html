@@ -1,0 +1,78 @@
+{% load static %}
+<div class="flight-card-wrapper"  id="flight-cards">
+    {% for flight in flights %}
+    <div class="flight-card">
+
+          <!-- Airline -->
+       <div class="flight-col airline">
+          <div class="outbound-label">
+            <span class="fas fa-plane-departure"></span> Flight
+          </div>
+          <div class="airline-logo-wrapper">
+            <img src="{{ flight.image.url }}" alt="{{ flight.airline_company }} Logo" class="airline-logo">
+          </div>
+          <div class="flight-info">{{ flight.airline_company }}</div>
+      </div>
+
+  <!-- Timeline -->
+   <div class="flight-col timeline-section">
+    <div class="timeline">
+      <div class="timeline-row">
+
+  <!-- Departure -->
+  <div class="departure">
+    <div class="city-code">{{ flight.departure_city }}</div>
+    <div class="flight-time">{{ flight.departure_time|time:"h:i A" }}</div>
+  </div>
+
+  <!-- Timeline Line with Plane -->
+  <div class="line">
+    <span class="circle"></span>
+    <span class="horizontal-line"></span>
+    <i class="fas fa-plane icon-grey"></i>
+    <span class="horizontal-line"></span>
+    <span class="circle"></span>
+  </div>
+
+  <!-- Arrival -->
+  <div class="arrival">
+    <div class="city-code">{{ flight.arrival_city }}</div>
+    <div class="flight-time">{{ flight.arrival_time|time:"h:i A" }}</div>
+  </div>
+
+  </div>
+</div>
+</div>
+
+<!-- Duration -->
+<div class="flight-col duration-section">
+<i class="fa-regular fa-clock icon-hour"></i>
+<div class="duration">{{ flight.formatted_duration }}</div>
+</div>
+
+<!-- Price -->
+<div class="flight-col price-box">
+<div class="seats-left">{{ flight.available_seats }} SEATS LEFT</div>
+<div class="price">{{ flight.price }} DZD</div>
+<div class="taxes">All taxes included</div>
+<button class="bookNowBtn"
+data-flight-id="{{ flight.id }}"
+data-airline="{{ flight.airline_company }}"
+data-departure-city="{{ flight.departure_city }}"
+data-departure-time="{{ flight.departure_time }}"
+data-arrival-city="{{ flight.arrival_city }}"
+data-arrival-time="{{ flight.arrival_time }}"
+data-duration="{{ flight.formatted_duration }}"
+data-available-seats="{{ flight.available_seats }}"
+data-price="{{ flight.price }}"
+data-image-url="{{ flight.image.url }}">
+Book Now
+</button>
+</div>
+
+</div>
+
+{% empty %}
+<p>No flights found for your search.</p>
+{% endfor %}
+</div>

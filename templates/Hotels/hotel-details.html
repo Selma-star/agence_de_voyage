@@ -1,0 +1,83 @@
+{% extends "Home/base_admin.html" %}
+{% load static %}
+
+{% block body %}
+<div class="page-wrapper">
+  <div class="content container-fluid">
+    <div class="page-header">
+      <div class="row">
+        <div class="col-sm-12">
+          <h3 class="page-title">{{ hotel.name }} Details</h3>
+          <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'hotel_list' %}">Hotels</a></li>
+            <li class="breadcrumb-item active">{{ hotel.name }} Details</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-body">
+        <!-- Hotel Information Section -->
+        <div class="row">
+          <div class="col-md-12">
+            <div class="about-info">
+              <h4>Hotel Information</h4>
+              <div class="media mt-3">
+                <img src="{{ hotel.image.url }}" class="mr-3" alt="{{ hotel.name }}">
+                <div class="media-body">
+                  <ul>
+                    <li><span class="title-span">Hotel Name: </span><span class="info-span">{{ hotel.name }}</span></li>
+                    <li><span class="title-span">Address: </span><span class="info-span">{{ hotel.address }}</span></li>
+                    <li><span class="title-span">City: </span><span class="info-span">{{ hotel.city.name }}</span></li>
+                    <li><span class="title-span">Telephone: </span><span class="info-span">{{ hotel.hotel_telephone }}</span></li>
+                    <li><span class="title-span">Email: </span><span class="info-span">{{ hotel.contact_email }}</span></li>
+                    <li><span class="title-span">Rating: </span><span class="info-span">{{ hotel.rating }}</span></li>
+                    <li><span class="title-span">Website: </span><span class="info-span">{{ hotel.website_url }}</span></li>
+                    <li><span class="title-span">Currency: </span><span class="info-span">{{ hotel.currency }}</span></li>
+                    <li><span class="title-span">Type: </span><span class="info-span">{{ hotel.get_type_display }}</span></li>
+                    <li><span class="title-span">Description: </span><span class="info-span">{{ hotel.description }}</span></li>
+                    <li><span class="title-span">Location (Lat, Lon): </span><span class="info-span">{{ hotel.latitude }}, {{ hotel.longitude }}</span></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hotel Image and Overview -->
+        <div class="row mt-3">
+          <div class="col-md-12">
+            <h4>Hotel Image</h4>
+            <img src="{{ hotel.image.url }}" class="img-fluid" alt="{{ hotel.name }}">
+          </div>
+        </div>
+
+        <div class="row mt-3">
+          <div class="col-md-12">
+            <h5>Hotel Overview</h5>
+            <p>{{ hotel.name }} is located in {{ hotel.city.name }} and offers excellent services with a rating of {{ hotel.rating }} stars. The hotel provides a comfortable stay with modern amenities.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer></footer>
+
+</div>
+</div>
+
+<script data-cfasync="false" src="{% static 'cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js' %}"></script>
+<script src="{% static 'assets/js/jquery-3.6.0.min.js' %}"></script>
+<script src="{% static 'assets/js/popper.min.js' %}"></script>
+<script src="{% static 'assets/plugins/bootstrap/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'assets/plugins/slimscroll/jquery.slimscroll.min.js' %}"></script>
+<script src="{% static 'assets/js/script.js' %}"></script>
+
+</body>
+</html>
+
+{% endblock %}

@@ -1,0 +1,737 @@
+/* Réinitialisation */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #fFFF;
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  
+  
+.package-detail {
+    margin: 5rem auto;
+    padding: 3.75rem 1.25rem; /* 60px 20px */
+    background-color: #fFFF;
+  }
+  
+  .container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2.5rem; /* 40px */
+    max-width: 75rem; /* 1200px */
+    margin: 0 auto;
+    align-items: stretch;
+  }
+  
+  .info {
+    flex: 1;
+    min-width: 18.75rem; /* 300px */
+  }
+  
+  .title {
+    font-family: 'Inter', sans-serif;
+    color: #201E43;
+    font-size: 2.2rem; /* 40px */
+    font-weight: bold;
+    margin-bottom: 0.625rem; /* 10px */
+  }
+  
+  .rating {
+    margin-top: 1rem; /* 16px */
+    color: #f4c150;
+    margin-bottom: 0.9375rem; /* 15px */
+    font-size: 1.5rem;
+  }
+  
+  .description {
+    font-family: 'poppins', sans-serif;
+    font-size: 1rem;
+    margin-bottom: 1.25rem;
+    font-size: 1rem;
+    color: #444;
+  }
+  
+  .features {
+    list-style: none;
+    padding: 0;
+    font-size: 1rem;
+  }
+  
+  .features li {
+    font-family: 'Poppins', sans-serif;
+    margin-bottom: 0.625rem;
+    font-weight: normal; /* normal pour tout le texte par défaut */
+    color: #444;
+  }
+  
+  .features li .label {
+    font-weight: bold; /* bold uniquement pour les titres */
+  }
+  
+  .features i {
+    color: #888;
+    margin-right: 0.625rem;
+  }
+  
+  .images {
+    flex: 1;
+    display: flex;
+    gap: 1rem;
+    min-width: 18.75rem;
+  }
+  
+  .column {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .left {
+    flex: 1;
+  }
+  
+  .left img {
+    width: 100%;
+    height: 50%;
+    object-fit: cover;
+    border-radius: 0.75rem;
+    flex: 1;
+}
+
+  .right {
+    flex: 1;
+  }
+  
+  .right img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 0.75rem;
+}
+
+  .rating-text {
+    font-family: 'poppins', sans-serif;
+    font-size: 1.1rem;
+    color: #444;
+    font-family: 'poppins', sans-serif;
+    margin-left: 0.75rem;
+    vertical-align: middle;
+  }
+
+.info {
+  flex: 1;
+  min-width: 18.75rem; /* 300px */
+  display: flex;
+  flex-direction: column;
+}
+
+.book-button {
+  font-family: 'Poppins', sans-serif;
+  margin-top: 0.8rem;
+  margin-left: 0rem;
+  display: block;
+  width: fit-content;
+  padding: 0.6rem 1.2rem;
+  background-color: #1D1B4C;
+  color: #fff;
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+  border-radius: 1.5rem;
+  transition: background-color 0.3s ease;
+}
+
+.book-button:hover {
+  background-color: #38B6FF;
+  transform: translateY(-0.125rem); /* petit effet "hover" */
+}
+
+.package-itinerary {
+  max-width: 75rem;
+  margin: 5rem auto;
+  padding: 0 2rem;
+  color: #222;
+}
+
+.sect-title {
+  font-size: 2.2rem;
+  font-weight: 600;
+  margin-bottom: 2rem;
+  color: #1D1B4C;
+  text-align: center;
+}
+
+.itinerary-cards {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr; /* default: single column on mobile */
+  gap: 3rem; /* smaller gap on small screens */
+}
+
+.itinerary-card {
+  background-color: #fff;
+  border-radius: 1rem;
+  box-shadow: 0 0.2rem 0.8rem rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.itinerary-card:hover {
+  transform: translateY(-0.2rem);
+}
+
+.itinerary-image {
+  width: 100%;
+  height: 12rem;
+  object-fit: cover;
+}
+
+.itinerary-content {
+  padding: 1.2rem;
+}
+
+.itinerary-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #111;
+}
+
+@media (min-width: 1024px) {
+  .itinerary-cards {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem; /* Ajustez selon vos préférences */
+  }
+
+  .itinerary-card {
+    flex: 1;
+    max-width: 30%; /* Ajustez pour contrôler la largeur des cartes */
+  }
+
+  .timeline-card {
+    flex: 0 0 auto;
+    width: 4rem; /* Largeur fixe pour la carte timeline */
+    height: auto;
+    pointer-events: none;
+    z-index: 1;
+    position: relative;
+  }
+}
+
+
+.timeline-card {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4rem; /* ajustée à la largeur de la ligne + icônes */
+  height: 100%;
+  pointer-events: none; /* rend la carte décorative non interactive */
+  z-index: 1; /* derrière les cartes */
+}
+
+.timeline {
+  position: absolute;
+  top: 2rem;
+  bottom: 2rem;
+  left: 50%;
+  width: 0.15rem;
+  background-image: linear-gradient(to bottom, #201E43 30%, transparent 30%);
+  background-size: 0.25rem 0.75rem;
+  background-repeat: repeat-y;
+  transform: translateX(-50%);
+}
+
+.timeline-icon {
+  position: absolute;
+}
+
+.timeline-icon-left {
+  top: 6rem;
+  left: -6rem; /* éloigné de la ligne vers la gauche */
+}
+
+.timeline-icon-right {
+  top: 14rem;
+  right: -6rem; /* éloigné de la ligne vers la droite */
+}
+
+.circle {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  border: 0.2rem solid #201E43;
+  background-color: #201E43;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.circle i {
+  font-size: 1.8rem;
+  color: white;
+}
+
+  .card-list {
+    list-style-type: disc;
+    padding-left: 1.25rem;
+  }
+  
+  .card-list li {
+    margin-bottom: 1rem;
+    font-size: 1rem;
+  }
+  
+  .card-list span {
+    font-size: 0.95rem;
+    color: #555;
+    margin-bottom: 0.8rem;
+    line-height: 1.5;
+    font-family: 'Poppins', sans-serif;
+  }
+
+
+  @media (max-width: 1023px) {
+    .itinerary-cards {
+      display: block;
+    }
+  
+    .itinerary-card {
+      width: 100%;
+      margin-bottom: 2rem;
+    }
+  
+    .timeline-card {
+      display: none;
+    }
+  }
+  
+  
+  .day-label {
+    background-color: #201E43;
+    color: white;
+    padding: 0.75rem 2rem;
+    border-radius: 1rem;
+    font-weight: bold;
+    font-size: 1.6rem;
+    text-align: center;
+    width: fit-content;
+    margin: 0 auto 2rem auto; /* centré + espace en bas */
+  }
+
+
+  .tour-includes-section {
+    background-color: #D0D2D3;
+    padding: 4rem 2rem;
+    text-align: center;
+    margin: 5rem auto;
+  }
+  
+  .section-title {
+    font-size: 2.2rem;
+    font-weight: bold;
+    margin-bottom: 3rem;
+    color: #201E43;
+    font-family: 'Inter', sans-serif;
+  }
+  
+  .tour-includes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+    gap: 2rem;
+    justify-items: center;
+  }
+  
+  .include-item {
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.05);
+    max-width: 18rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.include-item:hover {
+  transform: translateY(-0.2rem);
+}
+  
+  
+  .include-item .icon {
+    font-size: 2.5rem;
+    color: #201E43;
+    margin-bottom: 1rem;
+    display: block;
+  }
+  
+  .include-item h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #000;
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  .include-item p {
+    font-size: 1rem;
+    color: #000;
+    line-height: 1.5;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  .package-gallery {
+    max-width: 80rem;
+    width: 100%;
+    margin: 5rem auto;
+    padding: 0 1.5rem;
+    box-sizing: border-box;
+    overflow-x: hidden;
+  }
+
+  .package-gallery,
+.gallery-layout {
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+  .gallery-layout {
+    margin-top: 5rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    height: auto;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  .gallery-main {
+    flex: 1.7;
+    position: relative;
+  }
+
+  .main-image-text {
+    position: absolute;
+    top: 50%; /* avant c’était 10%, maintenant c’est plus bas */
+    font-weight: bold;
+    padding: 0.625rem 0.9375rem; /* 10px 15px en rem */
+    border-radius: 0.5rem;
+    font-size: 2.2rem;
+    text-align: left;
+    color: #fFFF;
+    text-shadow: 0.125rem 0.125rem 0.3125rem rgba(0, 0, 0, 0.6);
+  }
+  
+  .gallery-main img {
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 5 / 1.8;
+    object-fit: cover;
+    display: block;
+    border-radius: 1rem; 
+}
+
+  .gallery-side {
+    flex: 1.3;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 0.5rem;
+    position: relative;
+  }
+  
+  .gallery-side img {
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 1 / 0.7;
+    object-fit: cover;
+    display: block;
+    border-radius: 1rem; 
+  }
+  
+
+  .gallery-title {
+    font-size: 2rem;           
+    margin-bottom: 1.25rem;    
+  }
+  
+  .photo-gallery {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.625rem;             
+    flex-wrap: wrap;
+  }
+  
+  .gallery-photo {
+    width: 18%;                
+    height: 12.5rem;           
+    object-fit: cover;
+  }
+ 
+  .view-more-wrapper {
+    text-align: center;
+    margin-top: 1rem;
+  }
+  
+  .view-more-link {
+  position: absolute;
+  bottom: 0.625rem;           /* 10px / 16 = 0.625rem */
+  right: 0.625rem;            /* 10px / 16 = 0.625rem */
+  background-color: #201E43;
+  color: white;
+  padding: 0.375rem 0.75rem;  /* 6px / 16 = 0.375rem, 12px / 16 = 0.75rem */
+  border-radius: 1.25rem;     /* 20px / 16 = 1.25rem */
+  font-weight: 500;
+  font-size: 0.875rem;        /* 14px / 16 = 0.875rem */
+  text-decoration: none;
+  transition: background-color 0.3s;
+}
+  
+  .view-more-link:hover {
+    background-color: #e0e0e0;
+  }
+  
+  /* Fenêtre modale de photos */
+  .photo-modal {
+    display: none; /* cachée par défaut */
+    position: fixed;
+    z-index: 999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    background-color: rgba(0, 0, 0, 0.75);
+  }
+  
+  .photo-modal-content {
+    background-color: #fff;
+    margin: 8% auto;
+    padding: 2rem;
+    border-radius: 1rem;
+    max-width: 70rem;
+    box-shadow: 0 0.2rem 1rem rgba(0, 0, 0, 0.3);
+  }
+  
+  .close-modal {
+    color: #aaa;
+    float: right;
+    font-size: 2rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s;
+  }
+  
+  .close-modal:hover {
+    color: #000;
+  }
+  
+  .modal-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+  
+  .modal-gallery img {
+    width: 100%;
+    height: auto;
+    border-radius: 0.5rem;
+    object-fit: cover;
+  }
+
+  @media (max-width: 768px) {
+    .gallery-layout {
+      flex-direction: column;
+      gap: 1rem;
+      width: 100%;
+      box-sizing: border-box;
+    }
+  
+    .gallery-main,
+    .gallery-side {
+      width: 100%;
+    }
+  
+    .main-image-text {
+      font-size: 1.4rem;
+      left: 1rem;
+      bottom: 1rem; /* tu peux tester aussi 3rem ou plus */
+      position: absolute;
+      top: auto; /* <-- annule le top: 50% du global */
+      color: #fff;
+      text-shadow: 0.125rem 0.125rem 0.3125rem rgba(0, 0, 0, 0.6);
+    }
+  
+    .view-more-link {
+      font-size: 0.75rem;
+      padding: 0.3rem 0.6rem;
+      bottom: 0.625rem;
+      right: 0.625rem;
+    }
+  }
+  
+  @media (max-width: 600px) {
+    .photo-modal-content {
+      padding: 1rem 0.5rem;
+      margin-top: 20%;
+    }
+  
+    .close-modal {
+      font-size: 1.6rem;
+    }
+  
+    .modal-gallery {
+      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+      gap: 0.5rem;
+    }
+  
+    .modal-gallery img {
+      border-radius: 0.3rem;
+    }
+  }
+
+  
+  .package-policies {
+    font-family: 'Poppins', sans-serif;
+    max-width: 75rem;
+    margin: 5rem auto;
+    padding: 0 6rem 0.5rem 6rem; /* 6rem à droite et à gauche */
+    color: #201E43; 
+  }
+  
+  .policies-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+    gap: 2rem;
+    margin-top: 0.2rem;
+  }
+  
+  .policy-item {
+    background-color: #f9f9f9;
+    padding: 1.5rem;
+    border-radius: 1rem;
+    box-shadow: 0 0.1rem 0.6rem rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .policy-item:hover {
+    transform: translateY(-0.2rem);
+    box-shadow: 0 0.4rem 1rem rgba(0, 0, 0, 0.1);
+  }
+  
+  
+  .policy-item h4 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+  
+  .policy-item p {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: #444;
+  }
+
+
+/* section of other trips */
+.other-trips {
+    margin: 5rem auto;
+    text-align: center;
+    padding: 3.125rem 1.25rem; /* 50px 20px */
+    background: #fff;
+}
+
+.other-trips h2 {
+    font-family: 'Inter', sans-serif;
+    font-size: 2rem;
+    margin-bottom: 1.25rem; /* 20px */
+    color: #201E43;
+}
+
+.trip-cards {
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    justify-content: center;
+    gap: 1.25rem; /* 20px */
+    flex-wrap: wrap;
+}
+
+.card {
+    background: #fff;
+    border-radius: 0.625rem; /* 10px */
+    box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1); /* 4px 8px */
+    overflow: hidden;
+    width: 18.75rem; /* 300px */
+    text-align: center;
+    padding: 0.9375rem; /* 15px */
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-0.625rem); /* -10px */
+}
+
+
+.card img {
+    width: 100%;
+    height: 11.25rem; /* 180px */
+    object-fit: cover;
+    border-radius: 0.625rem; /* 10px */
+}
+
+.card h3 {
+    font-size: 1.2rem;
+    margin: 0.625rem 0; /* 10px 0 */
+    color: #000;
+}
+
+.card p {
+    font-size: 0.9rem;
+    color: #201E43;
+}
+
+.card .price {
+    font-weight: bold;
+    font-size: 1rem; /* 16px */
+    color: #000;
+    margin: 0.625rem 0; /* 10px 0 */
+}
+
+.card button {
+    font-family: 'Poppins', sans-serif;
+    background: #201E43;
+    color: white;
+    border: none;
+    padding: 0.625rem 0.9375rem; /* 10px 15px */
+    border-radius: 2.5rem; /* 40px */
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.card button:hover {
+    background: #38B6FF;
+}
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

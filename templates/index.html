@@ -1,0 +1,310 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Home{% endblock %}  <!-- Set custom title -->
+
+{% block extra_head %} 
+<link rel="stylesheet" href="{% static 'css/stylehome.css' %}">
+
+{% endblock %}
+{% block content %}
+
+<body>
+    
+    <section class="hero">
+        <div class="hero-title">
+          <h1>Everywhere we go,<br> makes us everything we are</h1>
+      
+          <!-- Conteneur de tous les filtres -->
+          <div id="hero-filters">
+      
+            <!-- Déplacer les boutons ici -->
+            <div class="filter-buttons">
+                <button onclick="showFilter('flight')" id="btn-flight">Flights</button>
+                <button onclick="showFilter('hotel')" id="btn-hotel">Hotels</button>
+                <button onclick="showFilter('package')" id="btn-package">Packages</button>
+              </div>
+
+            <!-- Ligne de séparation -->
+           <div class="filter-separator"></div>
+      
+            <!-- FILTRE FLIGHT -->
+            <form id="filter-flight" class="filter-container" style="display: flex;">
+              <div class="filter-item">
+                <label>From</label>
+                <input type="text" placeholder="Coming from...">
+              </div>
+              <div class="filter-item">
+                <label>To</label>
+                <input type="text" placeholder="Going to...">
+              </div>
+              <div class="filter-item">
+                <label>Departure</label>
+                <input type="date">
+              </div>
+              <div class="filter-item">
+                <label>Return</label>
+                <input type="date">
+              </div>
+              <div class="filter-item">
+                <label>People</label>
+                <input type="number" value="1" min="1">
+              </div>
+              <div class="filter-item">
+                <label>&nbsp;</label>
+                <button class="search-btn">Search Flight</button>
+              </div>
+            </form>
+      
+           <!-- FILTRE HOTEL -->
+          <form id="filter-hotel" class="filter-container" action="{% url 'hotelfiltre' %}" method="get" style="display: none;">
+
+         <div class="filter-item">
+      <label for="country">Country</label>
+      <div class="combobox">
+        <input type="text" id="country" name="country" class="input-box" placeholder="Search country..." autocomplete="off">
+        <ul id="country-list" class="dropdown" style="display: none;"></ul>
+      </div>
+    </div>
+  
+    <div class="filter-item">
+      <label for="city">City</label>
+      <div class="combobox">
+        <input type="text" id="city" name="city" class="input-box" placeholder="Search city..." required />
+        <ul id="cityDropdown" class="dropdown" style="display: none;"></ul>
+      </div>
+    </div>
+  
+    <div class="filter-item">
+        <label>Check-in</label>
+        <input type="date">
+      </div>
+      <div class="filter-item">
+        <label>Check-out</label>
+        <input type="date">
+      </div>
+  
+    <div class="filter-item">
+      <label>People</label>
+      <input type="number" name="people" min="1" value="1">
+    </div>
+  
+    <div class="filter-item">
+      <label>&nbsp;</label>
+      <button class="search-btn">Search Hotel</button>
+    </div>
+  
+  </form>
+      
+            <!-- FILTRE PACKAGE -->
+            <form id="filter-package" class="filter-container" style="display: none;">
+              <div class="filter-item">
+                <label>From Country</label>
+                <input type="text" placeholder="Search of country...">
+              </div>
+              <div class="filter-item">
+                <label>To Country</label>
+                <input type="text" placeholder="Search of country...">
+              </div>
+              <div class="filter-item">
+                <label>Check-in</label>
+                <input type="date">
+              </div>
+              <div class="filter-item">
+                <label>Check-out</label>
+                <input type="date">
+              </div>
+              <div class="filter-item">
+                <label>People</label>
+                <input type="number" value="1" min="1">
+              </div>
+              <div class="filter-item">
+                <label>&nbsp;</label>
+                <button class="search-btn">Search Package</button>
+              </div>
+            </form>
+      
+        </div>
+    </div>
+  </section>
+    
+    <!-- Destinations Section -->
+    <section class="destinations">
+        <div class="destinations-header">
+            <h2>Top Destinations</h2>
+            
+        </div>
+        <p class="subtitle">Your comfort, Our job</p>
+
+        <div class="carousel">
+            <div class="card">
+                <img src="/static/images/the bridge.jpg" alt="Constantine, Algeria">
+                <div class="overlay">
+                    <h3>Constantine, Algeria</h3>
+                    <p>The journey of life</p>
+                </div>
+            </div>
+            <div class="card">
+                <img src="/static/images/home4.jpg" alt="Algiers, Algeria"> ">
+                <div class="overlay">
+                    <h3>Jijel, Algeria</h3>
+                    <p>Discover a new culture</p>
+                </div> 
+            </div>
+            <div class="card">
+                <img src="/static/images/Tlemcen.jpg" alt="Tlemecen">
+                <div class="overlay">
+                <h3>Tlemcen, Algeria</h3>
+                <p>The island of your dreams</p>
+                </div>
+            </div>
+            <div class="card">
+                <img src="/static/images/oran.jpg" alt="Oran, Algeria">
+                <div class="overlay">
+                    <h3>Oran, Algeria</h3>
+                <p>The Mediterranean magic</p>
+                </div>
+    
+            </div>
+        </div>
+    </section>
+
+   <!-- Hotels Section -->
+   <section class="hotels">
+    <div class="hotels-header">
+    <h2>Hotels</h2>
+    
+    </div>
+    <p class="subtitle">Your comfort, Our job</p>
+    <div class="hotels-grid">
+        <div class="hotel-card verticalgauche">
+            <img src="/static/images/Sofitel_hamma_garden2.jpg" alt="The Horizon Retreat">
+            <div class="hotel-info">
+                <h3>Sofitel Hamma Garden</h3>
+                <p>Algeria, Algiers</p>
+            </div>
+        </div>
+        <div class="hotel-card horizontal">
+            <img src="/static/images/renaissance_Tlemcen.jpg" alt="Serenity Shores Hotel">
+            <div class="hotel-info">
+                <h3>Renaissance Tlemcen Hotel</h3>
+                <p>Algeria, Tlemcen</p>
+            </div>
+        </div>
+        <div class="hotel-card verticaldroite">
+            <img src="/static/images/Sheraton_Oran_Hotel.jpg" alt="The Grand Palms Resort">
+            <div class="hotel-info">
+                <h3>Sheraton Oran Hotel</h3>
+                <p>Algeria, Oran</p>
+            </div>
+        </div>
+        <div class="hotel-card horizontal">
+            <img src="/static/images/constantine.jpg" alt="Blue Lagoon Resort">
+            <div class="hotel-info">
+                <h3>Constantine Marriott Hotel</h3>
+                <p>Algeria, Constantine</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+ <!-- Memories Section -->
+ <section class="memories">
+    <div class="memories-text">
+        <h2>Memories</h2>
+        <p class="subtitle">Sweet memories come to life</p>
+
+        <div class="stats">
+            <div class="stat-box">
+                <span class="number">30K</span>
+                <p>Satisfied customers</p>
+            </div>
+            <div class="stat-box">
+                <span class="number">100</span>
+                <p>Destinations</p>
+            </div>
+            <div class="stat-box">
+                <span class="number">03</span>
+                <p>Years of experience</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="memories-images">
+        <!-- Image principale -->
+        <img src="/static/images/memo_dubai.jpg" alt="Main Image" class="main-image">
+        
+        <!-- Conteneur des petites images -->
+        <div class="small-images">
+            <img src="/static/images/memo1.jpg" alt="Small Image 1" class="small-image-1">
+            <img src="/static/images/memo2.jpg" alt="Small Image 2" class="small-image-2">
+        </div>
+    </div>
+</section>
+
+
+<section class="packages">
+    <h1 class="title">Our Special Packages</h1>
+    <p class="subtitle">A mix of discovering and adventure</p>
+
+    <div class="cards">
+        <div class="travel-card">
+            <img src="/static/images/oran.jpg" alt="Séjour à Paris" class="travel-image">
+            <h2 class="card-title">Stay in Oran</h2>
+            <p class="date">11-20 june</p>
+            <p class="people">20 personnes</p>
+        </div>
+
+        <div class="travel-card">
+            <img src="/static/images/saharra.jpg" alt="Séjour à Rome" class="travel-image">
+            <h2 class="card-title">Stay in Saraha</h2>
+            <p class="date">11-20 September</p>
+            <p class="people">20 personnes</p>
+        </div>
+
+        <div class="travel-card">
+            <img src="/static/images/annaba.jpg" alt="Séjour à Dubaï" class="travel-image">
+            <h2 class="card-title">Stay in Annaba</h2>
+            <p class="date">11-20 april</p>
+            <p class="people">20 personnes</p>
+        </div>
+    </div>
+</section>
+
+<section class="feedback-section">
+    <h2 class="title">What travelers say</h2>
+    <p class="subtitle">Your Feedback, Our Inspiration</p>
+
+    <div class="feedback-container">
+        <!-- Feedback 1 -->
+        <div class="feedback-card">
+            <img src="/static/images/profile2 (1).png" alt="Jane Copper" class="profile-pic">
+            <div class="feedback-info">
+                    <h3>Jane Copper</h3>
+                    <p class="location">Tokyo, Japan</p>
+                </div>
+                <p class="feedback-text">"Amazing experience! Everything was seamless, and the trip was perfectly planned. Can't wait for my next adventure!"</p>
+           
+        </div>
+    
+        <!-- Feedback 2 (Correction ici) -->
+        <div class="feedback-card">
+            <img src="/static/images/profile2 (2).png" alt="John Doe" class="profile-pic">
+            <div class="feedback-info">
+                <h3>John Doe</h3>
+                <p class="location">New York, USA</p>
+            </div>
+            <p class="feedback-text">"This trip changed my life! The planning was perfect, and I discovered amazing places I never imagined visiting."</p>
+        </div>
+    </div>
+    <div class="nav-buttons">
+        <button class="prev" onclick="prevFeedback()">&#10094;</button>
+        <button class="next" onclick="nextFeedback()">&#10095;</button>
+    </div>
+</section>
+
+  </body>
+{% endblock %}
+{% block scripts %}
+<script src="{% static 'js/home2.js' %}"></script>
+{% endblock %}

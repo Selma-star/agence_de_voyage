@@ -1,0 +1,196 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}destination hero{% endblock %}
+
+{% block extra_head %}
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <link rel="stylesheet" href="{% static 'css/styledes2.css' %}">
+  <script defer src="{% static 'js/script8.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+<body>
+  <div class="container">
+    <div class="hero-left">
+      <h2>Constantine <span>Algeria, Africa</span></h2>
+      <p>Constantine, often called "The City of Bridges," is one of Algeria’s most breathtaking destinations. Built across deep gorges and connected by stunning suspension bridges, the city offers a perfect blend of history, culture, and natural beauty. From ancient Roman ruins to vibrant markets and cliffside architecture, Constantine promises an unforgettable journey through time and tradition.</p>
+      <div class="buttons">
+        <a href="{% url 'best_things_to_do' %}">
+  <button>Best things to do</button>
+</a>
+
+<a href="{% url 'best_time_to_visit' %}">
+  <button>Best time to visit</button>
+</a>
+
+      </div>
+    </div>
+  
+    <div class="hero-right">
+      <div class="image-wrapper">
+        <img src="/static/imagess/briold.jpg" alt="photo principale" class="img1">
+        <img src="/static/imagess/f1.jpg" alt="photo secondaire" class="img2">
+      </div>
+    </div>
+  </div>
+
+  
+    <section class="room-types">
+        <h2 class="section-title">Must-see attractions</h2>
+        <div class="room-cards">
+          <div class="room-card">
+            <img src="/static/imagess/brid1.jpg" alt="Single Room" class="room-image" />
+            <div class="room-content">
+              <h4 class="room-title">Sidi M'Cid Bridge</h4>
+              <p class="room-description">
+                The most iconic bridge of Constantine, suspended high above the Rhummel Gorge. It offers panoramic views and is a symbol of the city's architectural genius.
+              </p>
+             
+            </div>
+          </div>
+
+          <div class="room-card">
+            <img src="/static/imagess/ahmad1.jpg" alt="Deluxe Room" class="room-image" />
+            <div class="room-content">
+              <h4 class="room-title">Palace of Ahmed Bey</h4>
+              <p class="room-description">
+                A beautiful 19th-century palace with intricate mosaics, lush gardens, and a rich history that reflects Constantine’s Ottoman heritage.
+              </p>
+              
+            </div>
+          </div>
+    
+          <div class="room-card">
+            <img src="/static/imagess/amimo.jpg" alt="Suite" class="room-image" />
+            <div class="room-content">
+              <h4 class="room-title">Emir Abdelkader Mosque</h4>
+              <p class="room-description">
+                One of the largest mosques in Africa, showcasing impressive Islamic architecture and serving as a cultural and spiritual center.
+              </p>
+              
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="package-gallery">
+        <div class="gallery-layout">
+          <div class="gallery-main">
+            <img src="/static/imagess/briold.jpg" alt="Main package image" />
+            <div class="main-image-text">
+                Explore <br> the attractions of <br> your destination.
+            </div>
+          </div>
+          <div class="gallery-side">
+            <img src="/static/imagess/amimo.jpg" alt="Image 1" />
+            <img src="/static/imagess/brid1.jpg" alt="Image 2" />
+            <img src="/static/imagess/ahmad1.jpg" alt="Image 2" />
+            <div class="last-photo-wrapper">
+              <img src="/static/imagess/mos2.jpg" alt="Image 3" />
+              <a href="#" class="view-more-link">View more photos</a>
+            </div>
+          </div>
+        </div>
+      </section>
+    
+      <div id="photoModal" class="photo-modal">
+        <div class="photo-modal-content">
+          <span class="close-modal">&times;</span>
+          <div class="modal-gallery">
+            <img src="/static/imagess/foot2 (1).jpg" alt="Photo 1" />
+            <img src="/static/imagess/foot2 (1).jpg" alt="Photo 2" />
+            <img src="/static/imagess/foot2 (1).jpg" alt="Photo 3" />
+            <img src="/static/imagess/foot2 (1).jpg" alt="Photo 4" />
+            <img src="/static/imagess/foot2 (1).jpg" alt="Photo 5" />
+            <img src="/static/imagess/foot2 (2).jpg" alt="Photo 6" />
+            <img src="/static/imagess/foot2 (2).jpg" alt="Photo 7" />
+            <img src="/static/imagess/foot2 (2).jpg" alt="Photo 8" />
+            <img src="/static/imagess/foot2 (2).jpg" alt="Photo 9" />
+            <img src="/static/imagess/foot2 (2).jpg" alt="Photo 10" />
+            <img src="/static/imagess/footage.jpg" alt="Photo 11" />
+          </div>
+        </div>
+      </div>
+
+
+
+      <section class="tour-includes-section">
+        <h2 class="section-title">Expert guidance to help you plan your trip</h2>
+        <div class="tour-includes-grid">
+          <div class="include-item">
+            <i class="fas fa-book icon"></i> <!-- Icône du livre -->
+            <h3>Things to know</h3>
+            <p>Constantine is a city of dramatic landscapes, historic monuments, and vibrant culture. Learn about the best areas to explore, local traditions, and safety tips.</p>
+            <a href="#" class="btn-article">Lire l'article</a> <!-- Bouton -->
+          </div>
+          <div class="include-item">
+            <i class="fas fa-sack-dollar icon"></i><!-- Icône du sac d'argent -->
+            <h3>Money and Costs</h3>
+            <p>Traveling to Constantine is budget-friendly. Most attractions are low-cost, and delicious local food can be enjoyed at affordable prices.</p>
+            <a href="#" class="btn-article">Lire l'article</a> <!-- Bouton -->
+          </div>
+          <div class="include-item">
+            <i class="fas fa-bus icon"></i> <!-- Icône de bus -->
+            <h3>Transportation</h3>
+            <p>Getting around Constantine is easy with taxis, private drivers, or by foot. Many of the main sights are within walking distance across the city’s bridges.</p>
+            <a href="#" class="btn-article">Lire l'article</a> <!-- Bouton -->
+          </div>
+        </div>
+      </section>
+
+
+      <section class="package-itinerary">
+        <h2 class="sect-title">Authentic Dishes and Best Restaurants</h2>
+        <div class="itinerary-cards">
+          <div class="itinerary-card">
+            <img src="/static/imagess/plat2.jpg" alt="where to go" class="itinerary-image" />
+            <div class="itinerary-content">
+              <h4 class="itinerary-title">What to eat?</h4>
+              <p class="room-description">
+                The best dishes to enjoy in Constantine right now.
+              </p>
+              <p class="room-description">
+                Discover Constantine's culinary treasures like "Chbah Essafra" (sweet meat dish), "Baklawa Constantine," and "Dobara" (spicy chickpea stew).
+              </p>
+                  <a href="{% url 'best_dishes' %}" class="room-button">Discover</a>
+            </div>
+          </div>
+
+           <!-- Carte décorative timeline -->
+           <div class="timeline-card">
+           <div class="timeline"></div>
+  
+          <div class="timeline-icon timeline-icon-left">
+          <div class="circle">
+            <i class="fas fa-pizza-slice"></i>
+    </div>
+  </div>
+  
+  <div class="timeline-icon timeline-icon-right">
+    <div class="circle">
+        <i class="fas fa-store"></i>
+    </div>
+  </div>
+</div>
+          <div class="itinerary-card">
+            <img src="/static/imagess/restau.jpg" alt="where to eat" class="itinerary-image" />
+            <div class="itinerary-content">
+              <h4 class="itinerary-title">Where to eat?</h4>
+              <p class="room-description">
+                The best places to eat and drink in Constantine at the moment.
+              </p>
+              <p class="room-description">
+                Enjoy traditional meals at cozy family-run restaurants, stylish cafes with city views, and lively markets full of street food flavors.
+              </p>
+              <a href="{% url 'best_places' %}" class="room-button">Discover</a>
+
+            </div>
+          </div>
+        </div>
+      </section>
+
+     
+      
+</body>
+{% endblock %}

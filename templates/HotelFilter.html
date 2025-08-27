@@ -1,0 +1,319 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Hotel{% endblock %}  <!-- Set custom title -->
+
+{% block extra_head %} 
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/HotelFilter.css' %}">
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+{% endblock %}
+
+{% block content %}
+<header>
+       
+</header>
+<div class="hero">
+      <h1>Discover Extraordinary <br> Comfort in Hotels</h1>
+  </div>
+    <section class="filter-section">
+      </section>
+
+      
+    
+    <section class="layout">
+      
+        <!-- FILTER MENU (Left Column) -->
+        <div class="filter-wrapper">
+        <div  class="filter-menu ">
+          <div class="filter-header">
+            <h3>Filter</h3>
+            <button id="reset-button">Reset</button>
+          </div>
+
+          <script>document.getElementById('reset-button').addEventListener('click', function () {
+            document.getElementById('selected-hotel-type').value = '';
+            document.getElementById('selected-rating').value = '';
+            document.getElementById('hidden-min-price').value = '';
+            document.getElementById('hidden-max-price').value = '';
+            document.getElementById('selected-room-type').value = '';
+        
+            // Uncheck all facilities
+            document.querySelectorAll('.facility-checkbox').forEach(cb => cb.checked = false);
+        
+            document.getElementById('hotel-type-form').requestSubmit();
+        });</script>
+      
+          <!-- Search Summary -->
+          <h3>Your Search Details</h3>
+            <div class="search-summary">
+                 <p> {{ request.GET.country }}, {{ request.GET.city }}</p>
+                  {% if nights %}
+                    <p>{{ nights }} nights ({{ checkin }} - {{ checkout }})</p>
+                  {% endif %}
+                   <p>{{ request.GET.people }} {{ request.GET.people|add:'-1'|yesno:'person,people' }}</p>
+            </div>
+          <form id="hotel-type-form" hx-get="/hotel-id/cards/" hx-target="#hotel-cards" hx-swap="outerHTML">
+            <input type="hidden" name="type" id="selected-hotel-type">       
+            <input type="hidden" name="country" value="{{ request.GET.country }}">
+            <input type="hidden" name="city" value="{{ request.GET.city }}">
+            <input type="hidden" name="rating" id="selected-rating"> 
+            <input type="hidden" name="min_price" id="hidden-min-price">
+            <input type="hidden" name="max_price" id="hidden-max-price">
+            <input type="hidden" name="room_type" id="selected-room-type">
+
+            <h4>Hotel Type</h4>
+            <div class="filter-buttons">
+              <button 
+                type="button" 
+                class="filter-option" 
+                onclick="document.getElementById('selected-hotel-type').value='LUXE'; this.form.requestSubmit();">
+                Luxe
+              </button>
+          
+              <button 
+                type="button" 
+                class="filter-option" 
+                onclick="document.getElementById('selected-hotel-type').value='FAMILIALE'; this.form.requestSubmit();">
+                Familial
+              </button>
+          
+              <button 
+                type="button" 
+                class="filter-option" 
+                onclick="document.getElementById('selected-hotel-type').value='POPULAIRE'; this.form.requestSubmit();">
+                Popular
+              </button>
+            </div>
+          
+          
+          <!-- Hotel Type -->
+          <!--<h4>Hotel Type </h4>
+          <div class="filter-buttons">
+            <button class="filter-option" data-type="LUXE">Luxe</button> 
+            <button class="filter-option" data-type="FAMILIALE">Familial</button> 
+            <button class="filter-option" data-type="POPULAIRE">Popular</button> 
+          </div>-->
+      
+          <!-- Price -->
+          <h4>Price Range</h4>
+          <div class="price-stepper">
+            <div class="price-control">
+              <label>Min Price</label>
+              <div class="step-buttons">
+                <button onclick="changePrice('min', -1000)">-</button>
+                <span id="min-price">7000 DZD</span>
+                <button onclick="changePrice('min', 1000)">+</button>
+              </div>
+            </div>
+          
+            <div class="price-control">
+              <label>Max Price</label>
+              <div class="step-buttons">
+                <button onclick="changePrice('max', -1000)">-</button>
+                <span id="max-price">15000 DZD</span>
+                <button onclick="changePrice('max', 1000)">+</button>
+              </div>
+            </div>
+          </div>
+          <div class="button-price">
+            <button id="apply-price">Apply price</button>
+          </div>
+          <script>
+            let min = 7000;
+           let max = 15000;
+           const step = 1000;
+           const minLimit = 1000;
+           const maxLimit = 100000;
+
+            function changePrice(type, value) {
+               if (type === 'min') {
+                min = Math.min(max - step, Math.max(min + value, minLimit));
+               document.getElementById('min-price').textContent = `${min} DZD`;
+              } else {
+                 max = Math.max(min + step, Math.min(max + value, maxLimit));
+                 document.getElementById('max-price').textContent = `${max} DZD`;
+              }
+               }
+              document.getElementById('apply-price').addEventListener('click', function () {
+                      document.getElementById('hidden-min-price').value = min;
+                      document.getElementById('hidden-max-price').value = max;
+                      document.getElementById('hotel-type-form').requestSubmit(); // Uses HTMX!
+              });
+            
+
+          </script>
+          
+      
+          <!-- Rating -->
+          <h4>Rating</h4>
+          <div class="rating-stars">
+            <span class="star" data-rating="1">★</span>
+            <span class="star" data-rating="2">★</span>
+            <span class="star" data-rating="3">★</span>
+            <span class="star" data-rating="4">★</span>
+            <span class="star" data-rating="5">★</span>
+          </div>
+          <script>
+            const stars = document.querySelectorAll('.rating-stars .star');
+            let selectedRating = 0;
+          
+            stars.forEach((star, index) => {
+              // Hover effect
+              star.addEventListener('mouseenter', () => {
+                stars.forEach((s, i) => {
+                  s.classList.toggle('hover', i <= index);
+                });
+              });
+          
+              // Remove hover on mouseout
+              star.addEventListener('mouseleave', () => {
+                stars.forEach(s => s.classList.remove('hover'));
+              });
+          
+              // Click to select
+              star.addEventListener('click', () => {
+                selectedRating = index + 1;
+          
+                stars.forEach((s, i) => {
+                  s.classList.toggle('selected', i < selectedRating);
+                });
+                      // Set value in hidden input
+                  document.getElementById('selected-rating').value = selectedRating;
+                  // Submit the form
+                  document.getElementById('hotel-type-form').requestSubmit();
+
+              });
+            });
+          </script>
+              
+
+
+
+
+          <!-- Room Types -->
+          <div class="room-type-section">
+            <h4>Rooms</h4>
+            <div class="filter-buttons">
+              <button type="button" class="filter-option" onclick="selectRoomType('Single')">Single</button>
+              <button type="button" class="filter-option" onclick="selectRoomType('Luxurious')">Luxurious</button>
+              <button type="button" class="filter-option" onclick="selectRoomType('Suite')">Suite</button>
+              <button type="button" class="filter-option" onclick="selectRoomType('Double')">Double</button>
+            </div>
+            
+            
+            
+            <script>
+            function selectRoomType(roomType) {
+              document.getElementById('selected-room-type').value = roomType;
+              document.getElementById('hotel-type-form').requestSubmit();
+            }
+            </script>
+          </div>
+      
+          <!-- Facilities -->
+          <div class="facilities-section">
+            <h4>Facilities & Services</h4>
+            <label><input type="checkbox" name="facilities" value="Swimming Pool" class="facility-checkbox"> Swimming Pool</label><br>
+            <label><input type="checkbox" name="facilities" value="Airport Taxi" class="facility-checkbox"> Airport Taxi</label><br>
+            <label><input type="checkbox" name="facilities" value="Salle De Sport" class="facility-checkbox"> Salle De Sport</label><br>
+            <label><input type="checkbox" name="facilities" value="Petit-déjeuner" class="facility-checkbox"> Petit-déjeuner</label><br>
+            <label><input type="checkbox" name="facilities" value="Internet" class="facility-checkbox"> Internet</label><br>
+            <label><input type="checkbox" name="facilities" value="Room Service" class="facility-checkbox"> Room Service</label>
+          </div>
+          <script>
+            document.querySelectorAll('.facility-checkbox').forEach(checkbox => {
+              checkbox.addEventListener('change', function() {
+                document.getElementById('hotel-type-form').requestSubmit();
+              });
+            });
+          </script>
+      
+          <div class="button-container">
+            <button type="button" id="apply-filters" onclick="document.getElementById('hotel-type-form').requestSubmit();">Apply</button>
+          </div>
+
+
+        </div>
+        </div>
+        <div class="content-area">
+          <div class="controls">
+            
+        </div>
+
+        <script>
+          function toggleSortMenu() {
+              const menu = document.getElementById('sort-menu');
+              menu.style.display = (menu.style.display === 'none' || menu.style.display === '') ? 'block' : 'none';
+          }
+          
+          function applySort(sortType) {
+              const params = new URLSearchParams(window.location.search);
+              params.set('sort', sortType);
+              window.location.search = params.toString();
+          }
+          </script>
+    </form>
+      <div class="hotels" id="hotel-cards">
+        {% for hotel in hotels %}
+         <div class="hotel-card">
+          {% if hotel.image %}
+           <img src="{{ hotel.image.url }}" alt="{{ hotel.name }}">
+          {% else %}
+          <img src="/static/images/hotel2.png" alt="No Image Available">
+          {% endif %}
+           <h3>{{ hotel.name }}</h3>
+           <div class="hotel-location"><i class="fas fa-map-marker-alt"></i> {{ hotel.city.name }}, {{ hotel.city.destination.name }}</div>
+           <div class="price">
+            {% if hotel.min_price %}
+            {{ hotel.min_price }} DZA
+            {% else %}
+            Price Unavailable
+            {% endif %}
+           </div>
+          <!--<div class="price">{{ hotel.price }} </div>-->
+           <!-- <span class="price">{{ hotel.price }}</span> -->
+             <button>More Details</button>
+           </div>
+        {% empty %}
+           <p>No hotels found based on your search.</p>
+        {% endfor %}
+     
+     </div> 
+      </div>
+    </section>
+
+    
+        <!-- HOTELS DISPLAY (Right Column) -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const filterButtons = document.querySelectorAll(".filter-option");
+            const resetButton = document.getElementById("reset-button");
+            const priceSlider = document.getElementById("price-slider");
+            const maxPrice = document.getElementById("max-price");
+    
+            // Toggle .selected class on click (multi-select)
+            filterButtons.forEach(button => {
+                button.addEventListener("click", () => {
+                    button.classList.toggle("selected");
+                });
+            });
+    
+            // Reset button logic
+            resetButton.addEventListener("click", function () {
+                filterButtons.forEach(button => button.classList.remove("selected"));
+    
+                // Reset price slider
+                priceSlider.value = 1000;
+                maxPrice.textContent = "1000";
+    
+              
+            });
+        });
+    </script>
+  
+ {% endblock %}
+ {% block scripts %}
+ <script src="{% static 'js/HotelID.js' %}"></script>
+ {% endblock %}

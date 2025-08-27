@@ -1,0 +1,28 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">  <!-- Correct charset declaration -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voyago - Travel</title>
+
+    <!-- Include global styles -->
+    <link rel="stylesheet" href="{% static 'css/navbar.css' %}" >
+    <link rel="stylesheet" href="{% static 'css/form.css' %}" >
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+
+    <!-- Include the navbar -->
+    {% include 'partials/navbar.html' %}
+
+    <!-- This is where each page content will be displayed -->
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+    {% block scripts %}
+    {% endblock %}
+    {% include "partials/helper.html" %}
+    {% include "partials/footer.html" %}
+</body>
+</html>
