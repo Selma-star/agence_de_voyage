@@ -40,7 +40,7 @@ chat-box assistant:
 
 
 ## 🎥 Demo Video
-▶️ [Watch the demo](https://youtu.be/EWKcTQxmX_k)
+▶️ [Watch the demo](https://youtu.be/74uRG777OEM)
 
 ## ⚙️ Installation & Setup
 1. Clone the repository:
